@@ -18,6 +18,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(express.static('uploads/'));
 app.use(cors({
     origin: '*'
 }));

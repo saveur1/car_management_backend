@@ -1,5 +1,6 @@
 import express from 'express';
 const router = express.Router();
+import { upload } from '../middlewares/imagesUpload.js';
 
 // Import the controllers (userController.js) to use its database functions.
 import { 
@@ -19,7 +20,10 @@ import {
 
 import { CheckAuth, CheckRole } from '../middlewares/CheckAuth.js';
 
-router.route("/register").post(registerUser);
+//register file that allows to upload images to 'uploads' folder
+router.route("/register").post(upload.single("avatar"), registerUser);
+
+//login with email and password
 router.route("/login").post(loginUser);
 router.route("/password/forgot").post(userForgotPassword);
 router.route("/password/reset/:token").put(userResetPassword);

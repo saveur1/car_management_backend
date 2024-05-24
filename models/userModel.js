@@ -52,21 +52,15 @@ const userSchema = new mongoose.Schema({
         minLength:[6,"Password must be atleast 6 characters"],
     },
     avatar:{
-        public_id:{
             type: String,
             required: true
-        },
-        url:{
-            type: String,
-            required: true
-        }
     },
     role:{
         type: String,
         required: [true,"Role is required Please"],
         trim: true,
-        enum: ["individual","private","international","government"],
-        default:"user"
+        enum: ["individual","suppliers","admin","operators"],
+        default:"individual"
     },
     createdAt:{
         type: Date,

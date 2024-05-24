@@ -1,5 +1,5 @@
 export const UserDoc = {
-    "/api/users/signup":{
+    "/api/v1/register":{
         post:{
             tags:["User"],
             security:[
@@ -13,14 +13,32 @@ export const UserDoc = {
                         schema:{
                             type:"object",
                             properties:{
-                                full_name:{
+                                first_name:{
                                     type:"string",
-                                    example:"Bikorimana Saveur",
-                                    description:"User Full Name",
+                                    example:"Bikorimana",
+                                    description:"User first Name",
+                                    required:true
+                                },
+                                last_name:{
+                                    type:"string",
+                                    example:"Saveur",
+                                    description:"User last Name",
+                                    required:true
+                                },
+                                phone_number:{
+                                    type:"string",
+                                    example:"+250782326424",
+                                    description:"User phone number",
+                                    required:true
+                                },
+                                location:{
+                                    type:"string",
+                                    example:"Kigali, Rwanda",
+                                    description:"User Location",
                                     required:true
                                 },
                                 email:{
-                                    type:"String",
+                                    type:"string",
                                     required:true,
                                     example:"bikorimanaxavier@gmail.com",
                                     description:"Type User email",
@@ -29,18 +47,18 @@ export const UserDoc = {
                                 password:{
                                     type:String,
                                     description:"User Password",
+                                    default:"user@123",
+                                    required:false
+                                },
+                                username:{
+                                    type:"string",
+                                    example:"saveur1",
+                                    description:"UserName",
                                     required:true
                                 },
-                                role:{
-                                    type:String,
-                                    required:true,
-                                    example:"Customer",
-                                    enum:["Admin","Manager","Customer"],
-                                    default:"Customer"
-                                },
-                                profile:{
+                                avatar:{
                                     type:"file",
-                                    description:"User images"
+                                    description:"User image"
                                 }
                             }
                         }
@@ -63,7 +81,47 @@ export const UserDoc = {
             }
         }
     },
-    "/api/users/all":{
+    "/api/v1/login":{
+        post:{
+            tags:["User"],
+            requestBody:{
+                content:{
+                    "application/json":{
+                        schema:{
+                            type:"object",
+                            properties:{
+                                email:{
+                                    type:"String",
+                                    description:"User Email",
+                                    example:"bikorimanaxavier@gmail.com",
+                                },
+                                password:{
+                                    type:"String",
+                                    description:"User Password",
+                                    example:"saveur"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            responses:{
+                200:{
+                    content:{
+                        "application/json":{
+                            type:"object",
+                            example:{
+                                status:"success",
+                                message:"",
+                                result:{}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/api/v1/users":{
         get:{
             tags:["User"],
             security:[
@@ -87,7 +145,7 @@ export const UserDoc = {
             }
         }
     },
-    "/api/users/single/{userId}":{
+    "/api/v1/users/{userId}":{
         get:{
             tags:["User"],
             parameters:[{
@@ -197,46 +255,6 @@ export const UserDoc = {
                             example:{
                                 status:"success",
                                 message:""
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    },
-    "/api/users/login":{
-        post:{
-            tags:["User"],
-            requestBody:{
-                content:{
-                    "application/json":{
-                        schema:{
-                            type:"object",
-                            properties:{
-                                email:{
-                                    type:"String",
-                                    description:"User Email",
-                                    example:"bikorimanaxavier@gmail.com",
-                                },
-                                password:{
-                                    type:"String",
-                                    description:"User Password",
-                                    example:"saveur"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            responses:{
-                200:{
-                    content:{
-                        "application/json":{
-                            type:"object",
-                            example:{
-                                status:"success",
-                                message:"",
-                                result:{}
                             }
                         }
                     }

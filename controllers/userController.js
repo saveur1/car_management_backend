@@ -10,24 +10,16 @@ import crypto from "crypto";
 //Register User => /api/v1/register
 export const registerUser = asyncCatch(async(req,res,next)=>{
 
-    const result = await cloudinary.v2.uploader.upload(req.body.avatar,{
-        folder:"car_rent",
-        crop:"scale"
-    });
-
-    const { first_name,last_name,username,email,password,phone_number } = req.body;
-
+    const { first_name,last_name,username,email,password,phone_number,location } = req.body;
     const user = await User.create({
         first_name,
         last_name,
         username,
         phone_number,
+        location,
         email,
         password,
-        avatar:{
-            public_id:result.public_id,
-            url:result.secure_url
-        }
+        avatar: req.headers.origin +'/'+ req.file.path
     });
 
     sendToken(201,user,res);
