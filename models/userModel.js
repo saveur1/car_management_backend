@@ -55,11 +55,15 @@ const userSchema = new mongoose.Schema({
             type: String,
             required: true
     },
+    categories:{
+        type: String,
+        enum:["individual", "government","international","private"]
+    },
     role:{
         type: String,
         required: [true,"Role is required Please"],
         trim: true,
-        enum: ["individual","suppliers","admin","operators"],
+        enum: ["customers","suppliers","admin","operators"],
         default:"individual"
     },
     createdAt:{

@@ -19,8 +19,8 @@ const Options={
             {name: "Booking", description: "Car Rental Bookings" }
         ],
         servers:[
-            {url:"http://localhost:5000",description:"Local Server"},
-            {url:"https//tech-car-rent.onrender.com",description:"Online Server"}
+            {url:"https://tech-car-rent.onrender.com",description:"Online Server"},
+            {url:"http://localhost:5000",description:"Local Server"}
         ],
         components:{
             securitySchemes:{
