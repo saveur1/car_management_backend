@@ -16,6 +16,7 @@ const Options={
         tags:[
             {name:"Authentication",description:"Aunthenticating users for car rental"},
             {name:"User",description:"Car Rental Users: Individuals, suppliers and admin"},
+            {name: "Booking", description: "Car Rental Bookings" }
         ],
         servers:[
             {url:"http://localhost:5000",description:"Local Server"}
@@ -33,25 +34,7 @@ const Options={
         },
         paths:{...authentication,...UserDoc}
     },
-    tags: [
-      { name: "User", description: "Car Rental Users: Individuals, suppliers" },
-      { name: "Booking", description: "Car Rental Bookings" },
-    ],
-    servers: [{ url: "http://localhost:5000", description: "Local Server" }],
-    components: {
-      securitySchemes: {
-        token: {
-          type: "apiKey",
-          scheme: "bearer",
-          bearerFormat: "JWT",
-          name: "authorization",
-          in: "header",
-        },
-      },
-    },
-    paths: { ...UserDoc,...BookingDoc },
-  },
-  apis: ["./routes/*.js"],
+    apis: ["./routes/*.js"]
 };
 
 const swaggerSpec = swaggerJSDoc(Options);
