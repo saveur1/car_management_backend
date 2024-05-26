@@ -81,46 +81,6 @@ export const UserDoc = {
             }
         }
     },
-    "/api/v1/login":{
-        post:{
-            tags:["User"],
-            requestBody:{
-                content:{
-                    "application/json":{
-                        schema:{
-                            type:"object",
-                            properties:{
-                                email:{
-                                    type:"String",
-                                    description:"User Email",
-                                    example:"bikorimanaxavier@gmail.com",
-                                },
-                                password:{
-                                    type:"String",
-                                    description:"User Password",
-                                    example:"saveur"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            responses:{
-                200:{
-                    content:{
-                        "application/json":{
-                            type:"object",
-                            example:{
-                                status:"success",
-                                message:"",
-                                result:{}
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    },
     "/api/v1/users":{
         get:{
             tags:["User"],
@@ -168,12 +128,12 @@ export const UserDoc = {
             }
         }
     },
-    "/api/users/update/{userId}":{
+    "/api/v1/users/{updateId}":{
         put:{
             tags:["User"],
             parameters:[{
                 in:"path",
-                name:"userId",
+                name:"updateId",
                 description:"Update User",
                 example:"6405a31a2ad56808f4925521"
             }],
@@ -183,14 +143,32 @@ export const UserDoc = {
                         schema:{
                             type:"object",
                             properties:{
-                                full_name:{
+                                first_name:{
                                     type:"string",
-                                    example:"Bikorimana Saveur",
-                                    description:"User Full Name",
+                                    example:"Bikorimana",
+                                    description:"User first Name",
+                                    required:true
+                                },
+                                last_name:{
+                                    type:"string",
+                                    example:"Saveur",
+                                    description:"User last Name",
+                                    required:true
+                                },
+                                phone_number:{
+                                    type:"string",
+                                    example:"+250782326424",
+                                    description:"User phone number",
+                                    required:true
+                                },
+                                location:{
+                                    type:"string",
+                                    example:"Kigali, Rwanda",
+                                    description:"User Location",
                                     required:true
                                 },
                                 email:{
-                                    type:"String",
+                                    type:"string",
                                     required:true,
                                     example:"bikorimanaxavier@gmail.com",
                                     description:"Type User email",
@@ -199,18 +177,18 @@ export const UserDoc = {
                                 password:{
                                     type:String,
                                     description:"User Password",
+                                    default:"user@123",
+                                    required:false
+                                },
+                                username:{
+                                    type:"string",
+                                    example:"saveur1",
+                                    description:"UserName",
                                     required:true
                                 },
-                                role:{
-                                    type:String,
-                                    required:true,
-                                    example:"customer",
-                                    enum:["Admin","Manager","Customer"],
-                                    default:"Customer"
-                                },
-                                profile:{
+                                avatar:{
                                     type:"file",
-                                    description:"User images"
+                                    description:"User image"
                                 }
                             }
                         }
@@ -233,12 +211,12 @@ export const UserDoc = {
             }
         }
     },
-    "/api/users/delete/{userId}":{
+    "/api/v1/users/{deleteId}":{
         delete:{
             tags:["User"],
             parameters:[{
                 in:"path",
-                name:"userId",
+                name:"deleteId",
                 description:"User Id for Deletion",
                 example:"6405a31a2ad56808f4925521"
             }],

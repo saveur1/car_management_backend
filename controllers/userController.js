@@ -23,6 +23,7 @@ export const registerUser = asyncCatch(async(req,res,next)=>{
     });
 
     sendToken(201,user,res);
+
 });
 
 //Login User => /api/v1/login
@@ -79,7 +80,7 @@ export const userForgotPassword = asyncCatch(async(req,res,next)=>{
 
         await sendEmail({
             email:email,
-            subject:"ShopIt Password Recovery",
+            subject:"CarRental Password Recovery",
             message
         });
 
@@ -212,7 +213,7 @@ export const logoutUser = asyncCatch(async(req,res,next)=>{
 })
 
 
-//Get all Users => /api/v1/admin/users -> admin only route
+//Get all Users => /api/v1/users -> admin only route
 export const getAllUsers = asyncCatch(async(req,res,next)=>{
 
     const users = await User.find();
@@ -223,7 +224,7 @@ export const getAllUsers = asyncCatch(async(req,res,next)=>{
     });
 })
 
-//get User Details => /api/v1/admin/user/:id -> admin only route
+//get User Details => /api/v1/user/:id -> admin only route
 export const getUserDetails = asyncCatch(async(req,res,next)=>{
 
     const user = await User.findById(req.params.id);
@@ -241,13 +242,20 @@ export const getUserDetails = asyncCatch(async(req,res,next)=>{
 //Update user details => /api/user/:id -> admin only route
 export const updateUserInfo = asyncCatch(async(req,res,next)=>{
 
+    const { first_name,last_name,username,email,password,phone_number,location } = req.body;
+
     const userInfo ={
-        name:req.body.name,
-        email:req.body.email,
-        role:req.body.role
+        first_name,
+        last_name,
+        username,
+        phone_number,
+        location,
+        email,
+        password,
+        avatar: req.headers.origin +'/'+ req.file.path
     }
 
-    const user = await User.findByIdAndUpdate(req.params.id,userInfo,{
+    const user = await User.findByIdAndUpdate(req.params.id, userInfo,{
         new:true,
         runValidators:true,
         useFindAndModify:false
@@ -259,7 +267,7 @@ export const updateUserInfo = asyncCatch(async(req,res,next)=>{
     }); 
 });
 
-//Delete user => /api/v1/admin/user/:id
+//Delete user => /api/v1/user/:id
 export const deleteUser = asyncCatch(async(req,res,next)=>{
 
     const user = await User.findById(req.params.id);
@@ -267,10 +275,6 @@ export const deleteUser = asyncCatch(async(req,res,next)=>{
     if(!user){
         return next(new ErrorHandler(`User with Id ${req.params.id} is not Registered`,400));
     }
-
-    // delete user profile also
-    const public_id = user.avatar.public_id;
-    await cloudinary.v2.uploader.destroy(public_id);
 
     await User.findByIdAndDelete(req.params.id);
 

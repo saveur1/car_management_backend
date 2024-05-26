@@ -1,0 +1,42 @@
+export const authentication = {
+    "/api/v1/login":{
+        post:{
+            tags:["Authentication"],
+            requestBody:{
+                content:{
+                    "application/json":{
+                        schema:{
+                            type:"object",
+                            properties:{
+                                email:{
+                                    type:"String",
+                                    description:"User Email",
+                                    example:"bikorimanaxavier@gmail.com",
+                                },
+                                password:{
+                                    type:"String",
+                                    description:"User Password",
+                                    example:"saveur"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            responses:{
+                200:{
+                    content:{
+                        "application/json":{
+                            type:"object",
+                            example:{
+                                status:"success",
+                                message:"",
+                                result:{}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+}
