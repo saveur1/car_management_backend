@@ -33,7 +33,7 @@ const Options={
                 }
             }
         },
-        paths:{...authentication,...UserDoc}
+        paths:{...authentication,...UserDoc,...BookingDoc}
     },
     apis: ["./routes/*.js"]
 };
