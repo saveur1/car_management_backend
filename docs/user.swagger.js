@@ -56,6 +56,12 @@ export const UserDoc = {
                                     description:"UserName",
                                     required:true
                                 },
+                                national_id:{
+                                    type:"string",
+                                    example:"120008*********5",
+                                    description:"National Identification Number",
+                                    required:true
+                                },
                                 avatar:{
                                     type:"file",
                                     description:"User image"

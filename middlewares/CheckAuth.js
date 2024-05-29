@@ -6,13 +6,13 @@ import User from "../models/userModel.js";
 //check if user is authanticated
 export const CheckAuth = asyncCatch(async(req,res,next)=>{
 
-    const { token } = req.headers;
+    const { authorization } = req.headers;
 
-    if(!token){
+    if(!authorization){
         return next(new ErrorHandler("Login First To Access this resource",401));
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(authorization, process.env.JWT_SECRET);
 
     req.user = await User.findById(decoded.id);
 

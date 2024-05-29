@@ -44,6 +44,13 @@ const userSchema = new mongoose.Schema({
         trim: true,
         maxLength:[15,"Phone Number can not exceed 15 characters"]
     },
+    national_id:{
+        type: String,
+        required: [true,"National ID is required Please"],
+        trim: true,
+        maxLength:[20,"National ID can not exceed 20 characters"],
+        unique: true
+    },
     password:{
         type: String,
         required: [true,"Password is required Please"],
@@ -100,7 +107,8 @@ userSchema.methods.getJwtToken = function(){
 //generate password reset token
 userSchema.methods.generateResetPasswordToken = function(){
     //generate token
-    const resetToken = crypto.randomBytes(20).toString("hex");
+    const resetToken = crypto.randomBytes(7).toString("hex");
+    console.log(resetToken);
 
     //hash and set it to resetPasswordToken
     this.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
