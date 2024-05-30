@@ -14,8 +14,11 @@ router
   .route("/")
   .post(createBooking)
   .get(getAllBookings)
-  .get(getBookingsByStatus);
-
+router.route("/status/:status").get(getBookingsByStatus);
+// router.route("/status/:status").get((req, res, next) => {
+//   console.log(`Received request for status: ${req.params.status}`);
+//   next();
+// }, getBookingsByStatus);
 router.route("/:id").get(getBooking).patch(updateBooking).delete(deleteBooking);
 
 export default router;

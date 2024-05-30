@@ -29,7 +29,8 @@ app.use(cors({
 //CALLING ALL ROUTES
 app.use("/api/v1",users);
 // Use booking routes
-app.use('/api/bookings', bookingRoutes);
+app.use('/api/v1/bookings', bookingRoutes);
+
 //SWAGGER DOCUMENTATION
 swaggerDocumentation(app);
 

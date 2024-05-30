@@ -1,5 +1,5 @@
 export const BookingDoc = {
-  "/api/bookings": {
+  "/api/v1/bookings": {
     post: {
       tags: ["Booking"],
       security: [
@@ -132,7 +132,7 @@ export const BookingDoc = {
       },
     },
   },
-  "/api/bookings/{id}": {
+  "/api/v1/bookings/{id}": {
     get: {
       tags: ["Booking"],
       parameters: [
@@ -291,7 +291,7 @@ export const BookingDoc = {
       },
     },
   },
-  "/api/bookings/status/{status}": {
+  "/api/v1/bookings/status/{status}": {
     get: {
       tags: ["Booking"],
       parameters: [
