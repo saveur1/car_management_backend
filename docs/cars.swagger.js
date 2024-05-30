@@ -44,9 +44,10 @@ export const CarDoc = {
                                     description:"Car brand",
                                 },
                                 transmission_type:{
-                                    type:String,
+                                    type:"string",
                                     description:"Transmission type: Manual or automatic",
                                     example:"Manual",
+                                    enum: ["Manual", "Automatic"],
                                     required:false
                                 },
                                 fuel_type:{
@@ -54,6 +55,16 @@ export const CarDoc = {
                                     example:"Diesel",
                                     description:"Fuel type",
                                     required:true
+                                },
+                                rental_cost_per_day:{
+                                    type: "number",
+                                    example:156.8,
+                                    required: true,
+                                },
+                                current_status:{
+                                    type: "string",
+                                    default: "available",
+                                    enum:['available','under_use','under_maintance','sold']
                                 },
                                 images:{
                                     type:"array",
