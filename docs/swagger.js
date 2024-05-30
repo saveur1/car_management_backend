@@ -3,6 +3,8 @@ import SwaggerUiOptions  from "swagger-ui-express";
 import { UserDoc } from "./user.swagger.js";
 import { authentication } from "./authentication.swagger.js";
 import { BookingDoc } from "./booking.swagger.js";
+import { CarDoc } from "./cars.swagger.js";
+import { StaffDoc } from "./staff.swagger.js";
 
 
 const Options={
@@ -16,7 +18,10 @@ const Options={
         tags:[
             {name:"Authentication",description:"Aunthenticating users for car rental"},
             {name:"User",description:"Car Rental Users: Individuals, suppliers and admin"},
-            {name: "Booking", description: "Car Rental Bookings" }
+            {name: "Booking", description: "Car Rental Bookings" },
+            {name: "Cars", description: "Requests for creating Cars" },
+            {name: "Staff", description: "Requests for creating staff" }
+
         ],
         servers:[
             {url:"https://tech-car-rent.onrender.com",description:"Online Server"},
@@ -33,7 +38,7 @@ const Options={
                 }
             }
         },
-        paths:{...authentication,...UserDoc,...BookingDoc}
+        paths:{...authentication,...UserDoc,...BookingDoc,...CarDoc,...StaffDoc}
     },
     apis: ["./routes/*.js"]
 };

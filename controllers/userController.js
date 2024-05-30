@@ -10,7 +10,7 @@ import crypto from "crypto";
 //Register User => /api/v1/register
 export const registerUser = asyncCatch(async(req,res,next)=>{
 
-    const { first_name,last_name,username,email,password,phone_number,location } = req.body;
+    const { first_name,last_name,username,email,password,phone_number,location,national_id } = req.body;
     const user = await User.create({
         first_name,
         last_name,
@@ -19,6 +19,7 @@ export const registerUser = asyncCatch(async(req,res,next)=>{
         location,
         email,
         password,
+        national_id,
         avatar: req.headers.origin +'/'+ req.file.path
     });
 

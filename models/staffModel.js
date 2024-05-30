@@ -29,6 +29,11 @@ const staffSchema = new mongoose.Schema(
       unique: true,
       maxLength: [30, "UserName can not exceed 30 characters"],
     },
+    image: 
+      {
+        type: String,
+        required: true,
+      },
     position: { type: String, required: true },
     email: {
       type: String,
@@ -44,9 +49,8 @@ const staffSchema = new mongoose.Schema(
     startDate: { type: Date, required: true },
     endDate: { type: Date },
     description: { type: String },
-    salary: { type: Number, required: true },
+    salary: { type: String, required: true },
   },
-  { timestamps: true }
 );
 
 const Staff = mongoose.model("Staff", staffSchema);
