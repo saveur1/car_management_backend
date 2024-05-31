@@ -1,4 +1,3 @@
-// routes/staff.js
 import express from "express";
 import {
   createStaff,
@@ -23,3 +22,4 @@ router.route("/:id")
 
 
 export default router;
+

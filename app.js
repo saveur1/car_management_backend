@@ -9,6 +9,7 @@ import dotenv from "dotenv";
 // IMPORTING ALL ROUTERS
 import users from "./routes/user.js";
 import bookingRoutes from './routes/booking.js';
+import cars from "./routes/cars.js";
 import staffRoutes from "./routes/staff.js";
 
 import { swaggerDocumentation } from "./docs/swagger.js";
@@ -29,9 +30,8 @@ app.use(cors({
 
 //CALLING ALL ROUTES
 app.use("/api/v1",users);
-// Use booking routes
 app.use('/api/v1/bookings', bookingRoutes);
-//use for staff routes
+app.use("/api/v1", cars);
 app.use("/api/v1/staff", staffRoutes);
 
 //SWAGGER DOCUMENTATION

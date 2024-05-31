@@ -20,8 +20,7 @@ const Options={
             {name:"User",description:"Car Rental Users: Individuals, suppliers and admin"},
             {name: "Booking", description: "Car Rental Bookings" },
             {name: "Cars", description: "Requests for creating Cars" },
-            {name: "Staff", description: "Requests for creating staff" }
-
+            { name: "Staff", description: "Staff Management" }  
         ],
         servers:[
             {url:"https://tech-car-rent.onrender.com",description:"Online Server"},
