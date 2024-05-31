@@ -14,7 +14,13 @@
     "type": "git",
     "url": "git+https://github.com/TechSphereLabs/Car-rent-backend.git"
   },
-  "keywords": [],
+  "keywords": [
+    "Techshere labs",
+    "Techshphere",
+    "Car-rent-backend",
+    "car rent backend",
+    "Car rent"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
