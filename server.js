@@ -20,10 +20,10 @@ server.listen(process.env.PORT, () => {
   );
 });
 
-process.on("unhandledRejection", (error) => {
-  console.log("ERROR: " + error.message);
-  console.log("Shutting down server due to unhandled Promise rejections");
-  server.close(() => {
-    process.exit(1);
-  });
-});
+// process.on("unhandledRejection", (error) => {
+//   console.log("ERROR: " + error.message);
+//   console.log("Shutting down server due to unhandled Promise rejections");
+//   server.close(() => {
+//     process.exit(1);
+//   });
+// });
