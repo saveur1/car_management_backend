@@ -2,6 +2,7 @@ import nodemailer from "nodemailer";
 
 const sendEmail = async options =>{
     var transport = nodemailer.createTransport({
+        service:"Gmail",
         host: process.env.SMTP_HOST,
         port: process.env.SMTP_PORT,
         auth: {
@@ -14,7 +15,7 @@ const sendEmail = async options =>{
         from: `${process.env.SMTP_FROM_NAME} <${process.env.SMTP_FROM_EMAIL}>`,
         to: options.email,
         subject: options.subject,
-        text: options.message
+        html: options.message
     }
 
     await transport.sendMail(message);

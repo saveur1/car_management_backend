@@ -66,17 +66,19 @@ export const userForgotPassword = asyncCatch(async(req,res,next)=>{
     }
 
     //get user token
-    const resetToken = user.generateResetPasswordToken();
+    const resetCode = user.generateResetPasswordToken().toUpperCase();
 
     await user.save({ validateBeforeSave:false });
 
     //generate reset link
     // const link = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
-
-    const link = `${req.protocol}://${req.get("host")}/password/reset/${resetToken}`;
     
-    const message = `Your password reset Link is as follow\n\n${link}\n\nIf you have not requested this email. then egnore it!`;
-
+    const message = 
+    `<h2 style='color:blue;'>Need to reset your password?</h2>
+     <p>Use your secret code!</p>
+     <p style='font-style:italic;font-weight:bold;padding:20px;margin-left:30px'>${ resetCode }</p>
+     <p>If you did not forget your password, you can ignore this email.</p>`;
+    
     try {
 
         await sendEmail({

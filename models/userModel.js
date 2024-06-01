@@ -107,14 +107,7 @@ userSchema.methods.getJwtToken = function(){
 //generate password reset token
 userSchema.methods.generateResetPasswordToken = function(){
     //generate token
-    const resetToken = crypto.randomBytes(7).toString("hex");
-    console.log(resetToken);
-
-    //hash and set it to resetPasswordToken
-    this.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
-
-    //set token expire time
-    this.resetPasswordExpires = Date.now()+30*60*1000;
+    const resetToken = crypto.randomBytes(3).toString("hex"); //3*2 represents Number of codes to send in email
 
     return resetToken;
 }
