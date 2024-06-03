@@ -34,7 +34,7 @@ router.route("/password/update").put(CheckAuth, updateUserPassword);
 
 //users routes, awhole CRUD for users
 router.route("/users").get(CheckAuth, CheckRole("admin","human_resources"), getAllUsers); //get all users
-router.route("/register").post(CheckAuth, CheckRole("admin","human_resources"), registerUser); //register user
+router.route("/register").post(registerUser); //register user
 router.route("/users/category/:category").get(CheckAuth, CheckRole("admin", "human_resources"), getUserByCategory); 
 router.route("/users/:id").get(CheckAuth, CheckRole("admin", "human_resources"), getUserDetails)
                           .put(CheckAuth, CheckRole("admin", "human_resources"), updateUserInfo)
