@@ -9,7 +9,7 @@ export const UserDoc = {
             ],
             requestBody:{
                 content:{
-                    "multipart/form-data":{
+                    "application/json":{
                         schema:{
                             type:"object",
                             properties:{
@@ -62,9 +62,16 @@ export const UserDoc = {
                                     description:"National Identification Number",
                                     required:true
                                 },
+                                categories:{
+                                    type:"string",
+                                    example:"individual",
+                                    enum:["individual", "government","international","private","suppliers"],
+                                    description:"User Category",
+                                    required:true
+                                },
                                 avatar:{
-                                    type:"file",
-                                    description:"User image"
+                                    type:"string",
+                                    description:"User image: URL"
                                 }
                             }
                         }
@@ -114,6 +121,11 @@ export const UserDoc = {
     "/api/v1/users/{userId}":{
         get:{
             tags:["User"],
+            security:[
+                {
+                    token:[]
+                }
+            ],
             parameters:[{
                 in:"path",
                 name:"userId",
@@ -137,6 +149,11 @@ export const UserDoc = {
     "/api/v1/users/{updateId}":{
         put:{
             tags:["User"],
+            security:[
+                {
+                    token:[]
+                }
+            ],
             parameters:[{
                 in:"path",
                 name:"updateId",
@@ -145,7 +162,7 @@ export const UserDoc = {
             }],
             requestBody:{
                 content:{
-                    "multipart/form-data":{
+                    "application/json":{
                         schema:{
                             type:"object",
                             properties:{
@@ -190,6 +207,19 @@ export const UserDoc = {
                                     type:"string",
                                     example:"saveur1",
                                     description:"UserName",
+                                    required:true
+                                },
+                                national_id:{
+                                    type:"string",
+                                    example:"120008*********5",
+                                    description:"National Identification Number",
+                                    required:true
+                                },
+                                categories:{
+                                    type:"string",
+                                    example:"individual",
+                                    enum:["individual", "government","international","private","suppliers"],
+                                    description:"User Category",
                                     required:true
                                 },
                                 avatar:{
@@ -246,16 +276,16 @@ export const UserDoc = {
             }
         }
     },
-    "/api/users/role/{role}":{
+    "/api/v1/users/category/{category}":{
         get:{
             tags:["User"],
             parameters:[{
                 in:"path",
-                name:"role",
+                name:"category",
                 type:"string",
-                description:"Role of user",
-                enum:["admin","manager","customer"],
-                example:"admin",
+                description:"Category of users: individual | government | international | private | suppliers",
+                enum:["individual", "government","international","private","suppliers"],
+                example:"individual",
                 required:true
             }],
             security:[

@@ -32,7 +32,7 @@ export const CarDoc = {
                                     required:true
                                 },
                                 manufacture_year:{
-                                    type:"string",
+                                    type:"number",
                                     example:"2018",
                                     description:"Manufacturer Year",
                                     required:true
@@ -121,6 +121,11 @@ export const CarDoc = {
     "/api/v1/cars/{carId}":{
         get:{
             tags:["Cars"],
+            security:[
+                {
+                    token:[]
+                }
+            ],
             parameters:[{
                 in:"path",
                 name:"carId",
@@ -144,6 +149,11 @@ export const CarDoc = {
     "/api/v1/cars/{updateId}":{
         put:{
             tags:["Cars"],
+            security:[
+                {
+                    token:[]
+                }
+            ],
             parameters:[{
                 in:"path",
                 name:"updateId",
@@ -175,7 +185,7 @@ export const CarDoc = {
                                     required:true
                                 },
                                 manufacture_year:{
-                                    type:"string",
+                                    type:"number",
                                     example:"2018",
                                     description:"Manufacturer Year",
                                     required:true
@@ -261,6 +271,35 @@ export const CarDoc = {
                             example:{
                                 status:"success",
                                 message:""
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/api/v1/cars/category/{category}":{
+        get:{
+            tags:["Cars"],
+            parameters:[{
+                in:"path",
+                name:"category",
+                description:"car category: new | medium | odd",
+                example:"new"
+            }],
+            security:[
+                {
+                    token:[]
+                }
+            ],
+            responses:{
+                200:{
+                    content:{
+                        "application/json":{
+                            type:"object",
+                            example:{
+                                status:"success",
+                                result:[]
                             }
                         }
                     }

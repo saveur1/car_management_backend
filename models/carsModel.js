@@ -23,10 +23,11 @@ const carsSchema = new mongoose.Schema({
         unique: true
     },
     manufacture_year:{
-        type: String,
+        type: Number,
         required: [true,"Manufacture Year is required Please"],
         trim: true,
-        maxLength:[10,"Manufacture Year can not exceed 10 characters"]
+        maxLength:[10,"Manufacture Year can not exceed 10 characters"],
+        index: true
     },
     car_brand:{
         type: String,

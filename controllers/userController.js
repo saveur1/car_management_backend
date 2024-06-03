@@ -10,18 +10,7 @@ import crypto from "crypto";
 //Register User => /api/v1/register
 export const registerUser = asyncCatch(async(req,res,next)=>{
 
-    const { first_name,last_name,username,email,password,phone_number,location,national_id } = req.body;
-    const user = await User.create({
-        first_name,
-        last_name,
-        username,
-        phone_number,
-        location,
-        email,
-        password,
-        national_id,
-        avatar: req.headers.origin +'/'+ req.file.path
-    });
+    const user = await User.create(req.body);
 
     sendToken(201,user,res);
 
@@ -245,20 +234,7 @@ export const getUserDetails = asyncCatch(async(req,res,next)=>{
 //Update user details => /api/user/:id -> admin only route
 export const updateUserInfo = asyncCatch(async(req,res,next)=>{
 
-    const { first_name,last_name,username,email,password,phone_number,location } = req.body;
-
-    const userInfo ={
-        first_name,
-        last_name,
-        username,
-        phone_number,
-        location,
-        email,
-        password,
-        avatar: req.headers.origin +'/'+ req.file.path
-    }
-
-    const user = await User.findByIdAndUpdate(req.params.id, userInfo,{
+    const user = await User.findByIdAndUpdate(req.params.id, req.body ,{
         new:true,
         runValidators:true,
         useFindAndModify:false
@@ -286,3 +262,16 @@ export const deleteUser = asyncCatch(async(req,res,next)=>{
         message:"User is Deleted."
     });
 })
+
+//get users by category =>GET /api/v1/users/category/:category
+export const getUserByCategory = asyncCatch(async(req,res,next)=>{
+
+    const users = await User.find({
+        categories:req.params.category
+    });
+
+    res.status(200).json({
+        success:true,
+        users
+    });
+});

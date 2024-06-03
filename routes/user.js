@@ -1,6 +1,7 @@
+/*                      ADMIN AND HUMAN RESOURCES 
+*/
 import express from 'express';
 const router = express.Router();
-import { upload } from '../middlewares/imagesUpload.js';
 
 // Import the controllers (userController.js) to use its database functions.
 import { 
@@ -15,13 +16,11 @@ import {
     getAllUsers,
     getUserDetails,
     updateUserInfo,
-    deleteUser
+    deleteUser,
+    getUserByCategory
 } from "../controllers/userController.js";
 
 import { CheckAuth, CheckRole } from '../middlewares/CheckAuth.js';
-
-//register file that allows to upload images to 'uploads' folder
-router.route("/register").post(upload.single("avatar"), registerUser);
 
 //Authentication part for car rental system
 router.route("/login").post(loginUser);
@@ -34,10 +33,12 @@ router.route("/profile/update").put(CheckAuth,updateUserProfile);
 router.route("/password/update").put(CheckAuth, updateUserPassword);
 
 //users routes, awhole CRUD for users
-router.route("/users").get(getAllUsers);
-router.route("/users/:id").get(getUserDetails)
-                          .put(upload.single("avatar"), updateUserInfo)
-                          .delete(deleteUser);
+router.route("/users").get(CheckAuth, CheckRole("admin","human_resources"), getAllUsers); //get all users
+router.route("/register").post(CheckAuth, CheckRole("admin","human_resources"), registerUser); //register user
+router.route("/users/category/:category").get(CheckAuth, CheckRole("admin", "human_resources"), getUserByCategory); 
+router.route("/users/:id").get(CheckAuth, CheckRole("admin", "human_resources"), getUserDetails)
+                          .put(CheckAuth, CheckRole("admin", "human_resources"), updateUserInfo)
+                          .delete(CheckAuth, CheckRole("admin", "human_resources"), deleteUser);
 
 
 export default router;

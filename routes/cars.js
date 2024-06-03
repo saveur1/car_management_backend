@@ -1,6 +1,9 @@
+/*
+                ADMIN AND OPERATORS ONLY
+*/
+
 import express from 'express';
 const router = express.Router();
-import { upload } from '../middlewares/imagesUpload.js';
 
 // Import the controllers (userController.js) to use its database functions.
 import {
@@ -8,19 +11,23 @@ import {
     getAllCars,
     getCarDetails,
     updateCarInfo,
-    deleteCar
+    deleteCar,
+    getCarCategory
 } from "../controllers/carController.js";
 
 import { CheckAuth, CheckRole } from '../middlewares/CheckAuth.js';
 
 //register file that allows to upload images to 'uploads' folder
-router.route("/cars/create").post(upload.array("images",10), registerCar);
+router.route("/cars/create").post(CheckAuth, CheckRole("admin", "operators"), registerCar);
 
-//cars routes, awhole CRUD for cars
-router.route("/cars").get(getAllCars);
-router.route("/cars/:id").get(getCarDetails)
-                          .put(upload.array("images",10), updateCarInfo)
-                          .delete(deleteCar);
+//cars routes, a whole CRUD for cars
+//Check authentication first then check user role
+router.route("/cars").get(CheckAuth, CheckRole("admin", "operators"), getAllCars);
+router.route("/cars/:id").get(CheckAuth, CheckRole("admin", "operators"), getCarDetails)
+                          .put(CheckAuth, CheckRole("admin", "operators"), updateCarInfo)
+                          .delete(CheckAuth, CheckRole("admin", "operators"), deleteCar);
+
+router.route("/cars/category/:category").get(CheckAuth, CheckRole("admin", "operators"), getCarCategory);
 
 
 export default router;
