@@ -12,13 +12,15 @@ const carsSchema = new mongoose.Schema({
         type: String,
         required: [true,"Plack is required Please"],
         trim: true,
-        maxLength:[50,"Plack can not exceed 50 characters"]
+        maxLength:[50,"Plack can not exceed 50 characters"],
+        unique: true
     },
     serial_number:{
         type: String,
         required: [true,"Serial Number is required Please"],
         trim: true,
-        maxLength:[50,"Serial Number can not exceed 50 characters"]
+        maxLength:[50,"Serial Number can not exceed 50 characters"],
+        unique: true
     },
     manufacture_year:{
         type: String,

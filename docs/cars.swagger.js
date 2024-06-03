@@ -9,7 +9,7 @@ export const CarDoc = {
             ],
             requestBody:{
                 content:{
-                    "multipart/form-data":{
+                    "application/json":{
                         schema:{
                             type:"object",
                             properties:{
@@ -69,7 +69,7 @@ export const CarDoc = {
                                 images:{
                                     type:"array",
                                     items:{
-                                        type:"file",
+                                        type:"string",
                                         description:"Car images"
                                     }
                                 }
@@ -152,7 +152,7 @@ export const CarDoc = {
             }],
             requestBody:{
                 content:{
-                    "multipart/form-data":{
+                    "application/json":{
                         schema:{
                             type:"object",
                             properties:{

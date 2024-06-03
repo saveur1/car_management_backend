@@ -4,28 +4,7 @@ import Car from "../models/carsModel.js";
 //Register Car =>POST /api/v1/cars/create
 export const registerCar = asyncCatch(async(req,res,next)=>{
 
-    const images = [];
-
-    //pushing images URL to images from req.files
-    for(let i=0; i<req.files.length; i++) {
-        const url = req.headers.origin +'/'+ req.files[i].path
-        images.push(url);
-    }
-
-    const { car_name,plack,serial_number,manufacture_year,car_brand,transmission_type,fuel_type,rental_cost_per_day,current_status } = req.body;
-
-    const car = await Car.create({
-        car_name,
-        plack,
-        serial_number,
-        manufacture_year,
-        car_brand,
-        transmission_type,
-        fuel_type,
-        rental_cost_per_day,
-        current_status,
-        images,
-    });
+    const car = await Car.create(req.body);
 
     res.status(200).json({
         success:true,
@@ -63,30 +42,7 @@ export const getCarDetails = asyncCatch(async(req,res,next)=>{
 //Update Car details =>PUT /api/cars/:id -> admin only route
 export const updateCarInfo = asyncCatch(async(req,res,next)=>{
 
-    const images = [];
-
-    //pushing images URL to images from req.files
-    for(let i=0; i<req.files.length; i++) {
-        const url = req.headers.origin +'/'+ req.files[i].path
-        images.push(url);
-    }
-
-    const { car_name,plack,serial_number,manufacture_year,car_brand,transmission_type,fuel_type,rental_cost_per_day,current_status } = req.body;
-
-    const carInfo ={
-        car_name,
-        plack,
-        serial_number,
-        manufacture_year,
-        car_brand,
-        transmission_type,
-        fuel_type,
-        rental_cost_per_day,
-        current_status,
-        images,
-    }
-
-    const car = await Car.findByIdAndUpdate(req.params.id, carInfo,{
+    const car = await Car.findByIdAndUpdate(req.params.id, req.body,{
         new:true,
         runValidators:true,
         useFindAndModify:false
