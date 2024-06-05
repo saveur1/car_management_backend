@@ -1,4 +1,8 @@
+/*
+                ADMIN AND OPERATORS ONLY
+*/
 import express from "express";
+const router = express.Router();
 import {
   createStaff,
   getAllStaff,
@@ -7,19 +11,19 @@ import {
   deleteStaffById,
   getStaffByPosition,
 } from "../controllers/staffController.js";
-import { upload } from "../middlewares/imagesUpload.js";
+import { CheckAuth, CheckRole } from "../middlewares/CheckAuth.js";
 
-const router = express.Router();
+//staff routes, a whole CRUD for staff
+//Check authentication first then check user role
+router.route("/")
+      .post(CheckAuth, CheckRole("admin", "operators"), createStaff)
+      .get(CheckAuth, CheckRole("admin", "operators"),getAllStaff);
+router.route("/position/:position").get(CheckAuth, CheckRole("admin", "operators"),getStaffByPosition);
 
-router.route("/").post(upload.single("image"), createStaff)
-                 .get(getAllStaff);
-router.route("/position/:position").get(getStaffByPosition);
-
-router.route("/:id")
-  .get(getStaffById)
-  .put(upload.single("image"), updateStaffById)
-  .delete(deleteStaffById);
-
+router
+  .route("/:id")
+  .get(CheckAuth, CheckRole("admin", "operators"), getStaffById)
+  .put(CheckAuth, CheckRole("admin", "operators"), updateStaffById)
+  .delete(CheckAuth, CheckRole("admin", "operators"),deleteStaffById);
 
 export default router;
-
