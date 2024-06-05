@@ -19,6 +19,7 @@ const staffSchema = new mongoose.Schema({
     type: String,
     required: [true, "Phone Number is required Please"],
     trim: true,
+    unique: true,
     maxLength: [15, "Phone Number can not exceed 15 characters"],
   },
   username: {
@@ -36,7 +37,7 @@ const staffSchema = new mongoose.Schema({
     unique: true,
     message: "Email Already Exists in Database",
   },
-  idNumber: { type: String, required: true, length: 16 },
+  idNumber: { type: String, required: true, length: 16,unique:true },
   position: { type: String, required: true },
 
   location: { type: String, required: true },

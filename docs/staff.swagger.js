@@ -9,7 +9,7 @@ export const StaffDoc = {
       ],
       requestBody: {
         content: {
-          "multipart/form-data": {
+          "application/json": {
             schema: {
               type: "object",
               properties: {
@@ -95,7 +95,7 @@ export const StaffDoc = {
                   required: true,
                 },
                 image: {
-                  type: "file",
+                  type: "string",
                   description: "Staff Image",
                   required: true,
                 },
@@ -149,6 +149,11 @@ export const StaffDoc = {
   "/api/v1/staff/{id}": {
     get: {
       tags: ["Staff"],
+      security: [
+        {
+          token: [],
+        },
+      ],
       parameters: [
         {
           in: "path",
@@ -177,6 +182,11 @@ export const StaffDoc = {
     },
     put: {
       tags: ["Staff"],
+      security: [
+        {
+          token: [],
+        },
+      ],
       parameters: [
         {
           in: "path",
@@ -188,7 +198,7 @@ export const StaffDoc = {
       ],
       requestBody: {
         content: {
-          "multipart/form-data": {
+          "application/json": {
             schema: {
               type: "object",
               properties: {
@@ -274,7 +284,7 @@ export const StaffDoc = {
                   required: false,
                 },
                 image: {
-                  type: "file",
+                  type: "string",
                   description: "Staff Image",
                   required: false,
                 },
@@ -302,6 +312,11 @@ export const StaffDoc = {
     },
     delete: {
       tags: ["Staff"],
+      security: [
+        {
+          token: [],
+        },
+      ],
       parameters: [
         {
           in: "path",
@@ -332,6 +347,11 @@ export const StaffDoc = {
   "/api/v1/staff/position/{position}": {
     get: {
       tags: ["Staff"],
+      security: [
+        {
+          token: [],
+        },
+      ],
       parameters: [
         {
           in: "path",

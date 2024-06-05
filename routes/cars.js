@@ -17,7 +17,6 @@ import {
 
 import { CheckAuth, CheckRole } from '../middlewares/CheckAuth.js';
 
-//register file that allows to upload images to 'uploads' folder
 router.route("/cars/create").post(CheckAuth, CheckRole("admin", "operators"), registerCar);
 
 //cars routes, a whole CRUD for cars
