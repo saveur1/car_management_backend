@@ -31,12 +31,12 @@ export default (error,req,res,next)=>{
         }
 
         if(error.name === "JsonWebTokenError"){
-            const message = "JSON web token is invalid. Try Again!!!";
+            const message = "Unknow Error has occurred, please try again later!";
             error = new ErrorHandler(message,400);
         }
 
         if(error.name === "TokenExipiredError"){
-            const message = "JSON web token is Expired. Try Again!!!";
+            const message = "Sorry to inform you that your session is expired, please Login Again!";
             error = new ErrorHandler(message,400);
         }
 
