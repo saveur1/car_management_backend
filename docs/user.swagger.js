@@ -308,5 +308,38 @@ export const UserDoc = {
                 }
             }
         }
+    },
+    "/api/v1/users/role/{role}":{
+        get:{
+            tags:["User"],
+            parameters:[{
+                in:"path",
+                name:"role",
+                type:"string",
+                description:"Role of users: admin | human_resources | operator | manager | supplier | customer",
+                enum: ["admin","manager","human_resources","operator","customer","supplier"],
+                example:"individual",
+                required:true
+            }],
+            security:[
+                {
+                    token:[]
+                }
+            ],
+            "responses":{
+                200:{
+                    content:{
+                        "application/json":{
+                            type:"object",
+                            example:{
+                                status:"success",
+                                message:"",
+                                result:[]
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

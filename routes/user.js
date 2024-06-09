@@ -17,7 +17,8 @@ import {
     getUserDetails,
     updateUserInfo,
     deleteUser,
-    getUserByCategory
+    getUserByCategory,
+    getUserByRole
 } from "../controllers/userController.js";
 
 import { CheckAuth, CheckRole } from '../middlewares/CheckAuth.js';
@@ -36,6 +37,7 @@ router.route("/password/update").put(CheckAuth, updateUserPassword);
 router.route("/users").get(CheckAuth, CheckRole("admin","human_resources"), getAllUsers); //get all users
 router.route("/register").post(CheckAuth, CheckRole("admin","human_resources"), registerUser); //register user
 router.route("/users/category/:category").get(CheckAuth, CheckRole("admin", "human_resources"), getUserByCategory); 
+router.route("/users/role/:role").get(CheckAuth, CheckRole("admin", "human_resources"), getUserByRole); 
 router.route("/users/:id").get(CheckAuth, CheckRole("admin", "human_resources"), getUserDetails)
                           .put(CheckAuth, CheckRole("admin", "human_resources"), updateUserInfo)
                           .delete(CheckAuth, CheckRole("admin", "human_resources"), deleteUser);

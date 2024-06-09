@@ -64,15 +64,16 @@ const userSchema = new mongoose.Schema({
     },
     categories:{
         type: String,
-        enum:["individual", "government","international","private","suppliers"],
+        enum:["individual", "government","international","private"],
         index: true
     },
     role:{
         type: String,
         required: [true,"Role is required Please"],
         trim: true,
-        enum: ["admin","manager","human_resources","operators","customer"],
-        default:"customer"
+        enum: ["admin","manager","human_resources","operator","customer","supplier"],
+        default:"customer",
+        index: true
     },
     createdAt:{
         type: Date,

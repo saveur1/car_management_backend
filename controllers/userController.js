@@ -275,3 +275,16 @@ export const getUserByCategory = asyncCatch(async(req,res,next)=>{
         users
     });
 });
+
+//get users by role =>GET /api/v1/users/role/:role
+export const getUserByRole = asyncCatch(async(req,res,next)=>{
+
+    const users = await User.find({
+        role:req.params.role
+    });
+
+    res.status(200).json({
+        success:true,
+        users
+    });
+});
