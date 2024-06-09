@@ -318,7 +318,7 @@ export const UserDoc = {
                 type:"string",
                 description:"Role of users: admin | human_resources | operator | manager | supplier | customer",
                 enum: ["admin","manager","human_resources","operator","customer","supplier"],
-                example:"individual",
+                example:"admin",
                 required:true
             }],
             security:[
