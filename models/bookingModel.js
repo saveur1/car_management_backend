@@ -4,11 +4,13 @@ const bookingSchema = new mongoose.Schema({
   customer: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+    index: true,
     required: true,
   },
   car: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Car",
+    index: true,
     required: true,
   },
   pickUpDate: {

@@ -77,3 +77,15 @@ export const deleteBooking = asyncCatch(async (req, res) => {
     message: "Booking was deleted successfully",
   });
 });
+
+// Get all customers bookings
+export const getAllCustomersBookings = asyncCatch(async (req, res) => {
+    const customer = req.params.customer;
+    const bookings = await Booking.find({customer: customer})
+                                  .populate("car")
+                                  .populate("customer");
+    res.status(200).json({
+      status: "success",
+      bookings,
+    });
+  });

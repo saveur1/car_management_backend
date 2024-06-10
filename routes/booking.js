@@ -6,6 +6,7 @@ import {
   updateBooking,
   deleteBooking,
   getBookingsByStatus,
+  getAllCustomersBookings,
 } from "../controllers/bookingController.js";
 
 const router = express.Router();
@@ -15,6 +16,7 @@ router
   .post(createBooking)
   .get(getAllBookings)
 router.route("/status/:status").get(getBookingsByStatus);
+router.route("/customer/:customer").get(getAllCustomersBookings);
 // router.route("/status/:status").get((req, res, next) => {
 //   console.log(`Received request for status: ${req.params.status}`);
 //   next();
