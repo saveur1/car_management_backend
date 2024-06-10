@@ -8,19 +8,28 @@ import {
   getBookingsByStatus,
   getAllCustomersBookings,
 } from "../controllers/bookingController.js";
+import { CheckAuth, CheckRole } from "../middlewares/CheckAuth.js";
 
 const router = express.Router();
 
 router
   .route("/")
-  .post(createBooking)
-  .get(getAllBookings)
-router.route("/status/:status").get(getBookingsByStatus);
-router.route("/customer/:customer").get(getAllCustomersBookings);
+  .post(CheckAuth, CheckRole("admin", "operators"), createBooking)
+  .get(CheckAuth, CheckRole("admin", "operators"), getAllBookings);
+router
+  .route("/status/:status")
+  .get(CheckAuth, CheckRole("admin", "operators"), getBookingsByStatus);
+router
+  .route("/customer/:customer")
+  .get(CheckAuth, CheckRole("admin", "operators"), getAllCustomersBookings);
 // router.route("/status/:status").get((req, res, next) => {
 //   console.log(`Received request for status: ${req.params.status}`);
 //   next();
 // }, getBookingsByStatus);
-router.route("/:id").get(getBooking).patch(updateBooking).delete(deleteBooking);
+router
+  .route("/:id")
+  .get(CheckAuth, CheckRole("admin", "operators"), getBooking)
+  .patch(CheckAuth, CheckRole("admin", "operators"), updateBooking)
+  .delete(CheckAuth, CheckRole("admin", "operators"), deleteBooking);
 
 export default router;

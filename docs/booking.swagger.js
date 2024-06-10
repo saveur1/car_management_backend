@@ -135,6 +135,11 @@ export const BookingDoc = {
   "/api/v1/bookings/{id}": {
     get: {
       tags: ["Booking"],
+      security: [
+        {
+          token: [],
+        },
+      ],
       parameters: [
         {
           in: "path",
@@ -179,6 +184,11 @@ export const BookingDoc = {
     },
     patch: {
       tags: ["Booking"],
+      security: [
+        {
+          token: [],
+        },
+      ],
       parameters: [
         {
           in: "path",
@@ -272,6 +282,11 @@ export const BookingDoc = {
     },
     delete: {
       tags: ["Booking"],
+      security: [
+        {
+          token: [],
+        },
+      ],
       parameters: [
         {
           in: "path",
@@ -294,6 +309,11 @@ export const BookingDoc = {
   "/api/v1/bookings/status/{status}": {
     get: {
       tags: ["Booking"],
+      security: [
+        {
+          token: [],
+        },
+      ],
       parameters: [
         {
           in: "path",
@@ -343,6 +363,11 @@ export const BookingDoc = {
   "/api/v1/bookings/customer/{customerID}": {
     get: {
       tags: ["Booking"],
+      security: [
+        {
+          token: [],
+        },
+      ],
       parameters: [
         {
           in: "path",
@@ -359,21 +384,21 @@ export const BookingDoc = {
               schema: {
                 type: "object",
                 example: {
-                    status: "success",
-                    bookings: [
-                        {
-                        _id: "60c72b2f9b1d4b3c6d3b9b0e",
-                        customerName: "John Doe",
-                        carPlateNumber: "ABC1234",
-                        pickUpDate: "2024-06-01T10:00:00Z",
-                        returnDate: "2024-06-10T10:00:00Z",
-                        cost: 150,
-                        additionalComment: "Please provide a baby seat.",
-                        bookingStatus: "pending",
-                        createdAt: "2024-05-01T10:00:00Z",
-                        updatedAt: "2024-05-01T10:00:00Z",
-                        },
-                    ],
+                  status: "success",
+                  bookings: [
+                    {
+                      _id: "60c72b2f9b1d4b3c6d3b9b0e",
+                      customerName: "John Doe",
+                      carPlateNumber: "ABC1234",
+                      pickUpDate: "2024-06-01T10:00:00Z",
+                      returnDate: "2024-06-10T10:00:00Z",
+                      cost: 150,
+                      additionalComment: "Please provide a baby seat.",
+                      bookingStatus: "pending",
+                      createdAt: "2024-05-01T10:00:00Z",
+                      updatedAt: "2024-05-01T10:00:00Z",
+                    },
+                  ],
                 },
               },
             },
