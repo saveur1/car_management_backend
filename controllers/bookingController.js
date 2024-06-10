@@ -24,7 +24,9 @@ export const getAllBookings = asyncCatch(async (req, res) => {
 
 // Get a booking by ID
 export const getBooking = asyncCatch(async (req, res) => {
-  const booking = await Booking.findById(req.params.id);
+  const booking = await Booking.findById(req.params.id)
+                               .populate("car")
+                               .populate("customer");
   if (!booking) {
     return res.status(404).json({
       status: "fail",
