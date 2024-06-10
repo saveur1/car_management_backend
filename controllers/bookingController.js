@@ -7,20 +7,18 @@ export const createBooking = asyncCatch(async (req, res) => {
   await booking.save();
   res.status(201).json({
     status: "success",
-    data: {
-      booking,
-    },
+    booking
   });
 });
 
 // Get all bookings
 export const getAllBookings = asyncCatch(async (req, res) => {
-  const bookings = await Booking.find();
+  const bookings = await Booking.find()
+                                .populate("car")
+                                .populate("customer");
   res.status(200).json({
     status: "success",
-    data: {
-      bookings,
-    },
+    bookings,
   });
 });
 
@@ -35,9 +33,7 @@ export const getBooking = asyncCatch(async (req, res) => {
   }
   res.status(200).json({
     status: "success",
-    data: {
-      booking,
-    },
+    booking,
   });
 });
 // Get bookings by status
@@ -46,9 +42,7 @@ export const getBookingsByStatus = asyncCatch(async (req, res) => {
     const bookings = await Booking.find({ bookingStatus: status });
     res.status(200).json({
         status: 'success',
-        data: {
-            bookings
-        }
+        bookings
     });
 });
 // Update a booking
@@ -65,9 +59,7 @@ export const updateBooking = asyncCatch(async (req, res) => {
   }
   res.status(200).json({
     status: "success",
-    data: {
-      booking,
-    },
+    booking
   });
 });
 
@@ -82,6 +74,6 @@ export const deleteBooking = asyncCatch(async (req, res) => {
   }
   res.status(204).json({
     status: "success",
-    data: null,
+    message: "Booking was deleted successfully",
   });
 });

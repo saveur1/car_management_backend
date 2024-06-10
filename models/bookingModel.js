@@ -1,12 +1,14 @@
 import mongoose from "mongoose";
 
 const bookingSchema = new mongoose.Schema({
-  customerName: {
-    type: String,
+  customer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
-  carPlateNumber: {
-    type: String,
+  car: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Car",
     required: true,
   },
   pickUpDate: {
@@ -29,10 +31,10 @@ const bookingSchema = new mongoose.Schema({
     enum: ["confirm", "pending", "canceled"],
     default: "pending",
   },
+},
+{
+    timestamps: true
 });
-//   {
-//     timestamps: true,
-//   }
 
 
 const Booking = mongoose.model("Booking", bookingSchema);
