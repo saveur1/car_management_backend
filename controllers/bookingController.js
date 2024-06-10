@@ -41,7 +41,9 @@ export const getBooking = asyncCatch(async (req, res) => {
 // Get bookings by status
 export const getBookingsByStatus = asyncCatch(async (req, res) => {
     const { status } = req.params;
-    const bookings = await Booking.find({ bookingStatus: status });
+    const bookings = await Booking.find({ bookingStatus: status })
+                                  .populate("car")
+                                  .populate("customer");
     res.status(200).json({
         status: 'success',
         bookings
