@@ -12,6 +12,7 @@ import bookingRoutes from './routes/booking.js';
 import cars from "./routes/cars.js";
 import staffRoutes from "./routes/staff.js";
 import garageRoutes from './routes/garage.js'; 
+import fuelRoutes from "./routes/fuel.js"; 
 
 import { swaggerDocumentation } from "./docs/swagger.js";
 
@@ -35,6 +36,7 @@ app.use('/api/v1/bookings', bookingRoutes);
 app.use("/api/v1", cars);
 app.use("/api/v1/staff", staffRoutes);
 app.use('/api/v1/garages', garageRoutes); 
+app.use("/api/v1/fuels", fuelRoutes); 
 
 
 //SWAGGER DOCUMENTATION

@@ -6,6 +6,7 @@ import { BookingDoc } from "./booking.swagger.js";
 import { CarDoc } from "./cars.swagger.js";
 import { StaffDoc } from "./staff.swagger.js";
 import { GarageDoc } from "./garage.swagger.js";  
+import { FuelDoc } from "./fuel.swagger.js";
 
 
 const Options = {
@@ -28,7 +29,8 @@ const Options = {
       { name: "Booking", description: "Car Rental Bookings" },
       { name: "Cars", description: "Requests for creating Cars" },
       { name: "Staff", description: "Staff Management" },
-      { name: "Garage", description: "Garage Services Management" }, 
+      { name: "Garage", description: "Garage Services Management" },
+      { name: "Fuel", description: "Fuel Management" },
     ],
     servers: [
       {
@@ -55,6 +57,7 @@ const Options = {
       ...CarDoc,
       ...StaffDoc,
       ...GarageDoc,
+      ...FuelDoc,
     },
   },
   apis: ["./routes/*.js"],
