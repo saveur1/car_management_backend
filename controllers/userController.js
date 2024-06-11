@@ -10,7 +10,7 @@ import crypto from "crypto";
 //Register User => /api/v1/register
 export const registerUser = asyncCatch(async(req,res,next)=>{
 
-    const user = await User.create({...req.body, role:"admin"});
+    const user = await User.create({...req.body});
 
     sendToken(201,user,res);
 
