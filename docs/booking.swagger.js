@@ -207,15 +207,17 @@ export const BookingDoc = {
             schema: {
               type: "object",
               properties: {
-                customerName: {
-                  type: "string",
-                  example: "John Doe",
-                  description: "Name of the customer",
+                customer: {
+                    type: "string",
+                    example: "60c72b2f9b1d4b3c6d3b9b0e",
+                    description: "Customer Id",
+                    required: true,
                 },
-                carPlateNumber: {
-                  type: "string",
-                  example: "ABC1234",
-                  description: "Car plate number",
+                car: {
+                    type: "string",
+                    example: "90c72b2f9b1d4b8c6d3b9b0f",
+                    description: "Car ID",
+                    required: true,
                 },
                 pickUpDate: {
                   type: "string",
