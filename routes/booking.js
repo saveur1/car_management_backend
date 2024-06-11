@@ -22,10 +22,6 @@ router
 router
   .route("/customer/:customer")
   .get(CheckAuth, CheckRole("admin", "operators"), getAllCustomersBookings);
-// router.route("/status/:status").get((req, res, next) => {
-//   console.log(`Received request for status: ${req.params.status}`);
-//   next();
-// }, getBookingsByStatus);
 router
   .route("/:id")
   .get(CheckAuth, CheckRole("admin", "operators"), getBooking)
