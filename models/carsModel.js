@@ -41,6 +41,7 @@ const carsSchema = new mongoose.Schema({
     fuel_type:{
         type: String,
         required: [true,"Fuel Type is required Please"],
+        enum: ["petrol" , "diesel" , "hybrid" , "electric"],
         maxLength:[30,"Car brand can not exceed 30 characters"]
     },
     rental_cost_per_day:{
