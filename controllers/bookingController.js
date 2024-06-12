@@ -92,4 +92,16 @@ export const getAllCustomersBookings = asyncCatch(async (req, res) => {
       status: "success",
       bookings,
     });
-  });
+});
+
+// Get all customers bookings rented particular car
+export const getAllCustomersRentedCar = asyncCatch(async (req, res) => {
+    const car = req.params.car;
+    const bookings = await Booking.find({car: car})
+                                  .populate("car")
+                                  .populate("customer");
+    res.status(200).json({
+      status: "success",
+      bookings,
+    });
+});
