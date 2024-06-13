@@ -36,7 +36,7 @@ const carsSchema = new mongoose.Schema({
     },
     transmission_type:{
         type: String,
-        enum: ["manual" , "automatic"],
+        enum: ["manual" , "automatic","semi-automatic"],
         required: [true,"Transmission type is required Please"],
     },
     fuel_type:{
