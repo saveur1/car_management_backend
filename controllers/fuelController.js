@@ -64,7 +64,7 @@ export const deleteFuel = asyncCatch(async (req, res) => {
       message: "No fuel entry found with that ID",
     });
   }
-  res.status(204).json({
+  res.status(200).json({
     status: "success",
     message: "Fuel entry was deleted successfully",
   });

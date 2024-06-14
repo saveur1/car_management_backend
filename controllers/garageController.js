@@ -64,7 +64,7 @@ export const deleteGarage = asyncCatch(async (req, res) => {
       message: "No garage entry found with that ID",
     });
   }
-  res.status(204).json({
+  res.status(200).json({
     status: "success",
     message: "Garage entry was deleted successfully",
   });
