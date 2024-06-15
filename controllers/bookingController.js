@@ -1,10 +1,19 @@
 import Booking from "../models/bookingModel.js";
 import asyncCatch from "../middlewares/asyncCatch.js";
+import Car from "../models/carsModel.js";
 
 // Create a new booking
 export const createBooking = asyncCatch(async (req, res) => {
   const booking = new Booking(req.body);
+  const car = await Car.findById(req.body.id);
+
+  //update car current status
+  car.current_status = "booked";
+
+  //save both booking and car
   await booking.save();
+  await car.save();;
+
   res.status(201).json({
     status: "success",
     booking
@@ -41,9 +50,12 @@ export const getBooking = asyncCatch(async (req, res) => {
 // Get bookings by status
 export const getBookingsByStatus = asyncCatch(async (req, res) => {
     const { status } = req.params;
+
     const bookings = await Booking.find({ bookingStatus: status })
                                   .populate("car")
                                   .populate("customer");
+    
+    // update car status
     res.status(200).json({
         status: 'success',
         bookings
@@ -51,16 +63,16 @@ export const getBookingsByStatus = asyncCatch(async (req, res) => {
 });
 // Update a booking
 export const updateBooking = asyncCatch(async (req, res) => {
+
   const booking = await Booking.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
   });
-  if (!booking) {
-    return res.status(404).json({
-      status: "fail",
-      message: "No booking found with that ID",
-    });
+
+  if(!booking){
+    return next(new ErrorHandler(`No booking found with that ID`,400))
   }
+
   res.status(200).json({
     status: "success",
     booking
