@@ -64,14 +64,24 @@ export const getBookingsByStatus = asyncCatch(async (req, res) => {
 // Update a booking
 export const updateBooking = asyncCatch(async (req, res) => {
 
-  const booking = await Booking.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  const prevBooking = await Booking.findById(req.params.id);
 
-  if(!booking){
+  if(!prevBooking){
     return next(new ErrorHandler(`No booking found with that ID`,400))
   }
+
+  //find old car and update status
+  await Car.findByIdAndUpdate(prevBooking.car, {current_status: "available"});
+
+  //Saving new Incoming booking
+  const booking = await Booking.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true
+  });
+
+  //update new car status
+  await Car.findByIdAndUpdate(booking.car,{current_status: "booked"});
+
 
   res.status(200).json({
     status: "success",
