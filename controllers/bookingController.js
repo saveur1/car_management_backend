@@ -5,7 +5,7 @@ import Car from "../models/carsModel.js";
 // Create a new booking
 export const createBooking = asyncCatch(async (req, res) => {
   const booking = new Booking(req.body);
-  const car = await Car.findById(req.body.id);
+  const car = await Car.findById(req.body.car);
 
   //update car current status
   car.current_status = "booked";
