@@ -25,29 +25,22 @@ export const FuelDoc = {
                   description: "Car ID",
                   required: true,
                 },
-                little: {
+                liter: {
                   type: "string",
-                  example: "50",
+                  example: 50,
                   description: "Amount of fuel in liters",
                   required: true,
                 },
                 totalCost: {
-                  type: "string",
-                  example: "100$",
+                  type: "number",
+                  example: 100,
                   description: "Total cost of the fuel",
                   required: true,
                 },
-                costPerLitre: {
-                  type: "string",
-                  example: "2$",
+                costPerLiter: {
+                  type: "number",
+                  example: 2,
                   description: "Cost per liter of fuel",
-                  required: true,
-                },
-                date: {
-                  type: "string",
-                  format: "date-time",
-                  example: "2024-05-30T09:00:00Z",
-                  description: "Date of fuel purchase",
                   required: true,
                 },
               },

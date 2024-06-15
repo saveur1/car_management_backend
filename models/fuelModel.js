@@ -12,16 +12,16 @@ const fuelSchema = new mongoose.Schema({
     index: true,
     required: true,
   },
-  little:{
-    type: String,
+  liter:{
+    type: Number,
     required: true
   },
   totalCost:{
-    type: String,
+    type: Number,
     required: true
   },
-  costPerLitre: {
-    type: String,
+  costPerLiter: {
+    type: Number,
     required: true
   },
 },{
