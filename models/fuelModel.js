@@ -24,10 +24,8 @@ const fuelSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  date: {
-    type: Date,
-    required: true,
-  },
+},{
+    timestamps: true
 });
 const Fuel = mongoose.model("Fuel",fuelSchema);
 export default Fuel;
