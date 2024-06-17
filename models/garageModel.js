@@ -25,14 +25,12 @@ const garageSchema = new mongoose.Schema({
   description: {
     type: String,
   },
-  Date: {
-    type: Date,
-    required: true,
-  },
   image: {
     type: String,
     required: true,
   },
+},{
+    timestamps: true
 });
 
 const Garage = mongoose.model("Garage", garageSchema);
