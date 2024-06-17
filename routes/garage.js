@@ -23,7 +23,7 @@ router
 router
   .route("/:id")
   .get(CheckAuth, CheckRole("admin", "operators"), getGarage)
-  .patch(CheckAuth, CheckRole("admin", "operators"), updateGarage)
+  .put(CheckAuth, CheckRole("admin", "operators"), updateGarage)
   .delete(CheckAuth, CheckRole("admin", "operators"), deleteGarage);
 
 export default router;
