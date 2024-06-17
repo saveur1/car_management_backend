@@ -8,6 +8,7 @@ import { StaffDoc } from "./staff.swagger.js";
 import { GarageDoc } from "./garage.swagger.js";  
 import { FuelDoc } from "./fuel.swagger.js";
 import { AssetDoc } from "./asset.swagger.js";
+import { CarToolDoc } from "./carTool.swagger.js";
 
 
 const Options = {
@@ -33,6 +34,7 @@ const Options = {
       { name: "Garage", description: "Garage Services Management" },
       { name: "Fuel", description: "Fuel Management" },
       { name: "Asset", description: "Asset Management" },
+      { name: "carTool", description: "car tools Management" },
     ],
     servers: [
       {
@@ -61,6 +63,7 @@ const Options = {
       ...GarageDoc,
       ...FuelDoc,
       ...AssetDoc,
+      ...CarToolDoc,
     },
   },
   apis: ["./routes/*.js"],
