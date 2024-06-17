@@ -20,7 +20,7 @@ export const AssetDoc = {
                   required: true,
                 },
                 unities: {
-                  type: "string",
+                  type: "number",
                   example: "10",
                   description: "Number of unities",
                   required: true,
@@ -35,13 +35,6 @@ export const AssetDoc = {
                   type: "number",
                   example: 1500.0,
                   description: "Total price for all unities",
-                  required: true,
-                },
-                date: {
-                  type: "string",
-                  format: "date-time",
-                  example: "2024-06-12T10:00:00Z",
-                  description: "Date of the asset acquisition",
                   required: true,
                 },
               },

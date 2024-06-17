@@ -7,10 +7,9 @@ nameOfAssert: {
     maxLength: [50, "Name of Asset can not exceed 50 characters"],
 },
 unities: {
-    type: String,
+    type: Number,
     required: [true, "Unities is required Please"],
-    trim: true,
-    maxLength: [50, "Unities can not exceed 50 characters"],
+    maxLength: [12, "Unities can not exceed 50 characters"],
 },
 unityPrice: {
     type: Number,
@@ -20,10 +19,8 @@ UnityTotalPrice: {
     type: Number,
     required:true,
 },
-date: {
-    type: Date,
-    required: true,
-},
+},{
+    timestamps: true
 });
 const Asset = mongoose.model("Asset", assetSchema);
 export default Asset;

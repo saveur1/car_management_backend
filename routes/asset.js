@@ -18,7 +18,7 @@ router
 router
   .route("/:id")
   .get(CheckAuth, CheckRole("admin", "operators"), getAsset)
-  .patch(CheckAuth, CheckRole("admin", "operators"), updateAsset)
+  .put(CheckAuth, CheckRole("admin", "operators"), updateAsset)
   .delete(CheckAuth, CheckRole("admin", "operators"), deleteAsset);
 
 export default router;
