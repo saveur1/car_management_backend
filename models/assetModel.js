@@ -19,6 +19,10 @@ UnityTotalPrice: {
     type: Number,
     required:true,
 },
+description: {
+    type: String,
+    required: [true, "Description is required Please"],
+}
 },{
     timestamps: true
 });

@@ -37,6 +37,12 @@ export const AssetDoc = {
                   description: "Total price for all unities",
                   required: true,
                 },
+                description: {
+                    type: "string",
+                    example: "Computer arrived late.",
+                    description: "Total price for all unities",
+                    required: true,
+                  },
               },
             },
           },
