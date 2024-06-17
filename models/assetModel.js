@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const assetSchema = new mongoose.Schema({
-nameOfAssert: {
+nameOfAsset: {
     type: String,
     required: [true, "Name of Asset is required Please"],
     trim: true,
