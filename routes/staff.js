@@ -10,6 +10,7 @@ import {
   updateStaffById,
   deleteStaffById,
   getStaffByPosition,
+  getStaffByJobType
 } from "../controllers/staffController.js";
 import { CheckAuth, CheckRole } from "../middlewares/CheckAuth.js";
 
@@ -18,7 +19,13 @@ import { CheckAuth, CheckRole } from "../middlewares/CheckAuth.js";
 router.route("/")
       .post(CheckAuth, CheckRole("admin", "operators"), createStaff)
       .get(CheckAuth, CheckRole("admin", "operators"),getAllStaff);
-router.route("/position/:position").get(CheckAuth, CheckRole("admin", "operators"),getStaffByPosition);
+
+router.route("/position/:position")
+      .get(CheckAuth, CheckRole("admin", "operators"),getStaffByPosition);
+
+router.route("/jobtype/:jobtype")
+      .get(CheckAuth, CheckRole("admin", "operators"), getStaffByJobType)
+
 
 router
   .route("/:id")

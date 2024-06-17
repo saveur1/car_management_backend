@@ -38,7 +38,18 @@ const staffSchema = new mongoose.Schema({
     message: "Email Already Exists in Database",
   },
   idNumber: { type: String, required: true, length: 16,unique:true },
-  position: { type: String, required: true },
+  position: { 
+    type: String, 
+    required: true 
+
+  },
+
+  jobType: {
+    type: String,
+    required: true,
+    enum: ["casual", "formal"],
+    default: "casual"
+  },
 
   location: { type: String, required: true },
   address: { type: String, required: true },

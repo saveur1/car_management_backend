@@ -379,4 +379,39 @@ export const StaffDoc = {
       },
     },
   },
+  "/api/v1/staff/jobtype/{jobtype}": {
+    get: {
+      tags: ["Staff"],
+      security: [
+        {
+          token: [],
+        },
+      ],
+      parameters: [
+        {
+          in: "path",
+          name: "jobtype",
+          description: "Staff job type: casual | formal",
+          required: true,
+          example: "casual",
+        },
+      ],
+      responses: {
+        200: {
+          description: "Staff fetched by job type",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                example: {
+                  success: true,
+                  staff: [],
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
 };
