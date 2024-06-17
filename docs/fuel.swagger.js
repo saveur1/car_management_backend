@@ -26,7 +26,7 @@ export const FuelDoc = {
                   required: true,
                 },
                 liter: {
-                  type: "string",
+                  type: "number",
                   example: 50,
                   description: "Amount of fuel in liters",
                   required: true,

@@ -19,16 +19,12 @@ const garageSchema = new mongoose.Schema({
     maxLength: [50, "Garage Name can not exceed 50 characters"],
   },
   amount: {
-    type: String,
+    type: Number,
     required: true,
   },
   description: {
     type: String,
-  },
-  image: {
-    type: String,
-    required: true,
-  },
+  }
 },{
     timestamps: true
 });
