@@ -36,10 +36,6 @@ const carToolSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  purchasePrice: {
-    type: Number,
-    required: true,
-  },
   quantity: {
     type: Number,
     required: true,
@@ -53,6 +49,10 @@ const carToolSchema = new mongoose.Schema({
     required: true,
   },
   photo: {
+    type: String,
+    required: true,
+  },
+  description: {
     type: String,
     required: true,
   },

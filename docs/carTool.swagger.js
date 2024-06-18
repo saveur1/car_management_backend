@@ -51,10 +51,10 @@ export const CarToolDoc = {
                   description: "Purchase date of the tool",
                   required: true,
                 },
-                purchasePrice: {
-                  type: "number",
-                  example: 25.99,
-                  description: "Purchase price of the tool",
+                description: {
+                  type: "string",
+                  example:"made in metal",
+                  description: "description of the tool",
                   required: true,
                 },
                 quantity: {
