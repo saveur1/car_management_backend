@@ -34,7 +34,7 @@ const Options = {
       { name: "Garage", description: "Garage Services Management" },
       { name: "Fuel", description: "Fuel Management" },
       { name: "Asset", description: "Asset Management" },
-      { name: "carTool", description: "car tools Management" },
+      { name: "Car Tool", description: "car tools Management" },
     ],
     servers: [
       {
