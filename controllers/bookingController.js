@@ -5,10 +5,37 @@ import Car from "../models/carsModel.js";
 // Create a new booking
 export const createBooking = asyncCatch(async (req, res) => {
   const booking = new Booking(req.body);
+
   const car = await Car.findById(req.body.car);
 
   //update car current status
-  car.current_status = "booked";
+  //update new car status depending on booking status
+  switch(req.body.bookingStatus){
+    case "pending":
+        car.current_status = "under_use";
+        break;
+
+    case "confirm":
+        car.current_status = "under_use";
+        break;
+
+    case "cancelled":
+        car.current_status = "available";
+        break;
+
+    case "expired":
+        car.current_status = "available";
+        break;
+
+    case "completed":
+        car.current_status = "available";
+        break;
+
+    default:
+        car.current_status = "under_use";
+        break;
+        
+  }
 
   //save both booking and car
   await booking.save();
@@ -64,6 +91,7 @@ export const getBookingsByStatus = asyncCatch(async (req, res) => {
 // Update a booking
 export const updateBooking = asyncCatch(async (req, res) => {
 
+  //get previous booking first
   const prevBooking = await Booking.findById(req.params.id);
 
   if(!prevBooking){
@@ -79,8 +107,29 @@ export const updateBooking = asyncCatch(async (req, res) => {
     runValidators: true
   });
 
-  //update new car status
-  await Car.findByIdAndUpdate(booking.car,{current_status: "booked"});
+
+  //update new car status depending on booking status
+  switch(req.body.bookingStatus){
+    case "pending":
+        await Car.findByIdAndUpdate(booking.car,{current_status: "under_use"});
+        break;
+    case "confirm":
+        await Car.findByIdAndUpdate(booking.car,{current_status: "under_use"});
+        break;
+    case "cancelled":
+        await Car.findByIdAndUpdate(booking.car,{current_status: "available"});
+        break;
+    case "expired":
+        await Car.findByIdAndUpdate(booking.car,{current_status: "available"});
+        break;
+    case "completed":
+        await Car.findByIdAndUpdate(booking.car,{current_status: "available"});
+        break;
+    default:
+        await Car.findByIdAndUpdate(booking.car,{current_status: "under_use"});
+        break;
+        
+  }
 
 
   res.status(200).json({

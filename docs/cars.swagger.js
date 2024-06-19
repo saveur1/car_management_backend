@@ -64,7 +64,7 @@ export const CarDoc = {
                                 current_status:{
                                     type: "string",
                                     default: "available",
-                                    enum:['available','under_use','under_maintance','sold']
+                                    enum:['available','under_use','under_maintance','sold','out_of_service']
                                 },
                                 images:{
                                     type:"array",
@@ -217,14 +217,14 @@ export const CarDoc = {
                                 current_status:{
                                     type:"number",
                                     example:"available",
-                                    enum:['available','under_use','under_maintance','sold'],
+                                    enum:['available','under_use','under_maintance','sold','out_of_service'],
                                     description:"Current car status",
                                     required:true
                                 },
                                 images:{
                                     type:"array",
                                     items:{
-                                        type:"file",
+                                        type:"string",
                                         description:"Car images"
                                     }
                                 }

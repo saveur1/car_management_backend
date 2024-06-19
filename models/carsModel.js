@@ -52,7 +52,7 @@ const carsSchema = new mongoose.Schema({
     current_status:{
         type: String,
         default: "available",
-        enum:['available','under_use','under_maintance',"booked",'sold']
+        enum:['available','under_use','under_maintance','sold','out_of_service']
     },
     images:[
         {

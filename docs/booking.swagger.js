@@ -52,7 +52,7 @@ export const BookingDoc = {
                 },
                 bookingStatus: {
                   type: "string",
-                  enum: ["confirm", "pending", "canceled"],
+                  enum: ["confirm", "pending", "cancelled","expired","completed"],
                   example: "pending",
                   description: "Booking status",
                   required: true,
@@ -243,7 +243,7 @@ export const BookingDoc = {
                 },
                 bookingStatus: {
                   type: "string",
-                  enum: ["confirm", "pending", "canceled"],
+                  enum: ["confirm", "pending", "cancelled","expired","completed"],
                   example: "pending",
                   description: "Booking status",
                 },
