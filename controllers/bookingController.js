@@ -113,18 +113,23 @@ export const updateBooking = asyncCatch(async (req, res) => {
     case "pending":
         await Car.findByIdAndUpdate(booking.car,{current_status: "under_use"});
         break;
+
     case "confirm":
         await Car.findByIdAndUpdate(booking.car,{current_status: "under_use"});
         break;
+
     case "cancelled":
         await Car.findByIdAndUpdate(booking.car,{current_status: "available"});
         break;
+
     case "expired":
         await Car.findByIdAndUpdate(booking.car,{current_status: "available"});
         break;
+
     case "completed":
         await Car.findByIdAndUpdate(booking.car,{current_status: "available"});
         break;
+        
     default:
         await Car.findByIdAndUpdate(booking.car,{current_status: "under_use"});
         break;
@@ -140,13 +145,20 @@ export const updateBooking = asyncCatch(async (req, res) => {
 
 // Delete a booking
 export const deleteBooking = asyncCatch(async (req, res) => {
-  const booking = await Booking.findByIdAndDelete(req.params.id);
+  const booking = await Booking.findById(req.params.id);
   if (!booking) {
     return res.status(404).json({
       status: "fail",
       message: "No booking found with that ID",
     });
   }
+
+  //find car ID and make it's status available to be booked
+  await Car.findByIdAndUpdate(booking.car,{current_status: "available"});
+
+  //deleted booking then from database
+  await Booking.findByIdAndDelete(req.params.id);
+
   res.status(204).json({
     status: "success",
     message: "Booking was deleted successfully",
