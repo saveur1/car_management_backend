@@ -41,7 +41,8 @@ const bookingSchema = new mongoose.Schema({
   //Booking Deriver
   driver: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Staff"
+    ref: "Staff",
+    required: false
   },
   fromLocation: {
     type: String,
