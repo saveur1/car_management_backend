@@ -51,7 +51,8 @@ export const createBooking = asyncCatch(async (req, res) => {
 export const getAllBookings = asyncCatch(async (req, res) => {
   const bookings = await Booking.find()
                                 .populate("car")
-                                .populate("customer");
+                                .populate("customer")
+                                .populate("driver");
   res.status(200).json({
     status: "success",
     bookings,
@@ -62,7 +63,8 @@ export const getAllBookings = asyncCatch(async (req, res) => {
 export const getBooking = asyncCatch(async (req, res) => {
   const booking = await Booking.findById(req.params.id)
                                .populate("car")
-                               .populate("customer");
+                               .populate("customer")
+                               .populate("driver");
   if (!booking) {
     return res.status(404).json({
       status: "fail",
@@ -80,7 +82,8 @@ export const getBookingsByStatus = asyncCatch(async (req, res) => {
 
     const bookings = await Booking.find({ bookingStatus: status })
                                   .populate("car")
-                                  .populate("customer");
+                                  .populate("customer")
+                                  .populate("driver");
     
     // update car status
     res.status(200).json({
@@ -170,7 +173,8 @@ export const getAllCustomersBookings = asyncCatch(async (req, res) => {
     const customer = req.params.customer;
     const bookings = await Booking.find({customer: customer})
                                   .populate("car")
-                                  .populate("customer");
+                                  .populate("customer")
+                                  .populate("driver");
     res.status(200).json({
       status: "success",
       bookings,
@@ -182,7 +186,8 @@ export const getAllCustomersRentedCar = asyncCatch(async (req, res) => {
     const car = req.params.car;
     const bookings = await Booking.find({car: car})
                                   .populate("car")
-                                  .populate("customer");
+                                  .populate("customer")
+                                  .populate("driver");
     res.status(200).json({
       status: "success",
       bookings,
