@@ -71,7 +71,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true,"Role is required Please"],
         trim: true,
-        enum: ["admin","manager","human_resources","operator","customer","supplier"],
+        enum: ["customer","supplier"],
         default:"customer",
         index: true
     },

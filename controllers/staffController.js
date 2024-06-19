@@ -1,5 +1,6 @@
 import Staff from "../models/staffModel.js";
 import asyncCatch from "../middlewares/asyncCatch.js";
+import sendToken from "../utils/sendToken.js";
 
 // @desc    Create new staff
 // @route   POST /api/v1/staff
@@ -10,6 +11,34 @@ export const createStaff = asyncCatch(async (req, res,next) => {
       staff
     });
 
+});
+
+//Login Staff => /api/v1/login
+export const loginStaff = asyncCatch(async(req,res,next)=>{
+    const {email,password} = req.body;
+
+    //check if email and password are set
+    if(!email || !password){
+        return next(new ErrorHandler("Email and password are required",400));
+    }
+
+    //check if email is in database
+    const staff = await Staff.findOne({email}).select("+password");
+
+    if(!staff){
+        return next(new ErrorHandler("Invalid email or password",401));
+    }
+
+    //check if password is in databse
+    const isMatch = await staff.comparePassword(password);
+
+    if(!isMatch){
+        return next(new ErrorHandler("Invalid email or password",401));
+    }
+
+    staff.password = undefined;
+
+    sendToken(200,staff,res);
 });
 
 // @desc    Get all staff

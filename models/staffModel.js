@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 import validator from "validator";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import crypto from "crypto";
 
 const staffSchema = new mongoose.Schema({
   firstname: {
@@ -37,11 +40,21 @@ const staffSchema = new mongoose.Schema({
     unique: true,
     message: "Email Already Exists in Database",
   },
-  idNumber: { type: String, required: true, length: 16,unique:true },
+  password: {
+    type: String,
+    validate: [validator.isStrongPassword, "Enter Strong Password Please!"],
+    required: true
+  },
+  idNumber: { 
+    type: String, 
+    required: true, 
+    length: 16,
+    unique:true 
+},
   position: { 
     type: String, 
-    required: true 
-
+    required: true,
+    enum: ["admin","manager","human_resources","operator","driver"],
   },
 
   jobType: {
@@ -62,6 +75,35 @@ const staffSchema = new mongoose.Schema({
     required: true,
   },
 });
+
+//hash password before saving
+staffSchema.pre("save",async function(next){
+    if(!this.isModified()){
+        next();
+    }
+
+    this.password = await bcrypt.hash(this.password,10);
+});
+
+//compare password
+staffSchema.methods.comparePassword = async function(enteredPassword){
+    return await bcrypt.compare(enteredPassword, this.password);
+}
+
+//generate token
+staffSchema.methods.getJwtToken = function(){
+    return jwt.sign({id:this._id}, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRES_TIME
+    });
+}
+
+//generate password reset token
+staffSchema.methods.generateResetPasswordToken = function(){
+    //generate token
+    const resetToken = crypto.randomBytes(3).toString("hex"); //3*2 represents Number of codes to send in email
+
+    return resetToken;
+}
 
 const Staff = mongoose.model("Staff", staffSchema);
 

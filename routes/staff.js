@@ -10,14 +10,18 @@ import {
   updateStaffById,
   deleteStaffById,
   getStaffByPosition,
-  getStaffByJobType
+  getStaffByJobType,
+  loginStaff
 } from "../controllers/staffController.js";
 import { CheckAuth, CheckRole } from "../middlewares/CheckAuth.js";
+
+//AUTHENTICATION
+router.route("/login").post(loginStaff);
 
 //staff routes, a whole CRUD for staff
 //Check authentication first then check user role
 router.route("/")
-      .post(CheckAuth, CheckRole("admin", "operators"), createStaff)
+      .post(createStaff) //create staff
       .get(CheckAuth, CheckRole("admin", "operators"),getAllStaff);
 
 router.route("/position/:position")

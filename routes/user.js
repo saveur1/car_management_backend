@@ -6,7 +6,6 @@ const router = express.Router();
 // Import the controllers (userController.js) to use its database functions.
 import { 
     registerUser, 
-    loginUser, 
     logoutUser,
     userForgotPassword, 
     userResetPassword, 
@@ -24,7 +23,6 @@ import {
 import { CheckAuth, CheckRole } from '../middlewares/CheckAuth.js';
 
 //Authentication part for car rental system
-router.route("/login").post(loginUser);
 router.route("/password/forgot").post(userForgotPassword);
 router.route("/password/reset/:token").put(userResetPassword);
 router.route("/logout").get(logoutUser);

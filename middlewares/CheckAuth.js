@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import asyncCatch from "./asyncCatch.js";
-import User from "../models/userModel.js";
+import Staff from "../models/staffModel.js";
 
 //check if user is authanticated
 export const CheckAuth = asyncCatch(async(req,res,next)=>{
@@ -16,7 +16,7 @@ export const CheckAuth = asyncCatch(async(req,res,next)=>{
 
     const decoded = jwt.verify(token , process.env.JWT_SECRET);
 
-    req.user = await User.findById(decoded.id);
+    req.staff = await Staff.findById(decoded.id);
 
     next();
 });
@@ -25,9 +25,9 @@ export const CheckAuth = asyncCatch(async(req,res,next)=>{
 export const CheckRole = (...roles)=>{
     return (req,res,next)=>{
         
-        if(!roles.includes(req.user.role)){
+        if(!roles.includes(req.staff.position)){
             return next(
-                new ErrorHandler(`Role ${req.user.role} is not allowed to access this resource`,403)
+                new ErrorHandler(`Role ${req.staff.position} is not allowed to access this resource`,403)
             );
         }
         next();

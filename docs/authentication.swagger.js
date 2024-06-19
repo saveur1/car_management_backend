@@ -1,5 +1,5 @@
 export const authentication = {
-    "/api/v1/login":{
+    "/api/v1/staff/login":{
         post:{
             tags:["Authentication"],
             requestBody:{

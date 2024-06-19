@@ -1,10 +1,16 @@
 import Garage from "../models/garageModel.js";
 import asyncCatch from "../middlewares/asyncCatch.js";
+import Car from "../models/carsModel.js";
 
 // Create a new garage entry
 export const createGarage = asyncCatch(async (req, res) => {
   const garage = new Garage(req.body);
+
+  //Update car to be under maintenance
+  await Car.findByIdAndUpdate(req.body.car, {current_status: "under_maintance"});
   await garage.save();
+
+  //return response
   res.status(201).json({
     status: "success",
     garage,

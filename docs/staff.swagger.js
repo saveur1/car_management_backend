@@ -43,6 +43,12 @@ export const StaffDoc = {
                   description: "Email Address",
                   required: true,
                 },
+                password: {
+                    type: "string",
+                    example: "User@123",
+                    description: "Password",
+                    required: true,
+                },
                 idNumber: {
                   type: "string",
                   example: "1234567890123456",
@@ -231,6 +237,12 @@ export const StaffDoc = {
                   example: "john.doe@example.com",
                   description: "Email Address",
                   required: false,
+                },
+                password: {
+                    type: "string",
+                    example: "User@123",
+                    description: "Password",
+                    required: true,
                 },
                 idNumber: {
                   type: "string",
