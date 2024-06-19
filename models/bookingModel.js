@@ -49,7 +49,7 @@ const bookingSchema = new mongoose.Schema({
   toLocation: {
     type: String,
   },
-  pedestrian: {
+  passenger: {
     type: String,
   }
 },
