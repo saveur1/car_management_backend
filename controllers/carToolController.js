@@ -1,14 +1,21 @@
 import CarTool from "../models/carToolModel.js";
 import asyncCatch from "../middlewares/asyncCatch.js";
+import cloudinary from "cloudinary";
 
 // Create a new car tool entry
 export const createCarTool = asyncCatch(async (req, res) => {
 
-  const backend_url = process.env.BACKEND_URL || "https://tech-car-rent.onrender.com";
+  //upload image to cloudinary
+  const image_url = await cloudinary.v2.uploader.upload(req.file.path, {
+    folder: "Car Tools",
+    use_filename: true,
+    unique_filename: false
+  });
+
   //append image to Car Tool object
   const carTool = new CarTool({
         ...req.body,
-        photo: backend_url+"/"+req.file.path
+        photo: image_url.secure_url
   });
 
   await carTool.save();
