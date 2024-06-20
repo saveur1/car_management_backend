@@ -4,10 +4,11 @@ import asyncCatch from "../middlewares/asyncCatch.js";
 // Create a new car tool entry
 export const createCarTool = asyncCatch(async (req, res) => {
 
+  const backend_url = process.env.BACKEND_URL || "https://tech-car-rent.onrender.com";
   //append image to Car Tool object
   const carTool = new CarTool({
         ...req.body,
-        photo: req.headers.origin+"/"+req.file.path
+        photo: backend_url+"/"+req.file.path
   });
 
   await carTool.save();
