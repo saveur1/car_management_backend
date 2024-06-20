@@ -8,11 +8,13 @@ import {
 } from "../controllers/carToolController.js";
 import { CheckAuth, CheckRole } from "../middlewares/CheckAuth.js";
 
+import { upload } from "../middlewares/imagesUpload.js";
+
 const router = express.Router();
 
 router
   .route("/")
-  .post(CheckAuth, CheckRole("admin", "operators"), createCarTool)
+  .post(CheckAuth, CheckRole("admin", "operators"),upload.single("photo"), createCarTool)
   .get(CheckAuth, CheckRole("admin", "operators"), getAllCarTools);
 
 router

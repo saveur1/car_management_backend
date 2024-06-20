@@ -9,7 +9,7 @@ export const CarToolDoc = {
       ],
       requestBody: {
         content: {
-          "application/json": {
+          "multipart/form-data": {
             schema: {
               type: "object",
               properties: {
@@ -76,8 +76,7 @@ export const CarToolDoc = {
                   required: true,
                 },
                 photo: {
-                  type: "string",
-                  example: "https://example.com/photo.jpg",
+                  type: "file",
                   description: "Photo URL of the tool",
                   required: true,
                 },

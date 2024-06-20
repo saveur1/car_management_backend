@@ -3,8 +3,15 @@ import asyncCatch from "../middlewares/asyncCatch.js";
 
 // Create a new car tool entry
 export const createCarTool = asyncCatch(async (req, res) => {
-  const carTool = new CarTool(req.body);
+
+  //append image to Car Tool object
+  const carTool = new CarTool({
+        ...req.body,
+        photo: req.headers.origin+"/"+req.file.path
+  });
+
   await carTool.save();
+
   res.status(201).json({
     status: "success",
     carTool,
