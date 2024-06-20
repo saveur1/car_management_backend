@@ -44,10 +44,16 @@ export const getCarTool = asyncCatch(async (req, res) => {
 
 // Update a car tool entry
 export const updateCarTool = asyncCatch(async (req, res) => {
-  const carTool = await CarTool.findByIdAndUpdate(req.params.id, req.body, {
+    
+  const carTool = await CarTool.findByIdAndUpdate(req.params.id,{
+    ...req.body,
+    photo: req.headers.origin+"/"+req.file.path
+    }, 
+    {
     new: true,
     runValidators: true,
   });
+
   if (!carTool) {
     return res.status(404).json({
       status: "fail",

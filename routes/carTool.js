@@ -20,7 +20,7 @@ router
 router
   .route("/:id")
   .get(CheckAuth, CheckRole("admin", "operators"), getCarTool)
-  .patch(CheckAuth, CheckRole("admin", "operators"), updateCarTool)
+  .patch(CheckAuth, CheckRole("admin", "operators"), upload.single("photo"), updateCarTool)
   .delete(CheckAuth, CheckRole("admin", "operators"), deleteCarTool);
 
 export default router;
