@@ -52,10 +52,17 @@ export const getCarTool = asyncCatch(async (req, res) => {
 
 // Update a car tool entry
 export const updateCarTool = asyncCatch(async (req, res) => {
+
+    //upload image to cloudinary
+  const image_url = await cloudinary.v2.uploader.upload(req.file.path, {
+    folder: "Car Tools",
+    use_filename: true,
+    unique_filename: false
+  });
     
   const carTool = await CarTool.findByIdAndUpdate(req.params.id,{
     ...req.body,
-    photo: req.headers.origin+"/"+req.file.path
+    photo: image_url.secure_url
     }, 
     {
     new: true,
