@@ -123,12 +123,7 @@ export const getStaffByPosition = asyncCatch(async (req, res, next) => {
 // @route   GET /api/v1/staff/jobtype/:jobtype
 export const getStaffByJobType = asyncCatch(async (req, res, next) => {
     const staffs = await Staff.find({ jobType: req.params.jobtype });
-     if (!staff) {
-       return res.status(404).json({
-         success: false,
-         message: "Staff not found",
-       });
-     }
+     
     res.status(200).json({
         success: true,
         staffs,
