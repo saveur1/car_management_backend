@@ -9,6 +9,7 @@ import { GarageDoc } from "./garage.swagger.js";
 import { FuelDoc } from "./fuel.swagger.js";
 import { AssetDoc } from "./asset.swagger.js";
 import { CarToolDoc } from "./carTool.swagger.js";
+import { SalariesDoc } from "./salaries.swagger.js";
 
 
 const Options = {
@@ -64,6 +65,7 @@ const Options = {
       ...FuelDoc,
       ...AssetDoc,
       ...CarToolDoc,
+      ...SalariesDoc
     },
   },
   apis: ["./routes/*.js"],
