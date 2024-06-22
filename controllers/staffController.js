@@ -1,6 +1,7 @@
 import Staff from "../models/staffModel.js";
 import asyncCatch from "../middlewares/asyncCatch.js";
 import sendToken from "../utils/sendToken.js";
+import ErrorHandler from "../utils/ErrorHandler.js";
 
 // @desc    Create new staff
 // @route   POST /api/v1/staff

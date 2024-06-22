@@ -54,6 +54,12 @@ const carsSchema = new mongoose.Schema({
         default: "available",
         enum:['available','under_use','under_maintance','sold','out_of_service']
     },
+    car_owner: {
+        type: String,
+        enum: ['main_owner',"second_party"],
+        required: true,
+        default: "main_owner"
+    },
     images:[
         {
             type: String,

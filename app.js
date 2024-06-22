@@ -5,6 +5,7 @@ import errorMiddleWare from "./middlewares/errors.js";
 import pageNotFound from "./middlewares/pageNotFound.js";
 import cors from "cors";
 import dotenv from "dotenv";
+import cloudinary from "cloudinary";
 
 // IMPORTING ALL ROUTERS
 import users from "./routes/user.js";
@@ -15,7 +16,8 @@ import garageRoutes from './routes/garage.js';
 import fuelRoutes from "./routes/fuel.js"; 
 import assetRoutes from "./routes/asset.js";
 import carTools from "./routes/carTool.js";
-import cloudinary from "cloudinary";
+import salaries from "./routes/salaries.js";
+import jobs from "./routes/jobs.js";
 
 import { swaggerDocumentation } from "./docs/swagger.js";
 
@@ -49,9 +51,10 @@ app.use('/api/v1/garages', garageRoutes);
 app.use("/api/v1/fuels", fuelRoutes); 
 app.use("/api/v1/assets", assetRoutes);
 app.use("/api/v1/car-tools", carTools);
+app.use("/api/v1/salaries", salaries);
+app.use("/api/v1/jobs", jobs);
 
-
-//SWAGGER DOCUMENTATION
+//SWAGGER DOCUMENTATION(/api/docs)
 swaggerDocumentation(app);
 
 

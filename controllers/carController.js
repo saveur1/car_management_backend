@@ -1,4 +1,5 @@
 import asyncCatch from "../middlewares/asyncCatch.js";
+import ErrorHandler from "../utils/ErrorHandler.js";
 import Car from "../models/carsModel.js";
 
 //Register Car =>POST /api/v1/cars/create
