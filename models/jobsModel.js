@@ -5,7 +5,8 @@ const jobsSchema = new mongoose.Schema({
         type: String,
         required: [true,"Car Name is required Please"],
         trim: true,
-        maxLength:[50,"Car Name can not exceed 50 characters"]
+        maxLength:[50,"Car Name can not exceed 50 characters"],
+        unique: true
     },
     skills: String,
     createdAt:{
