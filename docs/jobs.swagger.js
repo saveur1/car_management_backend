@@ -19,18 +19,6 @@ export const JobsDoc = {
                     description: "Enter Job Title",
                     required: true,
                   },
-                  job_description: {
-                    type: "string",
-                    example: "This is a job description",
-                    description: "What is done in this position? Responsibilities",
-                    required: true,
-                  },
-                  salary_range: {
-                    type: "string",
-                    example: "100$ to 500$",
-                    description: "what is salary range for this position?",
-                    required: true,
-                  },
                   skills: {
                     type: "string",
                     example: "Management, Leadership and Self Dependent",
@@ -144,18 +132,6 @@ export const JobsDoc = {
                         type: "string",
                         example: "Manager",
                         description: "Enter Job Title",
-                        required: true,
-                      },
-                      job_description: {
-                        type: "string",
-                        example: "This is a job description",
-                        description: "What is done in this position? Responsibilities",
-                        required: true,
-                      },
-                      salary_range: {
-                        type: "string",
-                        example: "100$ to 500$",
-                        description: "what is salary range for this position?",
                         required: true,
                       },
                       skills: {
