@@ -26,10 +26,13 @@ export const SalariesDoc = {
                     required: true,
                   },
                   employee: {
-                    type: "string",
-                    example: "60c72b2f9b1d4b3c6d3b9b0e",
-                    description: "Employee ID: who are you setting salary to?",
-                    required: true,
+                    type: "array",
+                    items: {
+                        type: "string",
+                        example: "60c72b2f9b1d4b3c6d3b9b0e",
+                        description: "Employee ID: who are you setting salary to?",
+                        required: true,
+                    }
                   },
                 },
               },
@@ -147,10 +150,13 @@ export const SalariesDoc = {
                         required: true,
                     },
                     employee: {
-                        type: "string",
-                        example: "60c72b2f9b1d4b3c6d3b9b0e",
-                        description: "Employee ID: who are you setting salary to?",
-                        required: true,
+                        type: "array",
+                        items: {
+                            type: "string",
+                            example: "60c72b2f9b1d4b3c6d3b9b0e",
+                            description: "Employee ID: who are you setting salary to?",
+                            required: true,
+                        }
                     },
                 },
               },

@@ -12,11 +12,11 @@ const salariesSchema = new mongoose.Schema({
         required: [true,"Job Amount is required Please"],
         maxLength:[10,"Job amount can not exceed 10 characters"],
     },
-    employee:{
+    employee:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Staff",
         required: true
-    },
+    }],
 },
 {
     timestamps: true
