@@ -57,7 +57,7 @@ export const StaffDoc = {
                 },
                 position: {
                   type: "string",
-                  example: "Manager",
+                  example: "manager",
                   description: "Position in the Company",
                   required: true,
                 },
@@ -80,12 +80,12 @@ export const StaffDoc = {
                   description: "Start Date",
                   required: true,
                 },
-                endDate: {
+                jobType: {
                   type: "string",
-                  format: "date",
-                  example: "2024-01-01",
-                  description: "End Date",
-                  required: false,
+                  enum: ["casual", "formal"],
+                  example: "casual",
+                  description: "Job type",
+                  required: true,
                 },
                 description: {
                   type: "string",
@@ -95,8 +95,8 @@ export const StaffDoc = {
                   required: false,
                 },
                 salary: {
-                  type: "string",
-                  example: "60000$",
+                  type: "number",
+                  example: 600,
                   description: "Salary",
                   required: true,
                 },
@@ -252,7 +252,7 @@ export const StaffDoc = {
                 },
                 position: {
                   type: "string",
-                  example: "Manager",
+                  example: "manager",
                   description: "Position in the Company",
                   required: false,
                 },
@@ -275,12 +275,12 @@ export const StaffDoc = {
                   description: "Start Date",
                   required: false,
                 },
-                endDate: {
-                  type: "string",
-                  format: "date",
-                  example: "2024-01-01",
-                  description: "End Date",
-                  required: false,
+                jobType: {
+                    type: "string",
+                    enum: ["casual", "formal"],
+                    example: "casual",
+                    description: "Job type",
+                    required: true,
                 },
                 description: {
                   type: "string",

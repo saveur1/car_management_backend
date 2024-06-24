@@ -67,9 +67,8 @@ const staffSchema = new mongoose.Schema({
   location: { type: String, required: true },
   address: { type: String, required: true },
   startDate: { type: Date, required: true },
-  endDate: { type: Date },
   description: { type: String },
-  salary: { type: String, required: true },
+  salary: { type: Number, required: true },
   image: {
     type: String,
     required: true,
