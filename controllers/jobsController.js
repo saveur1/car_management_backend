@@ -64,7 +64,7 @@ export const deleteJob = asyncCatch(async(req,res,next)=>{
         return next(new ErrorHandler(`job with Id ${req.params.id} is not Registered`,400));
     }
 
-    await job.findByIdAndDelete(req.params.id);
+    await Job.findByIdAndDelete(req.params.id);
 
     res.status(200).json({
         success:true,
