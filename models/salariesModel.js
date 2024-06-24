@@ -15,7 +15,9 @@ const salariesSchema = new mongoose.Schema({
     employee:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Staff",
-        required: true
+        required: true,
+        unique: [true, "Employee can not have many salaries"],
+        message: "Employee can not have many salaries"
     }],
 },
 {
