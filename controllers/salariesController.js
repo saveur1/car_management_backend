@@ -17,7 +17,9 @@ export const registerSalary = asyncCatch(async(req,res,next)=>{
 //Get all salaries => Get /api/v1/salaries -> admin only route
 export const getAllSalaries = asyncCatch(async(req,res,next)=>{
 
-    const salaries = await Salary.find();
+    const salaries = await Salary.find()
+                                 .populate("job")
+                                 .populate("employee");
 
     res.status(200).json({
         success:true,
@@ -28,7 +30,9 @@ export const getAllSalaries = asyncCatch(async(req,res,next)=>{
 //get salary Details => Get /api/v1/salaries/:id -> admin only route
 export const getSalaryDetails = asyncCatch(async(req,res,next)=>{
 
-    const salary = await Salary.findById(req.params.id);
+    const salary = await Salary.findById(req.params.id)
+                               .populate("job")
+                               .populate("salary");
 
     if(!salary){
         return next(new ErrorHandler(`Salary with id ${req.params.id} is not found in database`,400))
