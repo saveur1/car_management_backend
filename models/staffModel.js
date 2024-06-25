@@ -51,20 +51,21 @@ const staffSchema = new mongoose.Schema({
     length: 16,
     unique:true 
 },
-  position: { 
-    type: String, 
+  position: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Job",
     required: true,
-    enum: ["admin","manager","human_resources","operator","driver"],
   },
 
   jobType: {
     type: String,
     required: true,
-    enum: ["casual", "formal"],
+    enum: ["casual", "formal","fired"],
     default: "casual"
   },
   address: { type: String, required: true },
   startDate: { type: Date, required: true },
+  endingDate: { type: Date, required: true },
   description: { type: String },
   salary: { type: Number, required: true },
   image: {

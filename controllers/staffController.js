@@ -60,7 +60,8 @@ export const loginStaff = asyncCatch(async(req,res,next)=>{
 // @desc    Get all staff
 // @route   GET /api/v1/staff
 export const getAllStaff = asyncCatch(async (req, res, next) => {
-    const staff = await Staff.find();
+    const staff = await Staff.find()
+                             .populate("position");
     res.status(200).json({
         success: true,
         staff
@@ -70,7 +71,8 @@ export const getAllStaff = asyncCatch(async (req, res, next) => {
 // @desc    Get staff by ID
 // @route   GET /api/v1/staff/:id
 export const getStaffById = asyncCatch(async (req, res, next) => {
-    const staff = await Staff.findById(req.params.id);
+    const staff = await Staff.findById(req.params.id)
+                             .populate("position");
     if (!staff) {
         return res.status(404).json({
             success: false,
@@ -130,7 +132,8 @@ export const deleteStaffById = asyncCatch(async (req, res, next) => {
 // @desc    Get staff by position
 // @route   GET /api/v1/staff/position/:position
 export const getStaffByPosition = asyncCatch(async (req, res, next) => {
-    const staff = await Staff.find({ position: req.params.position });
+    const staff = await Staff.find({ position: req.params.position })
+                             .populate("position");
      if (!staff) {
        return res.status(404).json({
          success: false,
@@ -145,7 +148,8 @@ export const getStaffByPosition = asyncCatch(async (req, res, next) => {
 
 // @route   GET /api/v1/staff/jobtype/:jobtype
 export const getStaffByJobType = asyncCatch(async (req, res, next) => {
-    const staffs = await Staff.find({ jobType: req.params.jobtype });
+    const staffs = await Staff.find({ jobType: req.params.jobtype })
+                              .populate("position");
      
     res.status(200).json({
         success: true,

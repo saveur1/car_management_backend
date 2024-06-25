@@ -74,6 +74,13 @@ export const StaffDoc = {
                   description: "Start Date",
                   required: true,
                 },
+                endingDate: {
+                    type: "string",
+                    format: "date",
+                    example: "2023-01-01",
+                    description: "Ending Date",
+                    required: false,
+                },
                 jobType: {
                   type: "string",
                   enum: ["casual", "formal"],
@@ -262,6 +269,13 @@ export const StaffDoc = {
                   example: "2023-01-01",
                   description: "Start Date",
                   required: false,
+                },
+                endingDate: {
+                    type: "string",
+                    format: "date",
+                    example: "2023-01-01",
+                    description: "Ending Date",
+                    required: false,
                 },
                 jobType: {
                     type: "string",
