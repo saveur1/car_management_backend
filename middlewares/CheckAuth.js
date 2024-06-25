@@ -26,7 +26,7 @@ export const CheckAuth = asyncCatch(async(req,res,next)=>{
 export const CheckRole = (...roles)=>{
     return (req,res,next)=>{
         
-        if(!roles.includes(req.staff.position.job_title)){
+        if(!roles.includes(req.staff.position.job_title.toLowerCase())){
             return next(
                 new ErrorHandler(`Role ${req.staff.position.job_title} is not allowed to access this resource`,403)
             );
