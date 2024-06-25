@@ -56,7 +56,10 @@ const staffSchema = new mongoose.Schema({
     ref: "Job",
     required: true,
   },
-
+  status: {
+    type: String,
+    enum: ["active", "fired", "holiday"]
+  },
   jobType: {
     type: String,
     required: true,
