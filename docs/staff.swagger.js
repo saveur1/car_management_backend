@@ -9,7 +9,7 @@ export const StaffDoc = {
       ],
       requestBody: {
         content: {
-          "application/json": {
+          "multipart/form-data": {
             schema: {
               type: "object",
               properties: {
@@ -59,12 +59,6 @@ export const StaffDoc = {
                   type: "string",
                   example: "manager",
                   description: "Position in the Company",
-                  required: true,
-                },
-                location: {
-                  type: "string",
-                  example: "New York",
-                  description: "Location",
                   required: true,
                 },
                 address: {
@@ -204,7 +198,7 @@ export const StaffDoc = {
       ],
       requestBody: {
         content: {
-          "application/json": {
+          "multipart/form-data": {
             schema: {
               type: "object",
               properties: {
@@ -254,12 +248,6 @@ export const StaffDoc = {
                   type: "string",
                   example: "manager",
                   description: "Position in the Company",
-                  required: false,
-                },
-                location: {
-                  type: "string",
-                  example: "New York",
-                  description: "Location",
                   required: false,
                 },
                 address: {

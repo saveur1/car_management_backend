@@ -15,17 +15,19 @@ import {
 } from "../controllers/staffController.js";
 import { CheckAuth, CheckRole } from "../middlewares/CheckAuth.js";
 
+import { upload } from "../middlewares/imagesUpload.js";
+
 //AUTHENTICATION
 router.route("/login").post(loginStaff);
 
 //staff routes, a whole CRUD for staff
 //Check authentication first then check user role
 router.route("/")
-      .post(createStaff) //create staff
-      .get(CheckAuth, CheckRole("admin", "operators"),getAllStaff);
+      .post(CheckAuth, CheckRole("admin", "operators"), upload.single("image"), createStaff) //create staff
+      .get(CheckAuth, CheckRole("admin", "operators"), getAllStaff);
 
 router.route("/position/:position")
-      .get(CheckAuth, CheckRole("admin", "operators"),getStaffByPosition);
+      .get(CheckAuth, CheckRole("admin", "operators"), getStaffByPosition);
 
 router.route("/jobtype/:jobtype")
       .get(CheckAuth, CheckRole("admin", "operators"), getStaffByJobType)
@@ -34,7 +36,7 @@ router.route("/jobtype/:jobtype")
 router
   .route("/:id")
   .get(CheckAuth, CheckRole("admin", "operators"), getStaffById)
-  .put(CheckAuth, CheckRole("admin", "operators"), updateStaffById)
-  .delete(CheckAuth, CheckRole("admin", "operators"),deleteStaffById);
+  .put(CheckAuth, CheckRole("admin", "operators"), upload.single("image"), updateStaffById)
+  .delete(CheckAuth, CheckRole("admin", "operators"), deleteStaffById);
 
 export default router;

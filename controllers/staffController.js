@@ -2,11 +2,26 @@ import Staff from "../models/staffModel.js";
 import asyncCatch from "../middlewares/asyncCatch.js";
 import sendToken from "../utils/sendToken.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
+import cloudinary from "cloudinary";
 
 // @desc    Create new staff
 // @route   POST /api/v1/staff
 export const createStaff = asyncCatch(async (req, res,next) => {
-   const staff = await Staff.create(req.body);
+    const staffToAdd = {
+        ...req.body
+    }
+
+    if(req.file){
+        const cloudinary_image = await cloudinary.v2.uploader.upload(req.file.path, {
+            folder: "staff",
+            unique_filename: false,
+            use_filename: true
+        });
+
+        staff["image"] = cloudinary_image.secure_url;
+    }
+
+   const staff = await Staff.create(staffToAdd);
     res.status(200).json({
       success: true,
       staff
@@ -71,17 +86,25 @@ export const getStaffById = asyncCatch(async (req, res, next) => {
 // @desc    Update staff by ID
 // @route   PUT /api/v1/staff/:id
 export const updateStaffById = asyncCatch(async (req, res, next) => {
-    const staff = await Staff.findByIdAndUpdate(req.params.id, req.body,{
+    const staffToUpdate = {
+        ...req.body
+    }
+
+    if(req.file){
+        const cloudinary_image = await cloudinary.v2.uploader.upload(req.file.path, {
+            folder: "staff",
+            unique_filename: false,
+            use_filename: true
+        });
+
+        staff["image"] = cloudinary_image.secure_url;
+    }
+    const staff = await Staff.findByIdAndUpdate(req.params.id, staffToUpdate ,{
          new: true,
           runValidators: true,
           useFindAndModify: false 
         });
-    // if (!staff) {
-    //     return res.status(404).json({
-    //         success: false,
-    //         message: 'Staff not found'
-    //     });
-    // }
+
     res.status(200).json({
         success: true,
         staff,

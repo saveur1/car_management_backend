@@ -63,8 +63,6 @@ const staffSchema = new mongoose.Schema({
     enum: ["casual", "formal"],
     default: "casual"
   },
-
-  location: { type: String, required: true },
   address: { type: String, required: true },
   startDate: { type: Date, required: true },
   description: { type: String },
@@ -81,7 +79,7 @@ staffSchema.pre("save",async function(next){
         next();
     }
 
-    this.password = await bcrypt.hash(this.password,10);
+    this.password = await bcrypt.hash(this.password, 10);
 });
 
 //compare password
