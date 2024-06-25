@@ -58,7 +58,8 @@ const staffSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["active", "fired", "holiday"]
+    enum: ["active", "fired", "holiday"],
+    default: "active"
   },
   jobType: {
     type: String,
