@@ -110,12 +110,18 @@ export const updateStaffById = asyncCatch(async (req, res, next) => {
         });
 
         staff["image"] = cloudinary_image.secure_url;
+
     }
-    const staff = await Staff.findByIdAndUpdate(req.params.id, staffToUpdate ,{
-         new: true,
-          runValidators: true,
-          useFindAndModify: false 
-        });
+
+    const staff = await Staff.findById(req.params.id);
+    staff.password = req.body.password;
+
+    await staff.save();
+    // const staff = await Staff.findByIdAndUpdate(req.params.id, staffToUpdate ,{
+    //       new: true,
+    //       runValidators: true,
+    //       useFindAndModify: false 
+    //     });
 
     res.status(200).json({
         success: true,
