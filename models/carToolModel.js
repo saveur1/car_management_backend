@@ -34,7 +34,8 @@ const carToolSchema = new mongoose.Schema({
   },
   toolStatus: {
     type: String,
-    enum: ["in storage", "out of storage"]
+    enum: ["in storage", "out of storage"],
+    default: "in storage"
   },
   purchaseDate: {
     type: Date,
