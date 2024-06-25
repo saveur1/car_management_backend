@@ -3,6 +3,7 @@ import asyncCatch from "../middlewares/asyncCatch.js";
 import sendToken from "../utils/sendToken.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import cloudinary from "cloudinary";
+import Salary from "../models/salariesModel.js";
 
 // @desc    Create new staff
 // @route   POST /api/v1/staff
@@ -21,7 +22,14 @@ export const createStaff = asyncCatch(async (req, res,next) => {
         staff["image"] = cloudinary_image.secure_url;
     }
 
+   //Save staff in database
    const staff = await Staff.create(staffToAdd);
+
+   //add to salaries
+   const salary = await Salary.findById(req.body.salary);
+   salary.employee.push(staff._id);
+   await salary.save();
+
     res.status(200).json({
       success: true,
       staff

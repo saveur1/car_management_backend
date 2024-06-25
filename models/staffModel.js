@@ -67,7 +67,11 @@ const staffSchema = new mongoose.Schema({
   startDate: { type: Date, required: true },
   endingDate: { type: Date, required: true },
   description: { type: String },
-  salary: { type: Number, required: true },
+  salary: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: "Salary",
+    required: true,
+},
   image: {
     type: String,
     required: true,
