@@ -32,6 +32,10 @@ const carToolSchema = new mongoose.Schema({
     trim: true,
     maxLength: [50, "Tools Category cannot exceed 50 characters"],
   },
+  toolStatus: {
+    type: String,
+    enum: ["in storage", "out of storage"]
+  },
   purchaseDate: {
     type: Date,
     required: true,
@@ -56,6 +60,16 @@ const carToolSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+});
+
+carToolSchema.pre("findOneAndUpdate",async function(next){
+    if(!this.isModified())
+        next();
+
+    if(this.quantity <=0)
+        this.toolStatus = "out of storage";
+    else
+        this.toolStatus = "in storage";
 });
 
 const CarTool = mongoose.model("CarTool", carToolSchema);
