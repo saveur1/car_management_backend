@@ -16,7 +16,8 @@ export const CheckAuth = asyncCatch(async(req,res,next)=>{
 
     const decoded = jwt.verify(token , process.env.JWT_SECRET);
 
-    req.staff = await Staff.findById(decoded.id);
+    req.staff = await Staff.findById(decoded.id)
+                           .populate("position");
 
     next();
 });
@@ -25,9 +26,9 @@ export const CheckAuth = asyncCatch(async(req,res,next)=>{
 export const CheckRole = (...roles)=>{
     return (req,res,next)=>{
         
-        if(!roles.includes(req.staff.position)){
+        if(!roles.includes(req.staff.position.job_title)){
             return next(
-                new ErrorHandler(`Role ${req.staff.position} is not allowed to access this resource`,403)
+                new ErrorHandler(`Role ${req.staff.position.job_title} is not allowed to access this resource`,403)
             );
         }
         next();
