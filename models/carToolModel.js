@@ -64,13 +64,15 @@ const carToolSchema = new mongoose.Schema({
 });
 
 carToolSchema.pre("findOneAndUpdate",async function(next){
-    if(!this.isModified())
-        next();
 
-    if(this.quantity <=0)
-        this.toolStatus = "out of storage";
+    const update =  this.getUpdate();
+
+    if(update.quantity <=0)
+        update.toolStatus = "out of storage";
     else
-        this.toolStatus = "in storage";
+        update.toolStatus = "in storage";
+
+    next();
 });
 
 const CarTool = mongoose.model("CarTool", carToolSchema);
