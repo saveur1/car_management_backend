@@ -80,6 +80,9 @@ const staffSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+}, 
+{
+    timestamps: true
 });
 
 //hash password before saving

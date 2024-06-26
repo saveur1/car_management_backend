@@ -61,6 +61,8 @@ const carToolSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+},{
+    timestamps: true
 });
 
 carToolSchema.pre("findOneAndUpdate",async function(next){
