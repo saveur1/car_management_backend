@@ -105,3 +105,17 @@ export const getCarCategory = asyncCatch(async(req,res,next)=>{
         cars
     });
 })
+
+//GEt Car => GET /api/v1/cars/status/:status
+export const currentStatusCar = asyncCatch(async(req,res,next)=>{
+
+    const query = req.params.status;
+
+    //get cars by current status
+    const cars = await Car.find({current_status: query});
+
+    res.status(200).json({
+        success:true,
+        cars
+    });
+})

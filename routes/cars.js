@@ -12,7 +12,8 @@ import {
     getCarDetails,
     updateCarInfo,
     deleteCar,
-    getCarCategory
+    getCarCategory,
+    currentStatusCar
 } from "../controllers/carController.js";
 
 import { CheckAuth, CheckRole } from '../middlewares/CheckAuth.js';
@@ -27,6 +28,6 @@ router.route("/cars/:id").get(CheckAuth, CheckRole("admin", "operators"), getCar
                           .delete(CheckAuth, CheckRole("admin", "operators"), deleteCar);
 
 router.route("/cars/category/:category").get(CheckAuth, CheckRole("admin", "operators"), getCarCategory);
-
+router.route("/cars/status/:status").get(CheckAuth, CheckRole("admin", "operators"), currentStatusCar);
 
 export default router;

@@ -348,4 +348,33 @@ export const CarDoc = {
             }
         }
     },
+    "/api/v1/cars/status/{status}":{
+        get:{
+            tags:["Cars"],
+            parameters:[{
+                in:"path",
+                name:"status",
+                description:"car status: available | waiting | taken | under_maintance | sold | out_of_service",
+                example:"available"
+            }],
+            security:[
+                {
+                    token:[]
+                }
+            ],
+            responses:{
+                200:{
+                    content:{
+                        "application/json":{
+                            type:"object",
+                            example:{
+                                success:true,
+                                cars:[]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
 }
