@@ -28,7 +28,8 @@ export const createCarTool = asyncCatch(async (req, res) => {
 
 // Get all car tool entries
 export const getAllCarTools = asyncCatch(async (req, res) => {
-  const carTools = await CarTool.find();
+  const carTools = await CarTool.find()
+                                .sort({_id: -1});
   res.status(200).json({
     status: "success",
     carTools,

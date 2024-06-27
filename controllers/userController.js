@@ -182,7 +182,8 @@ export const logoutUser = asyncCatch(async(req,res,next)=>{
 //Get all Users => /api/v1/users -> admin only route
 export const getAllUsers = asyncCatch(async(req,res,next)=>{
 
-    const users = await User.find();
+    const users = await User.find()
+                            .sort({ _id: -1});
 
     res.status(200).json({
         success:true,
@@ -242,7 +243,7 @@ export const getUserByCategory = asyncCatch(async(req,res,next)=>{
 
     const users = await User.find({
         categories:req.params.category
-    });
+    }).sort({ _id: -1});
 
     res.status(200).json({
         success:true,
@@ -255,7 +256,7 @@ export const getUserByRole = asyncCatch(async(req,res,next)=>{
 
     const users = await User.find({
         role:req.params.role
-    });
+    }).sort({ _id: -1});
 
     res.status(200).json({
         success:true,

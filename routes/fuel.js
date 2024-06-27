@@ -6,6 +6,7 @@ import {
   updateFuel,
   deleteFuel,
   getFuelsByEmployee,
+  getFuelsByCar,
 } from "../controllers/fuelController.js";
 import { CheckAuth, CheckRole } from "../middlewares/CheckAuth.js";
 
@@ -19,6 +20,10 @@ router
 router
   .route("/employee/:employee")
   .get(CheckAuth, CheckRole("admin", "operators"), getFuelsByEmployee);
+
+router
+  .route("/car/:carId")
+  .get(CheckAuth, CheckRole("admin", "operators"), getFuelsByCar);
 
 router
   .route("/:id")

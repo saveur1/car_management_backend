@@ -81,7 +81,7 @@ export const FuelDoc = {
                 type: "object",
                 example: {
                   success: true,
-                  fuel: [],
+                  fuels: [],
                 },
               },
             },
@@ -265,7 +265,42 @@ export const FuelDoc = {
                 type: "object",
                 example: {
                   success: true,
-                  fuel: [],
+                  fuels: [],
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  "/api/v1/fuels/car/{carId}": {
+    get: {
+      tags: ["Fuel"],
+      security: [
+        {
+          token: [],
+        },
+      ],
+      parameters: [
+        {
+          in: "path",
+          name: "carId",
+          description: "Car ID",
+          required: true,
+          example: "60c72b2f9b1d4b3c6d3b9b0e",
+        },
+      ],
+      responses: {
+        200: {
+          description: "Fuel entries fetched by Car ID",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                example: {
+                  success: true,
+                  fuels: [],
                 },
               },
             },

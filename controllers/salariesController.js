@@ -19,7 +19,8 @@ export const getAllSalaries = asyncCatch(async(req,res,next)=>{
 
     const salaries = await Salary.find()
                                  .populate("job")
-                                 .populate("employee");
+                                 .populate("employee")
+                                 .sort({ _id: -1});
 
     res.status(200).json({
         success:true,

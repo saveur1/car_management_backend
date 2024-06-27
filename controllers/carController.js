@@ -17,7 +17,8 @@ export const registerCar = asyncCatch(async(req,res,next)=>{
 //Get all cars => Get /api/v1/cars -> admin only route
 export const getAllCars = asyncCatch(async(req,res,next)=>{
 
-    const cars = await Car.find();
+    const cars = await Car.find()
+                          .sort({createdAt: -1});
 
     res.status(200).json({
         success:true,
@@ -84,18 +85,18 @@ export const getCarCategory = asyncCatch(async(req,res,next)=>{
             cars = await Car.find({
                 // manufacturer_year <= 2
                 manufacture_year:{ $gt: nowYear-2 }  // 2 represents the years car stays as new: stops at 2 years old: 1,2
-            });
+            }).sort({createdAt: -1});
             break;
         case "medium":
             cars = await Car.find({
                 // 3 <= manufacturer_year <= 6
                 manufacture_year:{ $gte: nowYear-5, $lte: nowYear-2 } //Start from 3 years old - 6 years old: 3,4,5 
-            });
+            }).sort({createdAt: -1});
             break;
         default:
             cars = await Car.find({
                 manufacture_year:{ $lt: nowYear-5 }  // start from 5 years old - Anywhere in past years: 6,7,8,9...
-            });
+            }).sort({createdAt: -1});
             break;
     }
 
@@ -112,7 +113,8 @@ export const currentStatusCar = asyncCatch(async(req,res,next)=>{
     const query = req.params.status;
 
     //get cars by current status
-    const cars = await Car.find({current_status: query});
+    const cars = await Car.find({current_status: query})
+                          .sort({createdAt: -1});
 
     res.status(200).json({
         success:true,

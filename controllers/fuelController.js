@@ -13,7 +13,10 @@ export const createFuel = asyncCatch(async (req, res) => {
 
 // Get all fuel entries
 export const getAllFuels = asyncCatch(async (req, res) => {
-  const fuels = await Fuel.find().populate("employee").populate("car");
+  const fuels = await Fuel.find()
+                          .populate("employee")
+                          .populate("car")
+                          .sort({_id: -1});
   res.status(200).json({
     status: "success",
     fuels,
@@ -74,10 +77,25 @@ export const deleteFuel = asyncCatch(async (req, res) => {
 export const getFuelsByEmployee = asyncCatch(async (req, res) => {
   const employee = req.params.employee;
   const fuels = await Fuel.find({ employee })
-    .populate("employee")
-    .populate("car");
+                          .populate("employee")
+                          .populate("car")
+                          .sort({_id: -1});
   res.status(200).json({
     status: "success",
     fuels,
   });
 });
+
+// Get fuel entries by car ID
+export const getFuelsByCar = asyncCatch(async (req, res) => {
+    const car = req.params.carId;
+    const fuels = await Fuel.find({ car })
+                            .populate("employee")
+                            .populate("car")
+                            .sort({_id: -1});
+    res.status(200).json({
+      status: "success",
+      fuels,
+    });
+  });
+  
