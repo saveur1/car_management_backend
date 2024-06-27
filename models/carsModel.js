@@ -54,12 +54,28 @@ const carsSchema = new mongoose.Schema({
         default: "available",
         enum:['available','waiting', 'taken','under_maintance','sold','out_of_service']
     },
+    //car owners
     car_owner: {
         type: String,
         enum: ['main_owner',"second_party"],
         required: true,
         default: "main_owner"
     },
+    supplier: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
+    supplier_contract: String,
+
+    //insurance part
+    insurance_name: String,
+    insurance_start: Date,
+    insurance_end: Date,
+
+    //control technique part
+    control_start: Date,
+    control_end: Date,
+
     images:[
         {
             type: String,

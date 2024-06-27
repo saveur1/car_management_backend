@@ -227,7 +227,48 @@ export const CarDoc = {
                                         type:"string",
                                         description:"Car images"
                                     }
-                                }
+                                },
+                                insurance_name:{
+                                    type:"string",
+                                    example:"SONARWA",
+                                    description:"insurance name",
+                                },
+                                insurance_start:{
+                                    type:"date",
+                                    example: "2024-06-26T10:38:00",
+                                    description:"insurance start date",
+                                },
+                                insurance_end:{
+                                    type:"date",
+                                    example: "2024-06-26T10:38:00",
+                                    description:"insurance end date",
+                                },
+                                control_start:{
+                                    type:"date",
+                                    example: "2024-06-26T10:38:00",
+                                    description:"insurance start date",
+                                },
+                                control_end:{
+                                    type:"date",
+                                    example: "2024-06-26T10:38:00",
+                                    description:"insurance end date",
+                                },
+
+                                supplier:{
+                                    type:"string",
+                                    example:"6405a31a2ad56808f4925521",
+                                    description:"supplier id",
+                                },
+                                supplier_money_month:{
+                                    type:"number",
+                                    example:450,
+                                    description:"money paid to supplier per month",
+                                },
+                                supplier_contract:{
+                                    type:"string",
+                                    example:"https://pathtocontract.com/folder",
+                                    description:"supplier and owner contract",
+                                },
                             }
                         }
                     }
