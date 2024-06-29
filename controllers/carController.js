@@ -1,6 +1,9 @@
 import asyncCatch from "../middlewares/asyncCatch.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import Car from "../models/carsModel.js";
+import Booking from "../models/bookingModel.js";
+import Fuel from "../models/fuelModel.js";
+import Garage from "../models/garageModel.js";
 
 //Register Car =>POST /api/v1/cars/create
 export const registerCar = asyncCatch(async(req,res,next)=>{
@@ -64,6 +67,16 @@ export const deleteCar = asyncCatch(async(req,res,next)=>{
     if(!car){
         return next(new ErrorHandler(`Car with Id ${req.params.id} is not Registered`,400));
     }
+
+    //Delete all bookings for car
+    await Booking.deleteMany({car: req.params.id});
+
+    //Delete all Fuels for car
+    await Fuel.deleteMany({car: req.params.id});
+
+    //Delete all Garage for car
+    await Garage.deleteMany({car: req.params.id});
+
 
     await Car.findByIdAndDelete(req.params.id);
 
