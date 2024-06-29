@@ -74,4 +74,39 @@ export const authentication = {
             }
         }
     },
+    "/api/v1/staff/password/reset":{
+        put:{
+            tags:["Authentication"],
+            requestBody:{
+                content:{
+                    "application/json":{
+                        schema:{
+                            type:"object",
+                            properties:{
+                                resetCode:{
+                                    type:"string",
+                                    description:"Reset Code Received",
+                                    example:"782848",
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            responses:{
+                200:{
+                    content:{
+                        "application/json":{
+                            type:"object",
+                            example:{
+                                status:"success",
+                                message:"",
+                                result:{}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
 }

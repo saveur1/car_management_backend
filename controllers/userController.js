@@ -17,34 +17,6 @@ export const registerUser = asyncCatch(async(req,res,next)=>{
 });
 
 
-//User reset password => /api/v1/password/reset
-export const userResetPassword = asyncCatch(async(req,res,next)=>{
-
-    const resetToken = crypto.createHash("sha256").update(req.params.token).digest("hex");
-
-    const user = await User.findOne({
-        resetPasswordToken: resetToken,
-        resetPasswordExpires: { $gt: Date.now() }
-    });
-
-    if(!user){
-        return next(new ErrorHandler("Password reset token is invalid or has expired",400));
-    }
-
-    if(req.body.password !== req.body.confirmPassword){
-        return next(new ErrorHandler("Password does not match",400));
-    }
-
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpires = undefined;
-
-    user.password = req.body.password;
-
-    await user.save();
-
-    sendToken(200,user,res);
-});
-
 // Get user profile of logged user => /api/v1/profile
 export const getUserProfile = asyncCatch(async(req,res,next)=>{
 

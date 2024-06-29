@@ -7,7 +7,6 @@ const router = express.Router();
 import { 
     registerUser, 
     logoutUser,
-    userResetPassword, 
     getUserProfile, 
     updateUserPassword, 
     updateUserProfile,
@@ -22,7 +21,6 @@ import {
 import { CheckAuth, CheckRole } from '../middlewares/CheckAuth.js';
 
 //Authentication part for car rental system
-router.route("/password/reset/:token").put(userResetPassword);
 router.route("/logout").get(logoutUser);
 
 router.route("/profile").get(CheckAuth,getUserProfile);

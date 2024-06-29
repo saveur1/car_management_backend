@@ -5,6 +5,7 @@ import ErrorHandler from "../utils/ErrorHandler.js";
 import cloudinary from "cloudinary";
 import Salary from "../models/salariesModel.js";
 import sendEmail from "../utils/sendEmail.js";
+import { emailFormat } from "../config/emailDoc.js";
 
 // @desc    Create new staff
 // @route   POST /api/v1/staff
@@ -42,7 +43,7 @@ export const createStaff = asyncCatch(async (req, res,next) => {
 
 });
 
-//Login Staff => /api/v1/login
+//Login Staff => /api/v1/staff/login
 export const loginStaff = asyncCatch(async(req,res,next)=>{
     const {email,password} = req.body;
 
@@ -70,7 +71,7 @@ export const loginStaff = asyncCatch(async(req,res,next)=>{
     sendToken(200,staff,res);
 });
 
-//User forgot password => /api/v1/password/forgot
+//User forgot password => /api/v1/staff/password/forgot
 export const userForgotPassword = asyncCatch(async(req,res,next)=>{
 
     const { email } = req.body;
@@ -83,18 +84,15 @@ export const userForgotPassword = asyncCatch(async(req,res,next)=>{
     }
 
     //get staff token
-    const resetCode = staff.generateResetPasswordToken();
+    const  resetCode= staff.generateResetPasswordToken();
 
-    await staff.save({ validateBeforeSave:false });
+    await Staff.findByIdAndUpdate(staff._id, {resetPasswordCode:resetCode, resetPasswordExpires: Date.now()+30*60*1000}, {
+        new: true,
+        runValidators: true
+    });
 
-    //generate reset link
-    // const link = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
     
-    const message = 
-    `<h2 style='color:blue;'>Need to reset your password?</h2>
-     <p>Use your secret code!</p>
-     <p style='font-style:italic;font-weight:bold;padding:20px;margin-left:30px'>${ resetCode }</p>
-     <p>If you did not forget your password, you can ignore this email.</p>`;
+    const message = emailFormat(resetCode, staff.firstname, staff.lastname);
     
     try {
 
@@ -110,13 +108,41 @@ export const userForgotPassword = asyncCatch(async(req,res,next)=>{
         })
         
     } catch (error) {
-        staff.resetPasswordToken = undefined;
+        staff.resetPasswordCode = undefined;
         staff.resetPasswordExpires = undefined;
 
         await staff.save({validateBeforeSave:false});
         
         return next(new ErrorHandler(error.message,500));
     }
+});
+
+//Staff reset password => /api/v1/staff/password/reset
+export const userResetPassword = asyncCatch(async(req,res,next)=>{
+
+    const resetToken = req.body.resetCode;
+
+    const staff = await Staff.findOne({
+        resetPasswordCode: resetToken,
+        resetPasswordExpires: { $gt: Date.now() }
+    });
+
+    if(!staff){
+        return next(new ErrorHandler("Password reset code is invalid or has expired",400));
+    }
+
+    if(req.body.password !== req.body.confirmPassword){
+        return next(new ErrorHandler("Password does not match",400));
+    }
+
+    staff.resetPasswordCode = undefined;
+    staff.resetPasswordExpires = undefined;
+
+    staff.password = req.body.password;
+
+    await staff.save();
+
+    sendToken(200,staff,res);
 });
 
 // @desc    Get all staff
