@@ -75,6 +75,10 @@ const staffSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId, 
     ref: "Salary",
     required: true,
+  resetPasswordToken:String,
+  resetPasswordExpires:{
+      type: Date
+  }
 },
   image: {
     type: String,
@@ -109,7 +113,13 @@ staffSchema.methods.getJwtToken = function(){
 //generate password reset token
 staffSchema.methods.generateResetPasswordToken = function(){
     //generate token
-    const resetToken = crypto.randomBytes(3).toString("hex"); //3*2 represents Number of codes to send in email
+    const resetToken = crypto.randomInt(1000000).toString().padStart(6, '0'); //Generate random numbers then shrink them to 6 digits only
+
+    //save codes in database
+    this.resetPasswordToken = resetToken;
+
+    //set token expire time
+    this.resetPasswordExpires = Date.now()+30*60*1000;
 
     return resetToken;
 }

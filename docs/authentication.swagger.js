@@ -39,7 +39,7 @@ export const authentication = {
             }
         }
     },
-    "/api/v1/password/forgot":{
+    "/api/v1/staff/password/forgot":{
         post:{
             tags:["Authentication"],
             requestBody:{

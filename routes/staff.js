@@ -11,7 +11,8 @@ import {
   deleteStaffById,
   getStaffByPosition,
   getStaffByJobType,
-  loginStaff
+  loginStaff,
+  userForgotPassword
 } from "../controllers/staffController.js";
 import { CheckAuth, CheckRole } from "../middlewares/CheckAuth.js";
 
@@ -19,6 +20,7 @@ import { upload } from "../middlewares/imagesUpload.js";
 
 //AUTHENTICATION
 router.route("/login").post(loginStaff);
+router.route("/password/forgot").post(userForgotPassword);
 
 //staff routes, a whole CRUD for staff
 //Check authentication first then check user role

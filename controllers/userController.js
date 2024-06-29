@@ -16,55 +16,6 @@ export const registerUser = asyncCatch(async(req,res,next)=>{
 
 });
 
-//User forgot password => /api/v1/password/forgot
-export const userForgotPassword = asyncCatch(async(req,res,next)=>{
-
-    const { email } = req.body;
-
-    //getting user information
-    const user = await User.findOne({email}).select("+password");
-
-    if(!user){
-        return next(new ErrorHandler("Provided User Email Doesn't match Any in Database",404));
-    }
-
-    //get user token
-    const resetCode = user.generateResetPasswordToken().toUpperCase();
-
-    await user.save({ validateBeforeSave:false });
-
-    //generate reset link
-    // const link = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
-    
-    const message = 
-    `<h2 style='color:blue;'>Need to reset your password?</h2>
-     <p>Use your secret code!</p>
-     <p style='font-style:italic;font-weight:bold;padding:20px;margin-left:30px'>${ resetCode }</p>
-     <p>If you did not forget your password, you can ignore this email.</p>`;
-    
-    try {
-
-        await sendEmail({
-            email:email,
-            subject:"CarRental Password Recovery",
-            message
-        });
-
-        res.status(200).json({
-            success:true,
-            message:`Email Sent To: ${email}`
-        })
-        
-    } catch (error) {
-        user.resetPasswordToken = undefined;
-        user.resetPasswordExpires = undefined;
-
-        await user.save({validateBeforeSave:false});
-        
-        return next(new ErrorHandler(error.message,500));
-    }
-});
-
 
 //User reset password => /api/v1/password/reset
 export const userResetPassword = asyncCatch(async(req,res,next)=>{
