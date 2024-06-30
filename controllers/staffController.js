@@ -53,7 +53,10 @@ export const loginStaff = asyncCatch(async(req,res,next)=>{
     }
 
     //check if email is in database
-    const staff = await Staff.findOne({email}).select("+password");
+    const staff = await Staff.findOne({email})
+                             .select("+password")
+                             .populate("position")
+                             .populate("salary");
 
     if(!staff){
         return next(new ErrorHandler("Invalid email or password",401));
