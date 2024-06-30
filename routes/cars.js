@@ -1,5 +1,5 @@
 /*
-                ADMIN AND OPERATORS ONLY
+                ADMIN, MANAGER AND OPERATORS ONLY
 */
 
 import express from 'express';
@@ -18,16 +18,23 @@ import {
 
 import { CheckAuth, CheckRole } from '../middlewares/CheckAuth.js';
 
-router.route("/cars/create").post(CheckAuth, CheckRole("admin", "operators"), registerCar);
+router.route("/cars/create")
+            .post(CheckAuth, CheckRole("admin", "operators", "manager"), registerCar);
 
 //cars routes, a whole CRUD for cars
 //Check authentication first then check user role
-router.route("/cars").get(CheckAuth, CheckRole("admin", "operators"), getAllCars);
-router.route("/cars/:id").get(CheckAuth, CheckRole("admin", "operators"), getCarDetails)
-                          .put(CheckAuth, CheckRole("admin", "operators"), updateCarInfo)
-                          .delete(CheckAuth, CheckRole("admin", "operators"), deleteCar);
+router.route("/cars")
+            .get(CheckAuth, CheckRole("admin", "operators", "manager"), getAllCars);
 
-router.route("/cars/category/:category").get(CheckAuth, CheckRole("admin", "operators"), getCarCategory);
-router.route("/cars/status/:status").get(CheckAuth, CheckRole("admin", "operators"), currentStatusCar);
+router.route("/cars/:id")
+            .get(CheckAuth,    CheckRole("admin", "operators", "manager"), getCarDetails)
+            .put(CheckAuth,    CheckRole("admin", "operators", "manager"), updateCarInfo)
+            .delete(CheckAuth, CheckRole("admin", "operators", "manager"), deleteCar);
+
+router.route("/cars/category/:category")
+            .get(CheckAuth, CheckRole("admin", "operators", "manager"), getCarCategory);
+
+router.route("/cars/status/:status")
+            .get(CheckAuth, CheckRole("admin", "operators", "manager"), currentStatusCar);
 
 export default router;

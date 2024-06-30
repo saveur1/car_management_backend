@@ -1,3 +1,7 @@
+/*
+                            ADMIN AND MANAGER
+*/
+
 import express from "express";
 import {
   createGarage,
@@ -13,17 +17,17 @@ const router = express.Router();
 
 router
   .route("/")
-  .post(CheckAuth, CheckRole("admin", "operators"), createGarage)
-  .get(CheckAuth, CheckRole("admin", "operators"), getAllGarages);
+  .post(CheckAuth, CheckRole("admin", "operators", "manager"), createGarage)
+  .get(CheckAuth, CheckRole("admin",  "operators", "manager"), getAllGarages);
 
 router
   .route("/employee/:employee")
-  .get(CheckAuth, CheckRole("admin", "operators"), getGaragesByEmployee);
+  .get(CheckAuth, CheckRole("admin", "operators", "manager"), getGaragesByEmployee);
 
 router
   .route("/:id")
-  .get(CheckAuth, CheckRole("admin", "operators"), getGarage)
-  .put(CheckAuth, CheckRole("admin", "operators"), updateGarage)
-  .delete(CheckAuth, CheckRole("admin", "operators"), deleteGarage);
+  .get(CheckAuth,    CheckRole("admin", "operators", "manager"), getGarage)
+  .put(CheckAuth,    CheckRole("admin", "operators", "manager"), updateGarage)
+  .delete(CheckAuth, CheckRole("admin", "operators", "manager"), deleteGarage);
 
 export default router;
