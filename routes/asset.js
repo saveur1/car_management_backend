@@ -23,6 +23,6 @@ router
   .route("/:id")
   .get(CheckAuth,    CheckRole("admin", "operators", "manager"), getAsset)
   .put(CheckAuth,    CheckRole("admin", "operators", "manager"), updateAsset)
-  .delete(CheckAuth, CheckRole("admin", "operators", "manager"), deleteAsset);
+  .delete(CheckAuth, CheckRole("admin", "manager"), deleteAsset);
 
 export default router;

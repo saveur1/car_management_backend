@@ -1,3 +1,5 @@
+    /**         ADMIN, OPERATORS AND MANGER */
+
 import express from "express";
 import {
   createCarTool,
@@ -21,6 +23,6 @@ router
   .route("/:id")
   .get(CheckAuth,    CheckRole("admin", "operators", "manager"), getCarTool)
   .patch(CheckAuth,  CheckRole("admin", "operators", "manager"), upload.single("photo"), updateCarTool)
-  .delete(CheckAuth, CheckRole("admin", "operators", "manager"), deleteCarTool);
+  .delete(CheckAuth, CheckRole("admin", "manager"), deleteCarTool);
 
 export default router;

@@ -29,7 +29,7 @@ router.route("/cars")
 router.route("/cars/:id")
             .get(CheckAuth,    CheckRole("admin", "operators", "manager"), getCarDetails)
             .put(CheckAuth,    CheckRole("admin", "operators", "manager"), updateCarInfo)
-            .delete(CheckAuth, CheckRole("admin", "operators", "manager"), deleteCar);
+            .delete(CheckAuth, CheckRole("admin", "manager"), deleteCar);
 
 router.route("/cars/category/:category")
             .get(CheckAuth, CheckRole("admin", "operators", "manager"), getCarCategory);

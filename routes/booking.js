@@ -1,3 +1,4 @@
+    /*         ADMIN, OPERATOR AND MANAGER*/
 import express from "express";
 import {
   createBooking,

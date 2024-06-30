@@ -1,5 +1,5 @@
 /*
-                            ADMIN AND MANAGER
+                            ADMIN, OPERATORS AND MANAGER
 */
 
 import express from "express";
@@ -28,6 +28,6 @@ router
   .route("/:id")
   .get(CheckAuth,    CheckRole("admin", "operators", "manager"), getGarage)
   .put(CheckAuth,    CheckRole("admin", "operators", "manager"), updateGarage)
-  .delete(CheckAuth, CheckRole("admin", "operators", "manager"), deleteGarage);
+  .delete(CheckAuth, CheckRole("admin", "manager"), deleteGarage);
 
 export default router;

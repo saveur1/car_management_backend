@@ -33,6 +33,6 @@ router
   .route("/:id")
   .get(CheckAuth,    CheckRole("admin", "operators", "manager"), getFuel)
   .put(CheckAuth,    CheckRole("admin", "operators", "manager"), updateFuel)
-  .delete(CheckAuth, CheckRole("admin", "operators", "manager"), deleteFuel);
+  .delete(CheckAuth, CheckRole("admin", "manager"), deleteFuel);
 
 export default router;
