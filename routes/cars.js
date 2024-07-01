@@ -1,5 +1,5 @@
 /*
-                ADMIN, MANAGER AND OPERATORS ONLY
+                ADMIN, MANAGER, HUMAN RESOURCES AND OPERATORS ONLY
 */
 
 import express from 'express';
@@ -24,17 +24,17 @@ router.route("/cars/create")
 //cars routes, a whole CRUD for cars
 //Check authentication first then check user role
 router.route("/cars")
-            .get(CheckAuth, CheckRole("admin", "operators", "manager"), getAllCars);
+            .get(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources"), getAllCars);
 
 router.route("/cars/:id")
-            .get(CheckAuth,    CheckRole("admin", "operators", "manager"), getCarDetails)
+            .get(CheckAuth,    CheckRole("admin", "operators", "manager", "human_resources"), getCarDetails)
             .put(CheckAuth,    CheckRole("admin", "operators", "manager"), updateCarInfo)
             .delete(CheckAuth, CheckRole("admin", "manager"), deleteCar);
 
 router.route("/cars/category/:category")
-            .get(CheckAuth, CheckRole("admin", "operators", "manager"), getCarCategory);
+            .get(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources"), getCarCategory);
 
 router.route("/cars/status/:status")
-            .get(CheckAuth, CheckRole("admin", "operators", "manager"), currentStatusCar);
+            .get(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources"), currentStatusCar);
 
 export default router;

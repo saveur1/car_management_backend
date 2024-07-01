@@ -1,5 +1,6 @@
 /*
-                ADMIN AND OPERATORS ONLY
+                ADMIN, HUMAN RESOURCES AND ACCOUNTANT ONLY
+                OPERATORS: fetch all staffs only
 */
 import express from "express";
 const router = express.Router();
@@ -28,13 +29,13 @@ router.route("/password/reset").put(userResetPassword);
 //Check authentication first then check user role
 router.route("/")
       .post(CheckAuth, CheckRole("admin", "human_resources", "accountant"), upload.single("image"), createStaff) //create staff
-      .get(CheckAuth, CheckRole("admin", "human_resources", "accountant"), getAllStaff);
+      .get(CheckAuth, CheckRole("admin", "human_resources", "accountant", "operators"), getAllStaff);
 
 router.route("/position/:position")
-      .get(CheckAuth, CheckRole("admin", "human_resources", "accountant"), getStaffByPosition);
+      .get(CheckAuth, CheckRole("admin", "human_resources", "accountant", "operators"), getStaffByPosition);
 
 router.route("/jobtype/:jobtype")
-      .get(CheckAuth, CheckRole("admin", "human_resources", "accountant"), getStaffByJobType)
+      .get(CheckAuth, CheckRole("admin", "human_resources", "accountant", "operators"), getStaffByJobType)
 
 
 router

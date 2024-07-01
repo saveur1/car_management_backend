@@ -1,4 +1,4 @@
-    /*         ADMIN, OPERATOR AND MANAGER*/
+    /*         ADMIN, OPERATOR, HUMAN RESOURCES AND MANAGER*/
 import express from "express";
 import {
   createBooking,
@@ -16,25 +16,25 @@ const router = express.Router();
 
 router
   .route("/")
-  .post(CheckAuth, CheckRole("admin", "operators", "manager"), createBooking)
-  .get(CheckAuth, CheckRole("admin", "operators", "manager"), getAllBookings);
+  .post(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources"), createBooking)
+  .get(CheckAuth,  CheckRole("admin", "operators", "manager", "human_resources"), getAllBookings);
 router
   .route("/status/:status")
-  .get(CheckAuth, CheckRole("admin", "operators", "manager"), getBookingsByStatus);
+  .get(CheckAuth, CheckRole("admin", "operators", "manager", "human_resouces"), getBookingsByStatus);
 
 //get all bookings held by particular user id
 router
   .route("/customer/:customer")
-  .get(CheckAuth, CheckRole("admin", "operators", "manager"), getAllCustomersBookings);
+  .get(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources"), getAllCustomersBookings);
 
 //get all bookings held by particular car id
 router
   .route("/car/:car")
-  .get(CheckAuth, CheckRole("admin", "operators", "manager"), getAllCustomersRentedCar);
+  .get(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources"), getAllCustomersRentedCar);
 
 router
   .route("/:id")
-  .get(CheckAuth,    CheckRole("admin", "operators", "manager"), getBooking)
+  .get(CheckAuth,    CheckRole("admin", "operators", "manager", "human_resources"), getBooking)
   .patch(CheckAuth,  CheckRole("admin", "operators", "manager"), updateBooking)
   .delete(CheckAuth, CheckRole("admin", "operators", "manager"), deleteBooking);
 

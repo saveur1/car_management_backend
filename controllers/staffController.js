@@ -154,7 +154,8 @@ export const getAllStaff = asyncCatch(async (req, res, next) => {
     const staff = await Staff.find()
                              .populate("position")
                              .populate("salary")
-                             .sort({ _id: -1});
+                             .sort({ _id: -1})
+                             .select("-password");
     res.status(200).json({
         success: true,
         staff
@@ -166,7 +167,8 @@ export const getAllStaff = asyncCatch(async (req, res, next) => {
 export const getStaffById = asyncCatch(async (req, res, next) => {
     const staff = await Staff.findById(req.params.id)
                              .populate("position")
-                             .populate("salary");
+                             .populate("salary")
+                             .select("-password");
     if (!staff) {
         return res.status(404).json({
             success: false,
@@ -230,7 +232,8 @@ export const getStaffByPosition = asyncCatch(async (req, res, next) => {
     const staff = await Staff.find({ position: req.params.position })
                              .populate("position")
                              .populate("salary")
-                             .sort({ _id: -1});
+                             .sort({ _id: -1})
+                             .select("-password");
      if (!staff) {
        return res.status(404).json({
          success: false,
@@ -248,7 +251,8 @@ export const getStaffByJobType = asyncCatch(async (req, res, next) => {
     const staffs = await Staff.find({ jobType: req.params.jobtype })
                               .populate("position")
                               .populate("salary")
-                              .sort({ _id: -1});
+                              .sort({ _id: -1})
+                              .select("-password");
      
     res.status(200).json({
         success: true,

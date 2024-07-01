@@ -17,7 +17,7 @@ import {
 import { CheckAuth, CheckRole } from '../middlewares/CheckAuth.js';
 
 router.route("/")
-      .get(CheckAuth, CheckRole("admin", "humana_resources", "accountant"), getAllJobs)
+      .get(CheckAuth, CheckRole("admin", "human_resources", "accountant"), getAllJobs)
       .post(CheckAuth, CheckRole("admin", "human_resources","accountant"), registerJob);
 
 //Salaries routes, a whole CRUD for salaries
