@@ -6,11 +6,6 @@ const notificationSchema = new mongoose.Schema(
       ref: "Booking",
       required: false,
     },
-    car: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Car",
-      required: false,
-    },
     message: {
       type: String,
       required: true,

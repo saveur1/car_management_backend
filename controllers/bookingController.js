@@ -1,6 +1,8 @@
 import Booking from "../models/bookingModel.js";
 import asyncCatch from "../middlewares/asyncCatch.js";
 import Car from "../models/carsModel.js";
+import schedule from "node-schedule";
+import Notification from "../models/notificationModel.js";
 
 // Create a new booking
 export const createBooking = asyncCatch(async (req, res) => {
@@ -36,6 +38,28 @@ export const createBooking = asyncCatch(async (req, res) => {
         break;
         
   }
+
+  //pick up date notification
+  const pickUpDate = new Date(req.body.pickUpDate);
+
+  schedule.scheduleJob("booking pick up date", { start: pickUpDate},async function(){
+    await Notification.create({
+        booking: booking._id,
+        isread: false,
+        message: "Booking Pick up date is about to expire",
+    });
+  })
+
+  //return date notification
+  const returnDate = new Date(req.body.returnDate);
+
+  schedule.scheduleJob("booking return date", { start: returnDate},async function(){
+    await Notification.create({
+        booking: booking._id,
+        isread: false,
+        message: "Booking return date is about to expire",
+    });
+  })
 
   //save both booking and car
   await booking.save();
