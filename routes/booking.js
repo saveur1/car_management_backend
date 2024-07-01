@@ -20,7 +20,7 @@ router
   .get(CheckAuth,  CheckRole("admin", "operators", "manager", "human_resources"), getAllBookings);
 router
   .route("/status/:status")
-  .get(CheckAuth, CheckRole("admin", "operators", "manager", "human_resouces"), getBookingsByStatus);
+  .get(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources"), getBookingsByStatus);
 
 //get all bookings held by particular user id
 router
