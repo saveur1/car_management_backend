@@ -17,24 +17,24 @@ const router = express.Router();
 router
   .route("/")
   .post(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources"), createBooking)
-  .get(CheckAuth,  CheckRole("admin", "operators", "manager", "human_resources"), getAllBookings);
+  .get(CheckAuth,  CheckRole("admin", "operators", "manager", "human_resources", "accountant"), getAllBookings);
 router
   .route("/status/:status")
-  .get(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources"), getBookingsByStatus);
+  .get(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources", "accountant"), getBookingsByStatus);
 
 //get all bookings held by particular user id
 router
   .route("/customer/:customer")
-  .get(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources"), getAllCustomersBookings);
+  .get(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources", "accountant"), getAllCustomersBookings);
 
 //get all bookings held by particular car id
 router
   .route("/car/:car")
-  .get(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources"), getAllCustomersRentedCar);
+  .get(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources", "accountant"), getAllCustomersRentedCar);
 
 router
   .route("/:id")
-  .get(CheckAuth,    CheckRole("admin", "operators", "manager", "human_resources"), getBooking)
+  .get(CheckAuth,    CheckRole("admin", "operators", "manager", "human_resources", "accountant"), getBooking)
   .patch(CheckAuth,  CheckRole("admin", "operators", "manager"), updateBooking)
   .delete(CheckAuth, CheckRole("admin", "operators", "manager"), deleteBooking);
 

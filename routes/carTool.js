@@ -1,4 +1,4 @@
-    /**         ADMIN, OPERATORS AND MANGER */
+    /**         ADMIN, OPERATORS, ACCOUNTANT AND MANGER */
 
 import express from "express";
 import {
@@ -17,11 +17,11 @@ const router = express.Router();
 router
   .route("/")
   .post(CheckAuth, CheckRole("admin", "operators", "manager"),upload.single("photo"), createCarTool)
-  .get(CheckAuth,  CheckRole("admin", "operators", "manager"), getAllCarTools);
+  .get(CheckAuth,  CheckRole("admin", "operators", "manager", "accountant"), getAllCarTools);
 
 router
   .route("/:id")
-  .get(CheckAuth,    CheckRole("admin", "operators", "manager"), getCarTool)
+  .get(CheckAuth,    CheckRole("admin", "operators", "manager", "accountant"), getCarTool)
   .patch(CheckAuth,  CheckRole("admin", "operators", "manager"), upload.single("photo"), updateCarTool)
   .delete(CheckAuth, CheckRole("admin", "manager"), deleteCarTool);
 

@@ -1,6 +1,6 @@
 
 /*
-                ADMIN, OPERATORS, AND MANAGER
+                ADMIN, OPERATORS, ACCOUNTANT AND MANAGER
 */
 import express from "express";
 import {
@@ -19,7 +19,7 @@ const router = express.Router();
 router
   .route("/")
   .post(CheckAuth, CheckRole("admin", "operators", "manager"), createFuel)
-  .get(CheckAuth, CheckRole("admin", "operators", "manager"), getAllFuels);
+  .get(CheckAuth, CheckRole("admin", "operators", "manager", "accountant"), getAllFuels);
 
 router
   .route("/employee/:employee")
@@ -27,11 +27,11 @@ router
 
 router
   .route("/car/:carId")
-  .get(CheckAuth, CheckRole("admin", "operators", "manager"), getFuelsByCar);
+  .get(CheckAuth, CheckRole("admin", "operators", "manager", "accountant"), getFuelsByCar);
 
 router
   .route("/:id")
-  .get(CheckAuth,    CheckRole("admin", "operators", "manager"), getFuel)
+  .get(CheckAuth,    CheckRole("admin", "operators", "manager", "accountant"), getFuel)
   .put(CheckAuth,    CheckRole("admin", "operators", "manager"), updateFuel)
   .delete(CheckAuth, CheckRole("admin", "manager"), deleteFuel);
 

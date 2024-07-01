@@ -1,4 +1,4 @@
-/*                      ADMIN, MANAGER AND HUMAN RESOURCES 
+/*                      ADMIN, MANAGER, ACCOUNTANT AND HUMAN RESOURCES 
 */
 import express from 'express';
 const router = express.Router();
@@ -29,19 +29,19 @@ router.route("/password/update").put(CheckAuth, updateUserPassword);
 
 //users routes, awhole CRUD for users
 router.route("/users")
-            .get(CheckAuth, CheckRole("admin", "operators", "human_resources","manager"), getAllUsers); //get all users
+            .get(CheckAuth, CheckRole("admin", "operators", "human_resources","manager", "accountant"), getAllUsers); //get all users
 
 router.route("/register")
             .post(CheckAuth, CheckRole("admin", "operators", "human_resources","manager"), registerUser); //register user
 
 router.route("/users/category/:category")
-            .get(CheckAuth, CheckRole("admin", "operators", "human_resources","manager"), getUserByCategory);
+            .get(CheckAuth, CheckRole("admin", "operators", "human_resources","manager", "accountant"), getUserByCategory);
 
 router.route("/users/role/:role")
-            .get(CheckAuth, CheckRole("admin", "operators", "human_resources","manager"), getUserByRole);
+            .get(CheckAuth, CheckRole("admin", "operators", "human_resources","manager", "accountant"), getUserByRole);
 
 //get single User, delete and update
-router.route("/users/:id").get(CheckAuth,   CheckRole("admin", "operators", "human_resources","manager"), getUserDetails)
+router.route("/users/:id").get(CheckAuth,   CheckRole("admin", "operators", "human_resources","manager", "accountant"), getUserDetails)
                           .put(CheckAuth,   CheckRole("admin", "operators", "human_resources","manager"), updateUserInfo)
                           .delete(CheckAuth,CheckRole("admin", "human_resources","manager"), deleteUser);  //Operator not allowed to delete anything
 

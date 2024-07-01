@@ -1,5 +1,5 @@
 /*
-                    ADMIN, OPERATORS AND MANAGER
+                    ADMIN, OPERATORS, ACCOUNTANT AND MANAGER
 */
 
 import express from "express";
@@ -17,11 +17,11 @@ const router = express.Router();
 router
   .route("/")
   .post(CheckAuth, CheckRole("admin", "operators","manager"), createAsset)
-  .get(CheckAuth, CheckRole("admin", "operators", "manager"), getAllAssets);
+  .get(CheckAuth, CheckRole("admin", "operators", "manager","accountant"), getAllAssets);
 
 router
   .route("/:id")
-  .get(CheckAuth,    CheckRole("admin", "operators", "manager"), getAsset)
+  .get(CheckAuth,    CheckRole("admin", "operators", "manager","accountant"), getAsset)
   .put(CheckAuth,    CheckRole("admin", "operators", "manager"), updateAsset)
   .delete(CheckAuth, CheckRole("admin", "manager"), deleteAsset);
 
