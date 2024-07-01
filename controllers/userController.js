@@ -3,8 +3,7 @@ import cloudinary from "cloudinary";
 import User from "../models/userModel.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import sendToken from "../utils/sendToken.js";
-import sendEmail from "../utils/sendEmail.js";
-import crypto from "crypto";
+import schedule from "node-schedule";
 
 
 //Register User => /api/v1/register
@@ -107,6 +106,12 @@ export const getAllUsers = asyncCatch(async(req,res,next)=>{
 
     const users = await User.find()
                             .sort({ _id: -1});
+    
+    // Create a job that runs at 2:30 PM on July 1, 2024
+    const startTime = new Date("2024-07-01T17:06:00");
+    const job = schedule.scheduleJob("myJob", { start: startTime }, function() {  //job.spec: start, end, rule
+        console.log("Job executed!");
+    });
 
     res.status(200).json({
         success:true,
