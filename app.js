@@ -19,7 +19,7 @@ import carTools from "./routes/carTool.js";
 import salaries from "./routes/salaries.js";
 import jobs from "./routes/jobs.js";
 import notification from "./routes/notification.js";
-
+import activities from "./routes/activities.js"
 import { swaggerDocumentation } from "./docs/swagger.js";
 
 
@@ -54,6 +54,7 @@ app.use("/api/v1/assets", assetRoutes);
 app.use("/api/v1/car-tools", carTools);
 app.use("/api/v1/salaries", salaries);
 app.use("/api/v1/notifications", notification);
+app.use("/api/v1/activities", activities);
 app.use("/api/v1/jobs", jobs);
 
 //SWAGGER DOCUMENTATION(/api/docs)

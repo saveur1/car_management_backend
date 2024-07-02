@@ -1,24 +1,30 @@
 import CarTool from "../models/carToolModel.js";
 import asyncCatch from "../middlewares/asyncCatch.js";
 import cloudinary from "cloudinary";
+import Activities from "../models/activityModel.js";
 
 // Create a new car tool entry
 export const createCarTool = asyncCatch(async (req, res) => {
-
   //upload image to cloudinary
   const image_url = await cloudinary.v2.uploader.upload(req.file.path, {
     folder: "Car Tools",
     use_filename: true,
-    unique_filename: false
+    unique_filename: false,
   });
 
   //append image to Car Tool object
   const carTool = new CarTool({
-        ...req.body,
-        photo: image_url.secure_url
+    ...req.body,
+    photo: image_url.secure_url,
   });
 
   await carTool.save();
+
+  //add new activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Created Car Tool",
+  });
 
   res.status(201).json({
     status: "success",
@@ -53,21 +59,20 @@ export const getCarTool = asyncCatch(async (req, res) => {
 
 // Update a car tool entry
 export const updateCarTool = asyncCatch(async (req, res) => {
+  const data = { ...req.body };
 
-  const data = {...req.body };
-
-  if(req.file){
+  if (req.file) {
     //upload image to cloudinary
     const image_url = await cloudinary.v2.uploader.upload(req.file.path, {
-        folder: "Car Tools",
-        use_filename: true,
-        unique_filename: false
+      folder: "Car Tools",
+      use_filename: true,
+      unique_filename: false,
     });
 
-    data["photo"]= image_url.secure_url;
-}
-    
-  const carTool = await CarTool.findByIdAndUpdate(req.params.id, data,{
+    data["photo"] = image_url.secure_url;
+  }
+
+  const carTool = await CarTool.findByIdAndUpdate(req.params.id, data, {
     new: true,
     runValidators: true,
   });
@@ -78,6 +83,12 @@ export const updateCarTool = asyncCatch(async (req, res) => {
       message: "No car tool entry found with that ID",
     });
   }
+
+  //update activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Updated Car Tool",
+  });
   res.status(200).json({
     status: "success",
     carTool,
@@ -93,6 +104,13 @@ export const deleteCarTool = asyncCatch(async (req, res) => {
       message: "No car tool entry found with that ID",
     });
   }
+
+  //Deleted activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Car Toll deleted",
+  });
+
   res.status(200).json({
     status: "success",
     message: "Car tool entry was deleted successfully",

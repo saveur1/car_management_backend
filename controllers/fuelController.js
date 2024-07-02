@@ -1,10 +1,17 @@
 import Fuel from "../models/fuelModel.js";
 import asyncCatch from "../middlewares/asyncCatch.js";
+import Activities from "../models/activityModel.js";
 
 // Create a new fuel entry
 export const createFuel = asyncCatch(async (req, res) => {
   const fuel = new Fuel(req.body);
   await fuel.save();
+
+  //add new activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Fuel Created",
+  });
   res.status(201).json({
     status: "success",
     fuel,
@@ -52,6 +59,12 @@ export const updateFuel = asyncCatch(async (req, res) => {
       message: "No fuel entry found with that ID",
     });
   }
+
+  //updated activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Fuel Updated",
+  });
   res.status(200).json({
     status: "success",
     fuel,
@@ -67,6 +80,12 @@ export const deleteFuel = asyncCatch(async (req, res) => {
       message: "No fuel entry found with that ID",
     });
   }
+
+  //deleted activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Fuel deleted",
+  });
   res.status(200).json({
     status: "success",
     message: "Fuel entry was deleted successfully",
