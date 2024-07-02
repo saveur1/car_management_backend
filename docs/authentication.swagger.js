@@ -109,4 +109,44 @@ export const authentication = {
             }
         }
     },
+    "/api/v1/staff/password/update":{
+        put:{
+            tags:["Authentication"],
+            requestBody:{
+                content:{
+                    "application/json":{
+                        schema:{
+                            type:"object",
+                            properties:{
+                                oldPassword:{
+                                    type:"string",
+                                    description:"Old Password",
+                                    example:"782848",
+                                },
+                                password:{
+                                    type:"string",
+                                    description:"New Password",
+                                    example:"B333@123",
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            responses:{
+                200:{
+                    content:{
+                        "application/json":{
+                            type:"object",
+                            example:{
+                                status:"success",
+                                message:"",
+                                result:{}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
 }

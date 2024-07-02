@@ -6,10 +6,6 @@ const router = express.Router();
 // Import the controllers (userController.js) to use its database functions.
 import { 
     registerUser, 
-    logoutUser,
-    getUserProfile, 
-    updateUserPassword, 
-    updateUserProfile,
     getAllUsers,
     getUserDetails,
     updateUserInfo,
@@ -19,13 +15,6 @@ import {
 } from "../controllers/userController.js";
 
 import { CheckAuth, CheckRole } from '../middlewares/CheckAuth.js';
-
-//Authentication part for car rental system
-router.route("/logout").get(logoutUser);
-
-router.route("/profile").get(CheckAuth,getUserProfile);
-router.route("/profile/update").put(CheckAuth,updateUserProfile);
-router.route("/password/update").put(CheckAuth, updateUserPassword);
 
 //users routes, awhole CRUD for users
 router.route("/users")

@@ -155,6 +155,35 @@ export const userResetPassword = asyncCatch(async(req,res,next)=>{
     sendToken(200,staff,res);
 });
 
+// Get user profile of logged user => /api/v1/staff/profile
+export const getUserProfile = asyncCatch(async(req,res,next)=>{
+    
+    res.status(200).json({
+        success: true,
+        staff: req.staff
+    });
+})
+
+//Update Staff password => /api/v1/staff/password/update
+
+export const updateUserPassword = asyncCatch(async(req,res,next)=>{
+
+    const staff = await Staff.findById(req.staff._id).select("+password");
+
+    //compare if old password match to what is in database;
+    const isMatch = await staff.comparePassword(req.body.oldPassword);
+
+    if(!isMatch){
+        return next(new ErrorHandler("Existing Password is Incorrect",400));
+    }
+
+    staff.password = req.body.password;
+
+    await user.save();
+
+    sendToken(200, user, res);
+})
+
 // @desc    Get all staff
 // @route   GET /api/v1/staff
 export const getAllStaff = asyncCatch(async (req, res, next) => {

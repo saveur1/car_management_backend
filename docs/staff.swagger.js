@@ -428,4 +428,30 @@ export const StaffDoc = {
       },
     },
   },
+  "/api/v1/staff/profile": {
+    get: {
+      tags: ["Staff"],
+      security: [
+        {
+          token: [],
+        },
+      ],
+      responses: {
+        200: {
+          description: "Staff Profile fetched for user who has authenticated",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                example: {
+                  success: true,
+                  staff: {},
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
 };
