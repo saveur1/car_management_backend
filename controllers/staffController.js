@@ -35,12 +35,14 @@ export const createStaff = asyncCatch(async (req, res,next) => {
    await salary.save();
 
    //send email with password and email address
-   schedule.scheduleJob("send staff email", {start: new Date()}, function(){
-        sendEmail({
+   const job = schedule.scheduleJob("send staff email", {start: new Date()},async function(){
+        await sendEmail({
             email: req.body.email,
             subject: "Welcome to Techspherelabs",
             message: staffEmail(req, req.body.email, req.body.password, `${req.body.firstname} ${req.body.lastname}`)
         });
+
+        job.cancel();
    })
 
     res.status(200).json({
