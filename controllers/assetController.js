@@ -1,10 +1,17 @@
 import Asset from "../models/assetModel.js";
 import asyncCatch from "../middlewares/asyncCatch.js";
+import Activities from "../models/activityModel.js";
 
 // Create a new asset
 export const createAsset = asyncCatch(async (req, res) => {
   const asset = new Asset(req.body);
   await asset.save();
+
+  //add new activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Asset Created",
+  });
   res.status(201).json({
     status: "success",
     asset,
@@ -48,6 +55,12 @@ export const updateAsset = asyncCatch(async (req, res) => {
       message: "No asset found with that ID",
     });
   }
+
+  //update activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Updated Asset",
+  });
   res.status(200).json({
     status: "success",
     asset,
@@ -63,6 +76,12 @@ export const deleteAsset = asyncCatch(async (req, res) => {
       message: "No asset found with that ID",
     });
   }
+
+  //deleted activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Deleted Asset",
+  });
   res.status(200).json({
     status: "success",
     message: "Asset was deleted successfully",

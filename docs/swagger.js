@@ -12,6 +12,7 @@ import { CarToolDoc } from "./carTool.swagger.js";
 import { SalariesDoc } from "./salaries.swagger.js";
 import { JobsDoc } from "./jobs.swagger.js";
 import { NotificationDoc } from "./notification.swagger.js"; 
+import { ActivitiesDoc } from "./activities.swagger.js";
 
 
 const Options = {
@@ -39,6 +40,7 @@ const Options = {
       { name: "Asset", description: "Asset Management" },
       { name: "Car Tool", description: "car tools Management" },
       { name: "Notification", description: "send notification" },
+      { name: "Activities", description: "Track activity with us" },
     ],
     servers: [
       {
@@ -71,6 +73,7 @@ const Options = {
       ...SalariesDoc,
       ...JobsDoc,
       ...NotificationDoc,
+      ...ActivitiesDoc,
     },
   },
   apis: ["./routes/*.js"],

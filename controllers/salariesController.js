@@ -1,17 +1,21 @@
 import asyncCatch from "../middlewares/asyncCatch.js";
 import Salary from "../models/salariesModel.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
+import Activities from "../models/activityModel.js";
 
 //Register Salary =>POST /api/v1/salaries
 export const registerSalary = asyncCatch(async(req,res,next)=>{
+  const salary = await Salary.create(req.body);
 
-    const salary = await Salary.create(req.body); 
-
-    res.status(200).json({
-        success:true,
-        salary
-    });
-
+  //add new activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Salary Group Added",
+  });
+  res.status(200).json({
+    success: true,
+    salary,
+  });
 });
 
 //Get all salaries => Get /api/v1/salaries -> admin only route
@@ -47,32 +51,42 @@ export const getSalaryDetails = asyncCatch(async(req,res,next)=>{
 
 //Update Salary details =>PUT /api/salaries/:id -> admin only route
 export const updateSalaryInfo = asyncCatch(async(req,res,next)=>{
+  const salary = await Salary.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
 
-    const salary = await Salary.findByIdAndUpdate(req.params.id, req.body,{
-        new:true,
-        runValidators:true,
-        useFindAndModify:false
-    });
-
-    res.status(200).json({
-        success:true,
-        salary
-    }); 
+  //update activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Salary Group Updated",
+  });
+  res.status(200).json({
+    success: true,
+    salary,
+  });
 });
 
 //Delete Salary => DELETE /api/v1/salaries/:id
 export const deleteSalary = asyncCatch(async(req,res,next)=>{
+  const salary = await Salary.findById(req.params.id);
 
-    const salary = await Salary.findById(req.params.id);
+  if (!salary) {
+    return next(
+      new ErrorHandler(`Salary with Id ${req.params.id} is not Registered`, 400)
+    );
+  }
 
-    if(!salary){
-        return next(new ErrorHandler(`Salary with Id ${req.params.id} is not Registered`,400));
-    }
+  await Salary.findByIdAndDelete(req.params.id);
 
-    await Salary.findByIdAndDelete(req.params.id);
-
-    res.status(200).json({
-        success:true,
-        message:"Salary is Deleted Successfully."
-    });
+  //deleted activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Salary Group Deleted",
+  });
+  res.status(200).json({
+    success: true,
+    message: "Salary is Deleted Successfully.",
+  });
 })

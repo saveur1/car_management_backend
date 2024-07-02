@@ -4,17 +4,20 @@ import Car from "../models/carsModel.js";
 import Booking from "../models/bookingModel.js";
 import Fuel from "../models/fuelModel.js";
 import Garage from "../models/garageModel.js";
+import Activities from "../models/activityModel.js";
 
 //Register Car =>POST /api/v1/cars/create
 export const registerCar = asyncCatch(async(req,res,next)=>{
-
-    const car = await Car.create(req.body); 
-
-    res.status(200).json({
-        success:true,
-        car
-    });
-
+  const car = await Car.create(req.body);
+  //add new activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Created Car",
+  });
+  res.status(200).json({
+    success: true,
+    car,
+  });
 });
 
 //Get all cars => Get /api/v1/cars -> admin only route
@@ -46,44 +49,52 @@ export const getCarDetails = asyncCatch(async(req,res,next)=>{
 
 //Update Car details =>PUT /api/cars/:id -> admin only route
 export const updateCarInfo = asyncCatch(async(req,res,next)=>{
-
-    const car = await Car.findByIdAndUpdate(req.params.id, req.body,{
-        new:true,
-        runValidators:true,
-        useFindAndModify:false
-    });
-
-    res.status(200).json({
-        success:true,
-        car
-    }); 
+  const car = await Car.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+  //update activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Updated Car",
+  });
+  res.status(200).json({
+    success: true,
+    car,
+  });
 });
 
 //Delete Car => DELETE /api/v1/cars/:id
 export const deleteCar = asyncCatch(async(req,res,next)=>{
+  const car = await Car.findById(req.params.id);
 
-    const car = await Car.findById(req.params.id);
+  if (!car) {
+    return next(
+      new ErrorHandler(`Car with Id ${req.params.id} is not Registered`, 400)
+    );
+  }
 
-    if(!car){
-        return next(new ErrorHandler(`Car with Id ${req.params.id} is not Registered`,400));
-    }
+  //Delete all bookings for car
+  await Booking.deleteMany({ car: req.params.id });
 
-    //Delete all bookings for car
-    await Booking.deleteMany({car: req.params.id});
+  //Delete all Fuels for car
+  await Fuel.deleteMany({ car: req.params.id });
 
-    //Delete all Fuels for car
-    await Fuel.deleteMany({car: req.params.id});
+  //Delete all Garage for car
+  await Garage.deleteMany({ car: req.params.id });
 
-    //Delete all Garage for car
-    await Garage.deleteMany({car: req.params.id});
+  await Car.findByIdAndDelete(req.params.id);
 
-
-    await Car.findByIdAndDelete(req.params.id);
-
-    res.status(200).json({
-        success:true,
-        message:"Car is Deleted Successfully."
-    });
+  //delete activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Deleted Car",
+  });
+  res.status(200).json({
+    success: true,
+    message: "Car is Deleted Successfully.",
+  });
 })
 
 //get car by category => GET /api/v1/cars/category/:category

@@ -4,15 +4,19 @@ import User from "../models/userModel.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import sendToken from "../utils/sendToken.js";
 import schedule from "node-schedule";
+import Activities from "../models/activityModel.js";
 
 
 //Register User => /api/v1/register
 export const registerUser = asyncCatch(async(req,res,next)=>{
+  const user = await User.create({ ...req.body });
 
-    const user = await User.create({...req.body});
-
-    sendToken(201,user,res);
-
+  sendToken(201, user, res);
+  //add new activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "User Registared",
+  });
 });
 
 
@@ -46,34 +50,44 @@ export const getUserDetails = asyncCatch(async(req,res,next)=>{
 
 //Update user details => /api/user/:id -> admin only route
 export const updateUserInfo = asyncCatch(async(req,res,next)=>{
+  const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
 
-    const user = await User.findByIdAndUpdate(req.params.id, req.body ,{
-        new:true,
-        runValidators:true,
-        useFindAndModify:false
-    });
-
-    res.status(200).json({
-        success:true,
-        user
-    }); 
+  //update activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "User Updated",
+  });
+  res.status(200).json({
+    success: true,
+    user,
+  });
 });
 
 //Delete user => /api/v1/user/:id
 export const deleteUser = asyncCatch(async(req,res,next)=>{
+  const user = await User.findById(req.params.id);
 
-    const user = await User.findById(req.params.id);
+  if (!user) {
+    return next(
+      new ErrorHandler(`User with Id ${req.params.id} is not Registered`, 400)
+    );
+  }
 
-    if(!user){
-        return next(new ErrorHandler(`User with Id ${req.params.id} is not Registered`,400));
-    }
+  await User.findByIdAndDelete(req.params.id);
 
-    await User.findByIdAndDelete(req.params.id);
-
-    res.status(200).json({
-        success:true,
-        message:"User is Deleted."
-    });
+  //delete activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Deleted User",
+  });
+  res.status(200).json({
+    success: true,
+    message: "User is Deleted.",
+  });
 })
 
 //get users by category =>GET /api/v1/users/category/:category

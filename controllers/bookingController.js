@@ -71,7 +71,7 @@ export const createBooking = asyncCatch(async (req, res) => {
   //add new activies
   await Activities.create({
     staff: req.staff._id,
-    activityName: "Booking created",
+    activityName: "Created Booking",
   });
 
   //save both booking and car
@@ -133,56 +133,58 @@ export const getBookingsByStatus = asyncCatch(async (req, res) => {
 });
 // Update a booking
 export const updateBooking = asyncCatch(async (req, res) => {
-
   //get previous booking first
   const prevBooking = await Booking.findById(req.params.id);
 
-  if(!prevBooking){
-    return next(new ErrorHandler(`No booking found with that ID`,400))
+  if (!prevBooking) {
+    return next(new ErrorHandler(`No booking found with that ID`, 400));
   }
 
   //find old car and update status
-  await Car.findByIdAndUpdate(prevBooking.car, {current_status: "available"});
+  await Car.findByIdAndUpdate(prevBooking.car, { current_status: "available" });
 
   //Saving new Incoming booking
   const booking = await Booking.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
-    runValidators: true
+    runValidators: true,
   });
 
-
   //update new car status depending on booking status
-  switch(req.body.bookingStatus){
+  switch (req.body.bookingStatus) {
     case "pending":
-        await Car.findByIdAndUpdate(booking.car,{current_status: "under_use"});
-        break;
+      await Car.findByIdAndUpdate(booking.car, { current_status: "under_use" });
+      break;
 
     case "confirm":
-        await Car.findByIdAndUpdate(booking.car,{current_status: "under_use"});
-        break;
+      await Car.findByIdAndUpdate(booking.car, { current_status: "under_use" });
+      break;
 
     case "cancelled":
-        await Car.findByIdAndUpdate(booking.car,{current_status: "available"});
-        break;
+      await Car.findByIdAndUpdate(booking.car, { current_status: "available" });
+      break;
 
     case "expired":
-        await Car.findByIdAndUpdate(booking.car,{current_status: "available"});
-        break;
+      await Car.findByIdAndUpdate(booking.car, { current_status: "available" });
+      break;
 
     case "completed":
-        await Car.findByIdAndUpdate(booking.car,{current_status: "available"});
-        break;
-        
+      await Car.findByIdAndUpdate(booking.car, { current_status: "available" });
+      break;
+
     default:
-        await Car.findByIdAndUpdate(booking.car,{current_status: "under_use"});
-        break;
-        
+      await Car.findByIdAndUpdate(booking.car, { current_status: "under_use" });
+      break;
   }
 
+  //update activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Updated Booking",
+  });
 
   res.status(200).json({
     status: "success",
-    booking
+    booking,
   });
 });
 
@@ -197,11 +199,15 @@ export const deleteBooking = asyncCatch(async (req, res) => {
   }
 
   //find car ID and make it's status available to be booked
-  await Car.findByIdAndUpdate(booking.car,{current_status: "available"});
+  await Car.findByIdAndUpdate(booking.car, { current_status: "available" });
 
   //deleted booking then from database
   await Booking.findByIdAndDelete(req.params.id);
-
+  //delete activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Deleted Booking",
+  });
   res.status(204).json({
     status: "success",
     message: "Booking was deleted successfully",

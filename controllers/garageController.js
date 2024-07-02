@@ -1,15 +1,22 @@
 import Garage from "../models/garageModel.js";
 import asyncCatch from "../middlewares/asyncCatch.js";
 import Car from "../models/carsModel.js";
+import Activities from "../models/activityModel.js";
 
 // Create a new garage entry
 export const createGarage = asyncCatch(async (req, res) => {
   const garage = new Garage(req.body);
 
   //Update car to be under maintenance
-  await Car.findByIdAndUpdate(req.body.car, {current_status: "under_maintance"});
+  await Car.findByIdAndUpdate(req.body.car, {
+    current_status: "under_maintance",
+  });
   await garage.save();
-
+  //add new activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Garage Created",
+  });
   //return response
   res.status(201).json({
     status: "success",
@@ -59,6 +66,12 @@ export const updateGarage = asyncCatch(async (req, res) => {
       message: "No garage entry found with that ID",
     });
   }
+
+  //updated activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Garage Updated",
+  });
   res.status(200).json({
     status: "success",
     garage,
@@ -74,6 +87,12 @@ export const deleteGarage = asyncCatch(async (req, res) => {
       message: "No garage entry found with that ID",
     });
   }
+
+  //Deleted activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Garage Deleted",
+  });
   res.status(200).json({
     status: "success",
     message: "Garage entry was deleted successfully",
