@@ -6,6 +6,8 @@ import cloudinary from "cloudinary";
 import Salary from "../models/salariesModel.js";
 import sendEmail from "../utils/sendEmail.js";
 import { emailFormat } from "../config/emailDoc.js";
+import schedule from "node-schedule";
+import { staffEmail } from "../config/staffEmailTemplate.js";
 
 // @desc    Create new staff
 // @route   POST /api/v1/staff
@@ -32,9 +34,14 @@ export const createStaff = asyncCatch(async (req, res,next) => {
    salary.employee.push(staff._id);
    await salary.save();
 
-   
-   //send email to user for password
-
+   //send email with password and email address
+   schedule.scheduleJob("send staff email", {start: new Date()}, function(){
+        sendEmail({
+            email: req.body.email,
+            subject: "Welcome to Techspherelabs",
+            message: staffEmail(req, req.body.email, req.body.password, `${req.body.firstname} ${req.body.lastname}`)
+        });
+   })
 
     res.status(200).json({
       success: true,
