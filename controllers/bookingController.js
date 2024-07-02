@@ -43,23 +43,29 @@ export const createBooking = asyncCatch(async (req, res) => {
   //pick up date notification
   const pickUpDate = new Date(req.body.pickUpDate);
 
-  schedule.scheduleJob("booking pick up date", { start: pickUpDate},async function(){
+  const pickUpJob=schedule.scheduleJob("booking pick up date", { start: pickUpDate},async function(){
     await Notification.create({
         booking: booking._id,
         isread: false,
         message: "Booking Pick up date is about to expire",
+        title: "Booking Pick Date"
     });
+
+    pickUpJob.cancel();
   })
 
   //return date notification
   const returnDate = new Date(req.body.returnDate);
 
-  schedule.scheduleJob("booking return date", { start: returnDate},async function(){
+  const returnJob = schedule.scheduleJob("booking return date", { start: returnDate},async function(){
     await Notification.create({
         booking: booking._id,
         isread: false,
         message: "Booking return date is about to expire",
+        title: "Booking return date"
     });
+
+    returnJob.cancel();
   })
 
   //add new activies

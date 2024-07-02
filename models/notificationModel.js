@@ -6,6 +6,10 @@ const notificationSchema = new mongoose.Schema(
       ref: "Booking",
       required: false,
     },
+    title: {
+        type: String,
+        required: true,
+    },
     message: {
       type: String,
       required: true,

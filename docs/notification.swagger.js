@@ -25,6 +25,12 @@ export const NotificationDoc = {
                   description: "Notification message",
                   required: true,
                 },
+                title: {
+                    type: "string",
+                    example: "Confirmed Booking",
+                    description: "Notification message",
+                    required: true,
+                },
                 isread: {
                   type: "boolean",
                   example: false,
@@ -145,6 +151,12 @@ export const NotificationDoc = {
                   example: "Your booking has been confirmed.",
                   description: "Notification message",
                   required: false,
+                },
+                title: {
+                    type: "string",
+                    example: "Confirmed Booking",
+                    description: "Notification message",
+                    required: true,
                 },
                 isread: {
                   type: "boolean",
