@@ -48,7 +48,7 @@ export const createBooking = asyncCatch(async (req, res) => {
         booking: booking._id,
         isread: false,
         message: "Booking Pick up date is about to expire",
-        title: "Booking Pick Date"
+        title: "Booking"
     });
 
     pickUpJob.cancel();
@@ -62,7 +62,7 @@ export const createBooking = asyncCatch(async (req, res) => {
         booking: booking._id,
         isread: false,
         message: "Booking return date is about to expire",
-        title: "Booking return date"
+        title: "Booking"
     });
 
     returnJob.cancel();
