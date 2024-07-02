@@ -219,7 +219,7 @@ export const staffEmail = (req, email, password, names)=> `
 <table cellpadding="0" cellspacing="0" width="100%" style="border-radius:5px;border-collapse:separate">
 <tbody>
 <tr>
-<td align="center" class="esd-block-button es-p10t es-p10b"><span class="es-button-border" style="border-radius:6px"><a href="https://${req.headers.origin}/login" class="es-button" target="_blank" style="border-left-width:30px;border-right-width:30px;border-radius:6px">LOGIN NOW</a></span></td>
+<td align="center" class="esd-block-button es-p10t es-p10b"><span class="es-button-border" style="border-radius:6px"><a href="${req.headers.origin}/login" class="es-button" target="_blank" style="border-left-width:30px;border-right-width:30px;border-radius:6px">LOGIN NOW</a></span></td>
 </tr>
 <tr>
 <td align="left" class="esd-block-text es-p20t es-p10b" data-listener-added_d03e8ab7="true">
