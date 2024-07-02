@@ -72,17 +72,50 @@ export const getNotification = asyncCatch(async (req, res) => {
 
 // Update a notification
 export const updateNotification = asyncCatch(async (req, res) => {
-  const notification = await Notification.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    }).populate("booking");
+  const notificationEdit = await Notification.findByIdAndUpdate(req.params.id, req.body, {
+                                            new: true,
+                                            runValidators: true,
+                                        })
+                                        .populate("booking")
+                                        .populate({
+                                            path: "booking",
+                                            populate: {
+                                                path: "customer",
+                                                model: "User"
+                                            }
+                                        })
+                                        .populate({
+                                            path: "booking",
+                                            populate: {
+                                                path: "car",
+                                                model: "Car"
+                                            }
+                                        });
 
-  if(!notification) {
+  if(!notificationEdit) {
     return res.status(404).json({
       status: "fail",
       message: "No notification found with that ID",
     });
   }
+
+  const notification = await Notification.findById(req.params.id)
+                                        .populate("booking")
+                                        .populate({
+                                            path: "booking",
+                                            populate: {
+                                                path: "customer",
+                                                model: "User"
+                                            }
+                                        })
+                                        .populate({
+                                            path: "booking",
+                                            populate: {
+                                                path: "car",
+                                                model: "Car"
+                                            }
+                                        });
+
   res.status(200).json({
     status: "success",
     notification,
