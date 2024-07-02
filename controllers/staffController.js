@@ -231,14 +231,20 @@ export const updateStaffById = asyncCatch(async (req, res, next) => {
             use_filename: true
         });
 
-        staff["image"] = cloudinary_image.secure_url;
+        staffToUpdate["image"] = cloudinary_image.secure_url;
 
     }
-    const staff = await Staff.findByIdAndUpdate(req.params.id, staffToUpdate ,{
+    await Staff.findByIdAndUpdate(req.params.id, staffToUpdate ,{
           new: true,
           runValidators: true,
           useFindAndModify: false 
-        });
+    });
+
+    const staff = await Staff.findById(req.params.id)
+                             .populate("position")
+                             .populate("salary")
+                             .sort({ _id: -1})
+                             .select("-password");
 
     res.status(200).json({
         success: true,
