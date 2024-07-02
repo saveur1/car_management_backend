@@ -3,6 +3,7 @@ import asyncCatch from "../middlewares/asyncCatch.js";
 import Car from "../models/carsModel.js";
 import schedule from "node-schedule";
 import Notification from "../models/notificationModel.js";
+import Activities from '../models/activityModel.js';
 
 // Create a new booking
 export const createBooking = asyncCatch(async (req, res) => {
@@ -60,6 +61,12 @@ export const createBooking = asyncCatch(async (req, res) => {
         message: "Booking return date is about to expire",
     });
   })
+
+  //add new activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Booking created",
+  });
 
   //save both booking and car
   await booking.save();
