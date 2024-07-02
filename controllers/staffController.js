@@ -181,7 +181,7 @@ export const updateUserPassword = asyncCatch(async(req,res,next)=>{
 
     staff.password = req.body.password;
 
-    await user.save();
+    await staff.save();
 
     sendToken(200, staff, res);
 })
