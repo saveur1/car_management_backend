@@ -3,8 +3,8 @@ import asyncCatch from "../middlewares/asyncCatch.js";
 
 // Create a new notification
 export const createNotification = asyncCatch(async (req, res) => {
-  const notification = new Notification(req.body);
-  await notification.save();
+  const notification = await Notification.create(req.body);
+  
   res.status(201).json({
     status: "success",
     notification,
@@ -14,7 +14,21 @@ export const createNotification = asyncCatch(async (req, res) => {
 // Get all notifications
 export const getAllNotifications = asyncCatch(async (req, res) => {
   const notifications = await Notification.find()
-                                          .populate("Booking")
+                                          .populate("booking")
+                                          .populate({
+                                            path: "booking",
+                                            populate: {
+                                                path: "customer",
+                                                model: "User"
+                                            }
+                                          })
+                                          .populate({
+                                            path: "booking",
+                                            populate: {
+                                                path: "car",
+                                                model: "Car"
+                                            }
+                                          })
                                           .sort({ createdAt: -1 });
 
                                            
@@ -28,8 +42,22 @@ export const getAllNotifications = asyncCatch(async (req, res) => {
 // Get a notification by ID
 export const getNotification = asyncCatch(async (req, res) => {
   const notification = await Notification.findById(req.params.id)
-                                          .populate("Booking")
-                                          .sort({ createdAt: -1 });
+                                        .populate("booking")
+                                        .populate({
+                                            path: "booking",
+                                            populate: {
+                                                path: "customer",
+                                                model: "User"
+                                            }
+                                        })
+                                        .populate({
+                                            path: "booking",
+                                            populate: {
+                                                path: "car",
+                                                model: "Car"
+                                            }
+                                        })
+                                        .sort({ createdAt: -1 });
   if (!notification) {
     return res.status(404).json({
       status: "fail",
@@ -44,15 +72,12 @@ export const getNotification = asyncCatch(async (req, res) => {
 
 // Update a notification
 export const updateNotification = asyncCatch(async (req, res) => {
-  const notification = await Notification.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    {
+  const notification = await Notification.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
-    }
-  );
-  if (!notification) {
+    }).populate("booking");
+
+  if(!notification) {
     return res.status(404).json({
       status: "fail",
       message: "No notification found with that ID",
