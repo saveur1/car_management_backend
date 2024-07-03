@@ -15,11 +15,11 @@ export const createBooking = asyncCatch(async (req, res) => {
   //update new car status depending on booking status
   switch(req.body.bookingStatus){
     case "pending":
-        car.current_status = "under_use";
+        car.current_status = "waiting";
         break;
 
     case "confirm":
-        car.current_status = "under_use";
+        car.current_status = "taken";
         break;
 
     case "cancelled":
@@ -35,7 +35,6 @@ export const createBooking = asyncCatch(async (req, res) => {
         break;
 
     default:
-        car.current_status = "under_use";
         break;
         
   }
