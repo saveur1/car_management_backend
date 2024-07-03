@@ -13,6 +13,7 @@ import { SalariesDoc } from "./salaries.swagger.js";
 import { JobsDoc } from "./jobs.swagger.js";
 import { NotificationDoc } from "./notification.swagger.js"; 
 import { ActivitiesDoc } from "./activities.swagger.js";
+import { HolidayDoc } from "./holiday.swagger.js";
 
 
 const Options = {
@@ -74,6 +75,7 @@ const Options = {
       ...JobsDoc,
       ...NotificationDoc,
       ...ActivitiesDoc,
+      ...HolidayDoc,
     },
   },
   apis: ["./routes/*.js"],

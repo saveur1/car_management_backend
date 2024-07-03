@@ -9,7 +9,7 @@ export const createNotification = asyncCatch(async (req, res) => {
   //add new activies
   await Activities.create({
     staff: req.staff._id,
-    activityName: "Notification Sent",
+    activityName: "Notification Created",
   });
   res.status(201).json({
     status: "success",
@@ -78,49 +78,42 @@ export const getNotification = asyncCatch(async (req, res) => {
 
 // Update a notification
 export const updateNotification = asyncCatch(async (req, res) => {
-  const notificationEdit = await Notification.findByIdAndUpdate(req.params.id, req.body, {
-                                            new: true,
-                                            runValidators: true,
-                                        })
-                                        .populate("booking")
-                                        .populate({
-                                            path: "booking",
-                                            populate: {
-                                                path: "customer",
-                                                model: "User"
-                                            }
-                                        })
-                                        .populate({
-                                            path: "booking",
-                                            populate: {
-                                                path: "car",
-                                                model: "Car"
-                                            }
-                                        });
+  const notification = await Notification.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    }
+  )
+    .populate("booking")
+    .populate({
+      path: "booking",
+      populate: {
+        path: "customer",
+        model: "User",
+      },
+    })
+    .populate({
+      path: "booking",
+      populate: {
+        path: "car",
+        model: "Car",
+      },
+    });
 
-  if(!notificationEdit) {
+  if (!notification) {
     return res.status(404).json({
       status: "fail",
       message: "No notification found with that ID",
     });
   }
 
-  const notification = await Notification.findById(req.params.id)
-                                        .populate("booking")
-                                        .populate({
-                                            path: "booking",
-                                            populate: {
-                                                path: "customer",
-                                                model: "User"
-                                            }
-                                        })
-                                        .populate({
-                                            path: "booking",
-                                            populate: {
-                                                path: "car",
-                                                model: "Car"
-                                            }
-                                        });
+  //update activies
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Updated Notification",
+  });
 
   res.status(200).json({
     status: "success",
