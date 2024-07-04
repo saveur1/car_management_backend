@@ -4,8 +4,11 @@ import asyncCatch from "../middlewares/asyncCatch.js";
 
 // Create a new holiday
 export const createHoliday = asyncCatch(async (req, res) => {
-  const holiday = new Holiday(req.body);
-  await holiday.save();
+  const saveHoliday = await Holiday.create(req.body);
+  
+  const holiday = await Holiday.findById(saveHoliday._id)
+                                .populate("staff");
+
   res.status(201).json({
     success: true,
     holiday,
@@ -36,15 +39,18 @@ export const getHolidaysByStaff = asyncCatch(async (req, res) => {
 // Update a holiday
 export const updateHoliday = asyncCatch(async (req, res) => {
   const holiday = await Holiday.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+                new: true,
+                runValidators: true,
+            })
+            .populate("staff");
+
   if (!holiday) {
     return res.status(404).json({
       success: false,
       message: "No holiday found with that ID",
     });
   }
+  
   res.status(200).json({
     success: true,
     holiday,
