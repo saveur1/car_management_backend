@@ -259,23 +259,23 @@ export const updateStaffById = asyncCatch(async (req, res, next) => {
 
     staffToUpdate["image"] = cloudinary_image.secure_url;
   }
-  await Staff.findByIdAndUpdate(req.params.id, staffToUpdate, {
-    new: true,
-    runValidators: true,
-    useFindAndModify: false,
-  });
-
-  const staff = await Staff.findById(req.params.id)
-    .populate("position")
-    .populate("salary")
-    .sort({ _id: -1 })
-    .select("-password");
+  const staff = await Staff.findByIdAndUpdate(req.params.id, staffToUpdate, {
+                new: true,
+                runValidators: true,
+                useFindAndModify: false,
+            })
+            .populate("position")
+                .populate("salary")
+                .sort({ _id: -1 })
+                .select("-password");
+    
 
   //update activies
   await Activities.create({
     staff: req.staff._id,
     activityName: "Updated Staff",
   });
+  
   res.status(200).json({
     success: true,
     staff,
