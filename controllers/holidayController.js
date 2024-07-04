@@ -24,12 +24,7 @@ export const getAllHolidays = asyncCatch(async (req, res) => {
 export const getHolidaysByStaff = asyncCatch(async (req, res) => {
   const { staffId } = req.params;
   const holidays = await Holiday.find({ staff: staffId }).populate("staff");
-  if (!holidays || holidays.length === 0) {
-    return res.status(404).json({
-      success: false,
-      message: "No holidays found for this staff",
-    });
-  }
+  
   res.status(200).json({
     success: true,
     holidays,
