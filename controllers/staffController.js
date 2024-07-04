@@ -225,9 +225,9 @@ export const getAllStaff = asyncCatch(async (req, res, next) => {
 // @route   GET /api/v1/staff/:id
 export const getStaffById = asyncCatch(async (req, res, next) => {
   const staff = await Staff.findById(req.params.id)
-    .populate("position")
-    .populate("salary")
-    .select("-password");
+                    .populate("position")
+                    .populate("salary")
+                    .select("-password");
   if (!staff) {
     return res.status(404).json({
       success: false,
@@ -275,7 +275,7 @@ export const updateStaffById = asyncCatch(async (req, res, next) => {
     staff: req.staff._id,
     activityName: "Updated Staff",
   });
-  
+
   res.status(200).json({
     success: true,
     staff,
