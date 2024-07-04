@@ -16,7 +16,7 @@ export const createHoliday = asyncCatch(async (req, res) => {
 });
 // Get all holidays
 export const getAllHolidays = asyncCatch(async (req, res) => {
-  const holidays = await Holiday.find().populate("staff");
+  const holidays = await Holiday.find().populate("staff").sort({createdAt: -1});
   res.status(200).json({
     success: true,
     holidays,
