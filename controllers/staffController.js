@@ -337,3 +337,18 @@ export const getStaffByJobType = asyncCatch(async (req, res, next) => {
     staffs,
   });
 });
+
+// @route   POST /api/v1/staff/permissions
+export const updatePermissions = asyncCatch(async (req, res, next) => {
+
+    await Staff.updateMany({ position: req.body.position }, req.body, {
+        new: true,
+        runValidators: true
+    });
+  
+    res.status(200).json({
+      success: true,
+      message: "All staffs with given positioni were successfully updated",
+    });
+    
+  });
