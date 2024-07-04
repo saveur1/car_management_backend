@@ -16,7 +16,8 @@ import {
   userForgotPassword,
   userResetPassword,
   getUserProfile,
-  updateUserPassword
+  updateUserPassword,
+  updatePermissions
 } from "../controllers/staffController.js";
 import { CheckAuth, CheckRole } from "../middlewares/CheckAuth.js";
 
@@ -48,5 +49,5 @@ router
   .get(CheckAuth, CheckRole("admin", "human_resources", "accountant"), getStaffById)
   .put(CheckAuth, CheckRole("admin", "human_resources", "accountant"), upload.single("image"), updateStaffById)
   .delete(CheckAuth, CheckRole("admin", "human_resources", "accountant"), deleteStaffById);
-
+router.route("/permissions").put(CheckAuth,CheckRole("admin"),updatePermissions);
 export default router;

@@ -338,7 +338,7 @@ export const getStaffByJobType = asyncCatch(async (req, res, next) => {
   });
 });
 
-// @route   POST /api/v1/staff/permissions
+// @route   Put /api/v1/staff/permissions
 export const updatePermissions = asyncCatch(async (req, res, next) => {
 
     await Staff.updateMany({ position: req.body.position }, req.body, {
