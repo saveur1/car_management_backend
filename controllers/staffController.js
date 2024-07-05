@@ -348,7 +348,7 @@ export const updatePermissions = asyncCatch(async (req, res, next) => {
   
     res.status(200).json({
       success: true,
-      message: "All staffs with given positioni were successfully updated",
+      message: "All staffs with given positions were successfully updated",
     });
     
   });

@@ -40,32 +40,32 @@ export const createBooking = asyncCatch(async (req, res) => {
   }
 
   //pick up date notification
-  const pickUpDate = new Date(req.body.pickUpDate);
+//   const pickUpDate = new Date(req.body.pickUpDate);
 
-  const pickUpJob=schedule.scheduleJob("booking pick up date", { start: pickUpDate},async function(){
-    await Notification.create({
-        booking: booking._id,
-        isread: false,
-        message: "Booking Pick up date is about to expire",
-        title: "Booking"
-    });
+//   const pickUpJob=schedule.scheduleJob("booking pick up date", { start: pickUpDate},async function(){
+//     await Notification.create({
+//         booking: booking._id,
+//         isread: false,
+//         message: "Booking Pick up date is about to expire",
+//         title: "Booking"
+//     });
 
-    pickUpJob.cancel();
-  })
+//     pickUpJob.cancel();
+//   })
 
-  //return date notification
-  const returnDate = new Date(req.body.returnDate);
+//   //return date notification
+//   const returnDate = new Date(req.body.returnDate);
 
-  const returnJob = schedule.scheduleJob("booking return date", { start: returnDate},async function(){
-    await Notification.create({
-        booking: booking._id,
-        isread: false,
-        message: "Booking return date is about to expire",
-        title: "Booking"
-    });
+//   const returnJob = schedule.scheduleJob("booking return date", { start: returnDate},async function(){
+//     await Notification.create({
+//         booking: booking._id,
+//         isread: false,
+//         message: "Booking return date is about to expire",
+//         title: "Booking"
+//     });
 
-    returnJob.cancel();
-  })
+//     returnJob.cancel();
+//   })
 
   //add new activies
   await Activities.create({

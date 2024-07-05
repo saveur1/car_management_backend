@@ -28,7 +28,7 @@ export const CheckRole = (...roles)=>{
         
         if(!roles.includes(req.staff.position.job_title.toLowerCase())){
             return next(
-                new ErrorHandler(`Role ${req.staff.position.job_title} is not allowed to access this resource`,403)
+                new ErrorHandler(`Your role is not allowed to access this resource`,403)
             );
         }
         next();
