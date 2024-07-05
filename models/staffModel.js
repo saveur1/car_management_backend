@@ -84,18 +84,6 @@ const staffSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  allowDelete:{
-    type: Boolean,
-    default: true,
-  },
-  allowEdit:{
-    type: Boolean,
-    default: true,
-  },
-  allowAdd:{
-    type: Boolean,
-    default: true,
-  }
 }, 
 {
     timestamps: true

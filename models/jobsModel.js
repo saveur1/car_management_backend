@@ -13,6 +13,18 @@ const jobsSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    allowDelete:{
+        type: Boolean,
+        default: true,
+    },
+    allowEdit:{
+        type: Boolean,
+        default: true,
+    },
+    allowAdd:{
+        type: Boolean,
+        default: true,
+    }
 });
 
 
