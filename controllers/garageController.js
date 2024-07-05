@@ -11,12 +11,16 @@ export const createGarage = asyncCatch(async (req, res) => {
   await Car.findByIdAndUpdate(req.body.car, {
     current_status: "under_maintance",
   });
+
   await garage.save();
+
   //add new activies
   await Activities.create({
     staff: req.staff._id,
-    activityName: "Garage Created",
+    activityName: "Created Garage",
+    color: "blue"
   });
+
   //return response
   res.status(201).json({
     status: "success",
@@ -70,8 +74,10 @@ export const updateGarage = asyncCatch(async (req, res) => {
   //updated activies
   await Activities.create({
     staff: req.staff._id,
-    activityName: "Garage Updated",
+    activityName: "Updated Garage",
+    color: "yellow"
   });
+
   res.status(200).json({
     status: "success",
     garage,
@@ -91,8 +97,10 @@ export const deleteGarage = asyncCatch(async (req, res) => {
   //Deleted activies
   await Activities.create({
     staff: req.staff._id,
-    activityName: "Garage Deleted",
+    activityName: "Deleted Garage",
+    color: "red"
   });
+  
   res.status(200).json({
     status: "success",
     message: "Garage entry was deleted successfully",

@@ -6,11 +6,14 @@ import Activities from "../models/activityModel.js";
 //Register Job =>POST /api/v1/jobs
 export const registerJob = asyncCatch(async(req,res,next)=>{
   const job = await Job.create(req.body);
+
   //add new activies
   await Activities.create({
     staff: req.staff._id,
     activityName: "Created Job Position",
+    color: "blue"
   });
+
   res.status(200).json({
     success: true,
     job,
@@ -56,7 +59,9 @@ export const updateJobInfo = asyncCatch(async(req,res,next)=>{
   await Activities.create({
     staff: req.staff._id,
     activityName: "Updated Job Position",
+    color: "yellow"
   });
+
   res.status(200).json({
     success: true,
     job,
@@ -74,11 +79,14 @@ export const deleteJob = asyncCatch(async(req,res,next)=>{
   }
 
   await Job.findByIdAndDelete(req.params.id);
+  
   //deleted activies
   await Activities.create({
     staff: req.staff._id,
     activityName: "Deleted Job Position",
+    color: "red"
   });
+
   res.status(200).json({
     success: true,
     message: "Job is Deleted Successfully.",

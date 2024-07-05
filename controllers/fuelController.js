@@ -10,7 +10,8 @@ export const createFuel = asyncCatch(async (req, res) => {
   //add new activies
   await Activities.create({
     staff: req.staff._id,
-    activityName: "Fuel Created",
+    activityName: "Created Fuel",
+    color: "blue"
   });
   res.status(201).json({
     status: "success",
@@ -49,10 +50,12 @@ export const getFuel = asyncCatch(async (req, res) => {
 
 // Update a fuel entry
 export const updateFuel = asyncCatch(async (req, res) => {
+
   const fuel = await Fuel.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
   });
+
   if (!fuel) {
     return res.status(404).json({
       status: "fail",
@@ -63,8 +66,10 @@ export const updateFuel = asyncCatch(async (req, res) => {
   //updated activies
   await Activities.create({
     staff: req.staff._id,
-    activityName: "Fuel Updated",
+    activityName: "Updated Fuel",
+    color: "yellow"
   });
+
   res.status(200).json({
     status: "success",
     fuel,
@@ -84,8 +89,10 @@ export const deleteFuel = asyncCatch(async (req, res) => {
   //deleted activies
   await Activities.create({
     staff: req.staff._id,
-    activityName: "Fuel deleted",
+    activityName: "Deleted Fuel",
+    color: "red"
   });
+
   res.status(200).json({
     status: "success",
     message: "Fuel entry was deleted successfully",

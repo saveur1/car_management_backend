@@ -9,11 +9,14 @@ import Activities from "../models/activityModel.js";
 //Register Car =>POST /api/v1/cars/create
 export const registerCar = asyncCatch(async(req,res,next)=>{
   const car = await Car.create(req.body);
+
   //add new activies
   await Activities.create({
     staff: req.staff._id,
     activityName: "Created Car",
+    color: "blue"
   });
+
   res.status(200).json({
     success: true,
     car,
@@ -49,16 +52,20 @@ export const getCarDetails = asyncCatch(async(req,res,next)=>{
 
 //Update Car details =>PUT /api/cars/:id -> admin only route
 export const updateCarInfo = asyncCatch(async(req,res,next)=>{
+
   const car = await Car.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
   });
+
   //update activies
   await Activities.create({
     staff: req.staff._id,
     activityName: "Updated Car",
+    color: "yellow"
   });
+
   res.status(200).json({
     success: true,
     car,
@@ -90,7 +97,9 @@ export const deleteCar = asyncCatch(async(req,res,next)=>{
   await Activities.create({
     staff: req.staff._id,
     activityName: "Deleted Car",
+    color: "red"
   });
+
   res.status(200).json({
     success: true,
     message: "Car is Deleted Successfully.",

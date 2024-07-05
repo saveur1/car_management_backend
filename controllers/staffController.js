@@ -13,10 +13,12 @@ import Activities from "../models/activityModel.js";
 // @desc    Create new staff
 // @route   POST /api/v1/staff
 export const createStaff = asyncCatch(async (req, res, next) => {
+
   const staffToAdd = {
     ...req.body,
   };
 
+  //If there is file then add its url to staff data
   if (req.file) {
     const cloudinary_image = await cloudinary.v2.uploader.upload(
       req.file.path,
@@ -39,10 +41,8 @@ export const createStaff = asyncCatch(async (req, res, next) => {
   await salary.save();
 
   //send email with password and email address
-  const job = schedule.scheduleJob(
-    "send staff email",
-    { start: new Date() },
-    async function () {
+  //this function will run in background
+  const job = schedule.scheduleJob( "send staff email", { start: new Date() }, async function () {
       await sendEmail({
         email: req.body.email,
         subject: "Welcome to Techspherelabs",
@@ -61,8 +61,10 @@ export const createStaff = asyncCatch(async (req, res, next) => {
   //add new activies
   await Activities.create({
     staff: req.staff._id,
-    activityName: "Staff Created",
+    activityName: "Created Staff",
+    color: "blue"
   });
+
   res.status(200).json({
     success: true,
     staff,
@@ -211,10 +213,10 @@ export const updateUserPassword = asyncCatch(async (req, res, next) => {
 // @route   GET /api/v1/staff
 export const getAllStaff = asyncCatch(async (req, res, next) => {
   const staff = await Staff.find()
-    .populate("position")
-    .populate("salary")
-    .sort({ _id: -1 })
-    .select("-password");
+                            .populate("position")
+                            .populate("salary")
+                            .sort({ _id: -1 })
+                            .select("-password");
   res.status(200).json({
     success: true,
     staff,
@@ -228,12 +230,14 @@ export const getStaffById = asyncCatch(async (req, res, next) => {
                     .populate("position")
                     .populate("salary")
                     .select("-password");
+
   if (!staff) {
     return res.status(404).json({
       success: false,
       message: "Staff not found",
     });
   }
+
   res.status(200).json({
     success: true,
     staff,
@@ -274,12 +278,14 @@ export const updateStaffById = asyncCatch(async (req, res, next) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Updated Staff",
+    color: "yellow"
   });
 
   res.status(200).json({
     success: true,
     staff,
   });
+
 });
 
 // @desc    Delete staff by ID
@@ -296,8 +302,10 @@ export const deleteStaffById = asyncCatch(async (req, res, next) => {
   //add new activies
   await Activities.create({
     staff: req.staff._id,
-    activityName: "Staff Deleted",
+    activityName: "Deleted Staff",
+    color: "red"   //this color is used at frontend to style bullet point of activity
   });
+
   res.status(200).json({
     success: true,
     message: "Staff deleted",
@@ -351,4 +359,4 @@ export const updatePermissions = asyncCatch(async (req, res, next) => {
       message: "All staffs with given positions were successfully updated",
     });
     
-  });
+});

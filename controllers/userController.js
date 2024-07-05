@@ -1,9 +1,7 @@
 import asyncCatch from "../middlewares/asyncCatch.js";
-import cloudinary from "cloudinary";
 import User from "../models/userModel.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import sendToken from "../utils/sendToken.js";
-import schedule from "node-schedule";
 import Activities from "../models/activityModel.js";
 
 
@@ -11,12 +9,14 @@ import Activities from "../models/activityModel.js";
 export const registerUser = asyncCatch(async(req,res,next)=>{
   const user = await User.create({ ...req.body });
 
-  sendToken(201, user, res);
   //add new activies
   await Activities.create({
     staff: req.staff._id,
-    activityName: "User Registared",
+    activityName: "Registered User",
+    color: "blue"
   });
+
+  sendToken(201, user, res);
 });
 
 
@@ -59,8 +59,10 @@ export const updateUserInfo = asyncCatch(async(req,res,next)=>{
   //update activies
   await Activities.create({
     staff: req.staff._id,
-    activityName: "User Updated",
+    activityName: "Updated User",
+    color: "yellow"
   });
+
   res.status(200).json({
     success: true,
     user,
@@ -83,7 +85,9 @@ export const deleteUser = asyncCatch(async(req,res,next)=>{
   await Activities.create({
     staff: req.staff._id,
     activityName: "Deleted User",
+    color: "red"
   });
+  
   res.status(200).json({
     success: true,
     message: "User is Deleted.",

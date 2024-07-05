@@ -10,8 +10,10 @@ export const createAsset = asyncCatch(async (req, res) => {
   //add new activies
   await Activities.create({
     staff: req.staff._id,
-    activityName: "Asset Created",
+    activityName: "Created Asset",
+    color: "blue"
   });
+
   res.status(201).json({
     status: "success",
     asset,
@@ -31,6 +33,7 @@ export const getAllAssets = asyncCatch(async (req, res) => {
 // Get an asset by ID
 export const getAsset = asyncCatch(async (req, res) => {
   const asset = await Asset.findById(req.params.id);
+
   if (!asset) {
     return res.status(404).json({
       status: "fail",
@@ -60,7 +63,9 @@ export const updateAsset = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Updated Asset",
+    color: "yellow"
   });
+
   res.status(200).json({
     status: "success",
     asset,
@@ -70,6 +75,7 @@ export const updateAsset = asyncCatch(async (req, res) => {
 // Delete an asset
 export const deleteAsset = asyncCatch(async (req, res) => {
   const asset = await Asset.findByIdAndDelete(req.params.id);
+
   if (!asset) {
     return res.status(404).json({
       status: "fail",
@@ -81,7 +87,9 @@ export const deleteAsset = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Deleted Asset",
+    color: "red"
   });
+
   res.status(200).json({
     status: "success",
     message: "Asset was deleted successfully",

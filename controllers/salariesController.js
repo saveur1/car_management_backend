@@ -10,8 +10,10 @@ export const registerSalary = asyncCatch(async(req,res,next)=>{
   //add new activies
   await Activities.create({
     staff: req.staff._id,
-    activityName: "Salary Group Added",
+    activityName: "Added Salary Group",
+    color: "blue"
   });
+
   res.status(200).json({
     success: true,
     salary,
@@ -57,11 +59,6 @@ export const updateSalaryInfo = asyncCatch(async(req,res,next)=>{
     useFindAndModify: false,
   });
 
-  //update activies
-  await Activities.create({
-    staff: req.staff._id,
-    activityName: "Salary Group Updated",
-  });
   res.status(200).json({
     success: true,
     salary,
@@ -80,11 +77,6 @@ export const deleteSalary = asyncCatch(async(req,res,next)=>{
 
   await Salary.findByIdAndDelete(req.params.id);
 
-  //deleted activies
-  await Activities.create({
-    staff: req.staff._id,
-    activityName: "Salary Group Deleted",
-  });
   res.status(200).json({
     success: true,
     message: "Salary is Deleted Successfully.",

@@ -71,6 +71,7 @@ export const createBooking = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Created Booking",
+    color: "blue"
   });
 
   //save both booking and car
@@ -179,6 +180,7 @@ export const updateBooking = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Updated Booking",
+    color: "yellow"
   });
 
   res.status(200).json({
@@ -206,7 +208,9 @@ export const deleteBooking = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Deleted Booking",
+    color: "red"
   });
+  
   res.status(204).json({
     status: "success",
     message: "Booking was deleted successfully",

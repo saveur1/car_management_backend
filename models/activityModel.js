@@ -11,6 +11,10 @@ const activitySchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref:"Staff",
       required: [true, "Staff is required Please"],
+    },
+    color: {
+        type: String,
+        default: "blue"
     }
   },
   {

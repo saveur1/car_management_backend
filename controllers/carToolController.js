@@ -24,6 +24,7 @@ export const createCarTool = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Created Car Tool",
+    color: "blue"
   });
 
   res.status(201).json({
@@ -88,7 +89,9 @@ export const updateCarTool = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Updated Car Tool",
+    color: "yellow"
   });
+
   res.status(200).json({
     status: "success",
     carTool,
@@ -108,7 +111,8 @@ export const deleteCarTool = asyncCatch(async (req, res) => {
   //Deleted activies
   await Activities.create({
     staff: req.staff._id,
-    activityName: "Car Toll deleted",
+    activityName: "Deleted Car Tool",
+    color: "red"
   });
 
   res.status(200).json({
