@@ -14,6 +14,7 @@ import { JobsDoc } from "./jobs.swagger.js";
 import { NotificationDoc } from "./notification.swagger.js"; 
 import { ActivitiesDoc } from "./activities.swagger.js";
 import { HolidayDoc } from "./holiday.swagger.js";
+import { ChatDoc } from "./chat.swagger.js"; 
 
 
 const Options = {
@@ -42,6 +43,7 @@ const Options = {
       { name: "Car Tool", description: "car tools Management" },
       { name: "Notification", description: "send notification" },
       { name: "Activities", description: "Track activity with us" },
+      { name: "Chat", description: "Chat Functionality" },
     ],
     servers: [
       {
@@ -76,6 +78,7 @@ const Options = {
       ...NotificationDoc,
       ...ActivitiesDoc,
       ...HolidayDoc,
+      ...ChatDoc, 
     },
   },
   apis: ["./routes/*.js"],
