@@ -54,6 +54,10 @@ const carsSchema = new mongoose.Schema({
         default: "available",
         enum:['available','waiting', 'taken','under_maintenance','sold','out_of_service']
     },
+    available_after: {
+        type: Date,
+        default: Date.now()
+    },
     //car owners
     car_owner: {
         type: String,
