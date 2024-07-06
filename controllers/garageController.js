@@ -107,10 +107,10 @@ export const deleteGarage = asyncCatch(async (req, res) => {
   });
 });
 
-// Get garage entries by employee ID
+// Get garage entries by car ID
 export const getGaragesByEmployee = asyncCatch(async (req, res) => {
-  const employee = req.params.employee;
-  const garages = await Garage.find({ employee })
+  const car = req.params.car;
+  const garages = await Garage.find({ car })
                               .populate("employee")
                               .populate("car")
                               .sort({ _id: -1});
