@@ -29,7 +29,7 @@ export const createStaff = asyncCatch(async (req, res, next) => {
       }
     );
 
-    staff["image"] = cloudinary_image.secure_url;
+    staffToAdd["image"] = cloudinary_image.secure_url;
   }
 
   //Save staff in database

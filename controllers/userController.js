@@ -3,11 +3,30 @@ import User from "../models/userModel.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import sendToken from "../utils/sendToken.js";
 import Activities from "../models/activityModel.js";
+import cloudinary from "cloudinary";
 
 
 //Register User => /api/v1/register
 export const registerUser = asyncCatch(async(req,res,next)=>{
-  const user = await User.create({ ...req.body });
+    const userToAdd = {
+        ...req.body,
+      };
+    
+      //If there is file then add its url to staff data
+      if (req.file) {
+        const cloudinary_image = await cloudinary.v2.uploader.upload(
+          req.file.path,
+          {
+            folder: "user",
+            unique_filename: false,
+            use_filename: true,
+          }
+        );
+    
+        userToAdd["avatar"] = cloudinary_image.secure_url;
+      }
+
+  const user = await User.create(userToAdd);
 
   //add new activies
   await Activities.create({
@@ -50,7 +69,25 @@ export const getUserDetails = asyncCatch(async(req,res,next)=>{
 
 //Update user details => /api/user/:id -> admin only route
 export const updateUserInfo = asyncCatch(async(req,res,next)=>{
-  const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+    const userToUpdate = {
+        ...req.body,
+      };
+    
+      //If there is file then add its url to staff data
+      if (req.file) {
+        const cloudinary_image = await cloudinary.v2.uploader.upload(
+          req.file.path,
+          {
+            folder: "user",
+            unique_filename: false,
+            use_filename: true,
+          }
+        );
+    
+        userToUpdate["avatar"] = cloudinary_image.secure_url;
+      }
+
+  const user = await User.findByIdAndUpdate(req.params.id, userToUpdate, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
