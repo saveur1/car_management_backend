@@ -9,6 +9,7 @@ import { emailFormat } from "../config/emailDoc.js";
 import schedule from "node-schedule";
 import { staffEmail } from "../config/staffEmailTemplate.js";
 import Activities from "../models/activityModel.js";
+import Position from "../models/jobsModel.js";
 
 // @desc    Create new staff
 // @route   POST /api/v1/staff
@@ -42,21 +43,26 @@ export const createStaff = asyncCatch(async (req, res, next) => {
 
   //send email with password and email address
   //this function will run in background
-  const job = schedule.scheduleJob( "send staff email", { start: new Date() }, async function () {
-      await sendEmail({
-        email: req.body.email,
-        subject: "Welcome to Techspherelabs",
-        message: staffEmail(
-          req,
-          req.body.email,
-          req.body.password,
-          `${req.body.firstname} ${req.body.lastname}`
-        ),
-      });
+  const position = Position.findById(staff.position);
+  const allowedPositions = ["admin", "human_resources", "accountant", "operators", "manager"]; //excludes other positions form receiving email
 
-      job.cancel();
-    }
-  );
+  if(allowedPositions.includes(position.job_title)) {
+    const job = schedule.scheduleJob( "send staff email", { start: new Date() }, async function () {
+        await sendEmail({
+            email: req.body.email,
+            subject: "Welcome to Techspherelabs",
+            message: staffEmail(
+            req,
+            req.body.email,
+            req.body.password,
+            `${req.body.firstname} ${req.body.lastname}`
+            ),
+        });
+
+        job.cancel();
+        }
+    );
+}
 
   //add new activies
   await Activities.create({
