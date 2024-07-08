@@ -28,9 +28,11 @@ export const sendMessage = asyncCatch(async (req, res, next) => {
     attachments,
   });
 
+  const chat = await Chat.findById(newChat._id).populate("sender receiver");
+
   res.status(201).json({
     success: true,
-    data: newChat,
+    chat,
   });
 });
 
