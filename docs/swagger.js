@@ -15,6 +15,8 @@ import { NotificationDoc } from "./notification.swagger.js";
 import { ActivitiesDoc } from "./activities.swagger.js";
 import { HolidayDoc } from "./holiday.swagger.js";
 import { ChatDoc } from "./chat.swagger.js"; 
+import { SessionsDoc } from "./sessions.swagger.js";
+import { AccountsDoc } from "./accounts.swagger.js";
 
 
 const Options = {
@@ -80,7 +82,10 @@ const Options = {
       ...NotificationDoc,
       ...ActivitiesDoc,
       ...HolidayDoc,
-      ...ChatDoc, 
+      ...ChatDoc,
+      ...SessionsDoc,
+      ...AccountsDoc
+
     },
   },
   apis: ["./routes/*.js"],

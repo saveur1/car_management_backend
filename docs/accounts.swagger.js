@@ -1,4 +1,4 @@
-export const SessionsDoc = {
+export const AccountsDoc = {
     "/api/v1/accounts/link": {
       post: {
         tags: ["Sessions"],
