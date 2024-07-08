@@ -250,6 +250,27 @@ export const getStaffById = asyncCatch(async (req, res, next) => {
   });
 });
 
+// @desc    Get staff by email
+// @route   GET /api/v1/staff/:id
+export const getStaffEmail = asyncCatch(async (req, res, next) => {
+    const staff = await Staff.findOne({email: req.body.email})
+                      .populate("position")
+                      .populate("salary")
+                      .select("-password");
+  
+    if (!staff) {
+      return res.status(404).json({
+        success: false,
+        message: "Staff not found",
+      });
+    }
+  
+    res.status(200).json({
+      success: true,
+      staff,
+    });
+  });
+
 // @desc    Update staff by ID
 // @route   PUT /api/v1/staff/:id
 export const updateStaffById = asyncCatch(async (req, res, next) => {

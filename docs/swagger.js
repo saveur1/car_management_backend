@@ -44,6 +44,8 @@ const Options = {
       { name: "Notification", description: "send notification" },
       { name: "Activities", description: "Track activity with us" },
       { name: "Chat", description: "Chat Functionality" },
+      { name: "Session", description: "Managing sessions" },
+      { name: "Accounts", description: "Accounts routes" },
     ],
     servers: [
       {

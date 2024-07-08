@@ -17,6 +17,7 @@ import {
   userResetPassword,
   getUserProfile,
   updateUserPassword,
+  getStaffEmail
 } from "../controllers/staffController.js";
 import { CheckAuth, CheckRole } from "../middlewares/CheckAuth.js";
 
@@ -42,6 +43,8 @@ router.route("/position/:position")
 router.route("/jobtype/:jobtype")
       .get(CheckAuth, CheckRole("admin", "human_resources", "accountant", "operators"), getStaffByJobType)
 
+router.route("/email")
+      .get(CheckAuth, CheckRole("admin", "human_resources", "accountant", "operators"), getStaffEmail);
 
 router
   .route("/:id")

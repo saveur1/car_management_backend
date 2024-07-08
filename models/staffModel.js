@@ -80,6 +80,10 @@ const staffSchema = new mongoose.Schema({
   resetPasswordExpires:{
       type: Date
   },
+  sessions:[{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Session"
+  }],
   image: {
     type: String,
     required: true,

@@ -22,7 +22,11 @@ import notification from "./routes/notification.js";
 import activities from "./routes/activities.js";
 import holiday from "./routes/holiday.js";
 import chat from "./routes/chat.js";
+import session from "./routes/sessions.js";
+import accounts from "./routes/accounts.js";
+
 import { swaggerDocumentation } from "./docs/swagger.js";
+
 
 //setting up Configurations
 dotenv.config();
@@ -59,6 +63,8 @@ app.use("/api/v1/activities", activities);
 app.use("/api/v1/jobs", jobs);
 app.use("/api/v1/holidays", holiday);
 app.use("/api/v1/chat", chat);
+app.use("/api/v1/accounts", accounts);
+app.use("/api/v1/sessions", session);
 //SWAGGER DOCUMENTATION(/api/docs)
 swaggerDocumentation(app);
 

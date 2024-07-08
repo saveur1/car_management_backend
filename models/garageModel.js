@@ -18,6 +18,10 @@ const garageSchema = new mongoose.Schema({
     trim: true,
     maxLength: [50, "Garage Name can not exceed 50 characters"],
   },
+  garageStatus: {
+    type: String,
+    enum: ["garage", "completed"]
+  },
   amount: {
     type: Number,
     required: true,

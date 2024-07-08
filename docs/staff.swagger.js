@@ -187,6 +187,49 @@ export const StaffDoc = {
         },
       },
     },
+    "/api/v1/staff/email": {
+    get: {
+      tags: ["Staff"],
+      security: [
+        {
+          token: [],
+        },
+      ],
+      requestBody: {
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                email: {
+                  type: "string",
+                  example: "John@gmail.com",
+                  description: "Email address",
+                  required: true,
+                },
+              },
+            },
+          },
+        },
+      },
+      responses: {
+        200: {
+          description: "Staff details fetched successfully",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                example: {
+                  success: true,
+                  staff: {},
+                },
+              },
+            },
+          },
+        },
+      },
+     }
+    },
     put: {
       tags: ["Staff"],
       security: [
