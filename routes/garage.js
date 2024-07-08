@@ -21,7 +21,7 @@ router
   .get(CheckAuth, CheckRole("admin",  "operators", "manager", "accountant"), getAllGarages);
 
 router
-  .route("/employee/:employee")
+  .route("/car/:car")
   .get(CheckAuth, CheckRole("admin", "operators", "manager", "accountant"), getGaragesByEmployee);
 
 router

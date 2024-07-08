@@ -9,7 +9,7 @@ export const UserDoc = {
             ],
             requestBody:{
                 content:{
-                    "application/json":{
+                    "multipart/form-data":{
                         schema:{
                             type:"object",
                             properties:{
@@ -70,7 +70,7 @@ export const UserDoc = {
                                     required:true
                                 },
                                 avatar:{
-                                    type:"string",
+                                    type:"file",
                                     description:"User image: URL"
                                 }
                             }
@@ -162,7 +162,7 @@ export const UserDoc = {
             }],
             requestBody:{
                 content:{
-                    "application/json":{
+                    "multipart/form-data":{
                         schema:{
                             type:"object",
                             properties:{

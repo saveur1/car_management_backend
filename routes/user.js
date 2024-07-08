@@ -14,6 +14,8 @@ import {
     getUserByRole
 } from "../controllers/userController.js";
 
+import { upload } from "../middlewares/imagesUpload.js";
+
 import { CheckAuth, CheckRole } from '../middlewares/CheckAuth.js';
 
 //users routes, awhole CRUD for users
@@ -21,7 +23,7 @@ router.route("/users")
             .get(CheckAuth, CheckRole("admin", "operators", "human_resources","manager", "accountant"), getAllUsers); //get all users
 
 router.route("/register")
-            .post(CheckAuth, CheckRole("admin", "operators", "human_resources","manager"), registerUser); //register user
+            .post(CheckAuth, CheckRole("admin", "operators", "human_resources","manager"), upload.single("avatar"), registerUser); //register user
 
 router.route("/users/category/:category")
             .get(CheckAuth, CheckRole("admin", "operators", "human_resources","manager", "accountant"), getUserByCategory);
@@ -31,7 +33,7 @@ router.route("/users/role/:role")
 
 //get single User, delete and update
 router.route("/users/:id").get(CheckAuth,   CheckRole("admin", "operators", "human_resources","manager", "accountant"), getUserDetails)
-                          .put(CheckAuth,   CheckRole("admin", "operators", "human_resources","manager"), updateUserInfo)
+                          .put(CheckAuth,   CheckRole("admin", "operators", "human_resources","manager"), upload.single("avatar"), updateUserInfo)
                           .delete(CheckAuth,CheckRole("admin", "human_resources","manager"), deleteUser);  //Operator not allowed to delete anything
 
 

@@ -244,7 +244,7 @@ export const GarageDoc = {
       },
     },
   },
-  "/api/v1/garages/employee/{employeeId}": {
+  "/api/v1/garages/car/{carId}": {
     get: {
       tags: ["Garage"],
       security: [
@@ -255,15 +255,15 @@ export const GarageDoc = {
       parameters: [
         {
           in: "path",
-          name: "employeeId",
-          description: "Employee ID",
+          name: "carId",
+          description: "car ID",
           required: true,
           example: "60c72b2f9b1d4b3c6d3b9b0e",
         },
       ],
       responses: {
         200: {
-          description: "Garage entries fetched by employee ID",
+          description: "Garage entries fetched by car ID",
           content: {
             "application/json": {
               schema: {

@@ -51,13 +51,6 @@ const userSchema = new mongoose.Schema({
         maxLength:[20,"National ID can not exceed 20 characters"],
         unique: true
     },
-    password:{
-        type: String,
-        required: [true,"Password is required Please"],
-        default: "User@123",
-        select: false,
-        minLength:[6,"Password must be atleast 6 characters"],
-    },
     avatar:{
             type: String,
             required: true
@@ -84,35 +77,6 @@ const userSchema = new mongoose.Schema({
         type: Date
     }
 });
-
-//hash password before saving
-userSchema.pre("save",async function(next){
-    if(!this.isModified()){
-        next();
-    }
-
-    this.password = await bcrypt.hash(this.password,10);
-});
-
-//compare password
-userSchema.methods.comparePassword = async function(enteredPassword){
-    return await bcrypt.compare(enteredPassword, this.password);
-}
-
-//generate token
-userSchema.methods.getJwtToken = function(){
-    return jwt.sign({id:this._id}, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES_TIME
-    });
-}
-
-//generate password reset token
-userSchema.methods.generateResetPasswordToken = function(){
-    //generate token
-    const resetToken = crypto.randomBytes(3).toString("hex"); //3*2 represents Number of codes to send in email
-
-    return resetToken;
-}
 
 
 export default mongoose.model("User",userSchema);

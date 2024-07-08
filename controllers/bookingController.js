@@ -26,18 +26,12 @@ export const createBooking = asyncCatch(async (req, res) => {
         car.current_status = "available";
         break;
 
-    case "expired":
-        car.current_status = "available";
-        break;
-
-    case "completed":
-        car.current_status = "available";
-        break;
-
     default:
         break;
         
   }
+
+  car.available_after = booking.returnDate;
 
   //pick up date notification
 //   const pickUpDate = new Date(req.body.pickUpDate);
@@ -152,27 +146,26 @@ export const updateBooking = asyncCatch(async (req, res) => {
   //update new car status depending on booking status
   switch (req.body.bookingStatus) {
     case "pending":
-      await Car.findByIdAndUpdate(booking.car, { current_status: "under_use" });
+      await Car.findByIdAndUpdate(booking.car, { current_status: "waiting", available_after: booking.returnDate });
       break;
 
     case "confirm":
-      await Car.findByIdAndUpdate(booking.car, { current_status: "under_use" });
+      await Car.findByIdAndUpdate(booking.car, { current_status: "taken", available_after: booking.returnDate });
       break;
 
     case "cancelled":
-      await Car.findByIdAndUpdate(booking.car, { current_status: "available" });
+      await Car.findByIdAndUpdate(booking.car, { current_status: "available", available_after: new Date() });
       break;
 
     case "expired":
-      await Car.findByIdAndUpdate(booking.car, { current_status: "available" });
+      await Car.findByIdAndUpdate(booking.car, { current_status: "available", available_after: new Date() });
       break;
 
     case "completed":
-      await Car.findByIdAndUpdate(booking.car, { current_status: "available" });
+      await Car.findByIdAndUpdate(booking.car, { current_status: "available", available_after: new Date() });
       break;
 
     default:
-      await Car.findByIdAndUpdate(booking.car, { current_status: "under_use" });
       break;
   }
 
