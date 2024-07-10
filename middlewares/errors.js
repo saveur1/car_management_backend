@@ -3,6 +3,7 @@ import ErrorHandler from "../utils/ErrorHandler.js";
 export default (error,req,res,next)=>{
     error.statusCode = error.statusCode || 500;
     error.message = error.message || "Internal Server Error";
+    console.error(error);
 
     if(process.env.NODE_ENV==="DEVELOPMENT") {
         res.status(error.statusCode).json({

@@ -24,8 +24,10 @@ import holiday from "./routes/holiday.js";
 import chat from "./routes/chat.js";
 import session from "./routes/sessions.js";
 import accounts from "./routes/accounts.js";
+import cookieParser from 'cookie-parser';
 
 import { swaggerDocumentation } from "./docs/swagger.js";
+import { corsOptionsDelegate } from "./config/corsOptions.js";
 
 
 //setting up Configurations
@@ -34,11 +36,12 @@ const app = express();
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use("/uploads", express.static("./uploads"));
+
+//configuration of cors policy
 app.use(
-  cors({
-    origin: "*",
-  })
+  cors(corsOptionsDelegate)
 );
 
 //cloudinary config
