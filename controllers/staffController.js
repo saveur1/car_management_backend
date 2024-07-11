@@ -36,11 +36,6 @@ export const createStaff = asyncCatch(async (req, res, next) => {
   //Save staff in database
   const staff = await Staff.create(staffToAdd);
 
-  //add to salaries
-  const salary = await Salary.findById(req.body.salary);
-  salary.employee.push(staff._id);
-  await salary.save();
-
   //send email with password and email address
   //this function will run in background
   const position = Position.findById(staff.position);
@@ -220,7 +215,6 @@ export const updateUserPassword = asyncCatch(async (req, res, next) => {
 export const getAllStaff = asyncCatch(async (req, res, next) => {
   const staff = await Staff.find()
                             .populate("position")
-                            .populate("salary")
                             .sort({ _id: -1 })
                             .select("-password");
   res.status(200).json({
@@ -234,7 +228,6 @@ export const getAllStaff = asyncCatch(async (req, res, next) => {
 export const getStaffById = asyncCatch(async (req, res, next) => {
   const staff = await Staff.findById(req.params.id)
                     .populate("position")
-                    .populate("salary")
                     .select("-password");
 
   if (!staff) {
@@ -255,7 +248,6 @@ export const getStaffById = asyncCatch(async (req, res, next) => {
 export const getStaffEmail = asyncCatch(async (req, res, next) => {
     const staff = await Staff.findOne({email: req.body.email})
                       .populate("position")
-                      .populate("salary")
                       .select("-password");
   
     if (!staff) {
@@ -296,9 +288,8 @@ export const updateStaffById = asyncCatch(async (req, res, next) => {
                 useFindAndModify: false,
             })
             .populate("position")
-                .populate("salary")
-                .sort({ _id: -1 })
-                .select("-password");
+            .sort({ _id: -1 })
+            .select("-password");
     
 
   //update activies
@@ -326,6 +317,10 @@ export const deleteStaffById = asyncCatch(async (req, res, next) => {
     });
   }
 
+  //delete all resources created by staff
+  //delete all activities for that staff
+  //delete all holidays for that staff
+
   //add new activies
   await Activities.create({
     staff: req.staff._id,
@@ -344,7 +339,6 @@ export const deleteStaffById = asyncCatch(async (req, res, next) => {
 export const getStaffByPosition = asyncCatch(async (req, res, next) => {
   const staff = await Staff.find({ position: req.params.position })
     .populate("position")
-    .populate("salary")
     .sort({ _id: -1 })
     .select("-password");
   if (!staff) {
@@ -363,7 +357,6 @@ export const getStaffByPosition = asyncCatch(async (req, res, next) => {
 export const getStaffByJobType = asyncCatch(async (req, res, next) => {
   const staffs = await Staff.find({ jobType: req.params.jobtype })
     .populate("position")
-    .populate("salary")
     .sort({ _id: -1 })
     .select("-password");
 
