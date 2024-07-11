@@ -3,7 +3,6 @@ import asyncCatch from "../middlewares/asyncCatch.js";
 import sendToken from "../utils/sendToken.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import cloudinary from "cloudinary";
-import Salary from "../models/salariesModel.js";
 import sendEmail from "../utils/sendEmail.js";
 import { emailFormat } from "../config/emailDoc.js";
 import schedule from "node-schedule";
@@ -84,8 +83,7 @@ export const loginStaff = asyncCatch(async (req, res, next) => {
   //check if email is in database
   const staff = await Staff.findOne({ email })
     .select("+password")
-    .populate("position")
-    .populate("salary");
+    .populate("position");
 
   if (!staff) {
     return next(new ErrorHandler("Invalid email or password", 401));
