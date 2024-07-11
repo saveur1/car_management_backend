@@ -71,11 +71,6 @@ const staffSchema = new mongoose.Schema({
   startDate: { type: Date, required: true },
   endingDate: { type: Date, required: true },
   description: { type: String },
-  salary: { 
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: "Salary",
-    required: true,
-  },
   resetPasswordCode:String,
   resetPasswordExpires:{
       type: Date
@@ -88,6 +83,38 @@ const staffSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  gender: {
+    type: String,
+    enum: ["male", "female"],
+    required: true,
+  },
+  insurance: String,
+  department: String,
+
+  //Salary Fields
+  grossSalary: { 
+    type: String,
+    required: true,
+  },
+  accountNumber: String,
+  bankName: String,
+  bankClientName: String,
+  basicSalary: Number,
+  transport: String,
+  taxablePay: Number,
+  PAYE: Number,
+  payForNSSF: Number,
+  employeeNSSF: Number,
+  companyNSSF: Number,
+  NSSF: Number,
+  employeeContributionOnML: Number,
+  totalContributionOnML: Number,
+  netBeforeDeductingCBHIS: Number,
+  communityBasedHealthInsurance: Number,
+  blockedSalary: Number,
+  NetInRwf: Number,
+  totalCost: Number
+
 }, 
 {
     timestamps: true
