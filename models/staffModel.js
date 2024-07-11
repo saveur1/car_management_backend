@@ -100,7 +100,7 @@ const staffSchema = new mongoose.Schema({
   bankName: String,
   bankClientName: String,
   basicSalary: Number,
-  transport: String,
+  transport: Number,
   taxablePay: Number,
   PAYE: Number,
   payForNSSF: Number,
