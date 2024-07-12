@@ -48,7 +48,7 @@ const Options = {
       { name: "Activities", description: "Track activity with us" },
       { name: "Chat", description: "Chat Functionality" },
       { name: "Payment", description: "Payment Management" },
-      { name: "Session", description: "Managing sessions" },
+      { name: "Sessions", description: "Managing sessions" },
       { name: "Accounts", description: "Accounts routes" },
     ],
     servers: [
@@ -85,9 +85,9 @@ const Options = {
       ...ActivitiesDoc,
       ...HolidayDoc,
       ...ChatDoc,
-      ...PaymentDoc, 
       ...SessionsDoc,
-      ...AccountsDoc
+      ...AccountsDoc,
+      ...PaymentDoc, 
 
     },
   },

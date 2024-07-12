@@ -1,6 +1,6 @@
 import express from "express"
 import {createPayment,getPayments,getPaymentByStaff,getPaymentById,updatePayment,deletePayment} from "../controllers/paymentController.js"
-import { CheckAuth,CheckRole } from "../middlewares/CheckAuth";
+import { CheckAuth,CheckRole } from "../middlewares/CheckAuth.js";
 const router = express.Router();
 
 router.route("/").post(CheckAuth, CheckRole("admin", "operators"), createPayment)

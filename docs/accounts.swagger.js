@@ -1,7 +1,7 @@
 export const AccountsDoc = {
     "/api/v1/accounts/link": {
       post: {
-        tags: ["Sessions"],
+        tags: ["Accounts"],
         security: [
           {
             token: [],
@@ -75,7 +75,7 @@ export const AccountsDoc = {
     },
     "/api/v1/accounts/unlink": {
         post: {
-            tags: ["Sessions"],
+            tags: ["Accounts"],
             security: [
               {
                 token: [],

@@ -67,7 +67,7 @@ app.use("/api/v1/activities", activities);
 app.use("/api/v1/jobs", jobs);
 app.use("/api/v1/holidays", holiday);
 app.use("/api/v1/chat", chat);
-app.use("api/v1/payment",payment);
+app.use("/api/v1/payment",payment);
 app.use("/api/v1/accounts", accounts);
 app.use("/api/v1/sessions", session);
 //SWAGGER DOCUMENTATION(/api/docs)
