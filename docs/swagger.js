@@ -15,7 +15,7 @@ import { NotificationDoc } from "./notification.swagger.js";
 import { ActivitiesDoc } from "./activities.swagger.js";
 import { HolidayDoc } from "./holiday.swagger.js";
 import { ChatDoc } from "./chat.swagger.js"; 
-
+import { PaymentDoc } from "./payment.swagger.js";
 
 const Options = {
   definition: {
@@ -44,6 +44,7 @@ const Options = {
       { name: "Notification", description: "send notification" },
       { name: "Activities", description: "Track activity with us" },
       { name: "Chat", description: "Chat Functionality" },
+      { name: "Payment", description: "Payment Management" },
     ],
     servers: [
       {
@@ -78,7 +79,8 @@ const Options = {
       ...NotificationDoc,
       ...ActivitiesDoc,
       ...HolidayDoc,
-      ...ChatDoc, 
+      ...ChatDoc,
+      ...PaymentDoc, 
     },
   },
   apis: ["./routes/*.js"],
