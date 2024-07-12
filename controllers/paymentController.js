@@ -6,17 +6,17 @@ export const createPayment = asyncCatch(async (req, res) => {
 
     const { staffs, reason, paymentDate } = req.body;
 
+    // Convert user IDs to ObjectIds for Mongoose query
+    const staffIds = staffs?.map(id => mongoose.Types.ObjectId(id));
+
     //save all incoming payments
-    for(let staffId in staffs){
+    for(let staffId in staffIds){
         await Payment.create({
             staff: staffId,
             paymentDate: paymentDate,
             reason: reason
         })
     }
-
-    // Convert user IDs to ObjectIds for Mongoose query
-    const staffIds = staffs?.map(id => mongoose.Types.ObjectId(id));
 
     const payments = await Payment.find({_id: {$in: staffIds }})
                               .populate("staff");
