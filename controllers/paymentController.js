@@ -3,16 +3,26 @@ import asyncCatch from "../middlewares/asyncCatch.js";
 
 // Create a new payment
 export const createPayment = asyncCatch(async (req, res) => {
-const PaymentMade = await Payment.create(req.body);
 
-const payment = await Payment.findById(PaymentMade._id)
-                             .populate("staff");
+    const { staffs, reason, paymentDate } = req.body;
+
+    //save all incoming payments
+    for(let staffId in staffs){
+        await Payment.create({
+            staff: staffId,
+            paymentDate: paymentDate,
+            reason: reason
+        })
+    }
+
+    const payments = await Payment.find({_id: {$in: staffs }})
+                              .populate("staff");
 
 
-        res.status(201).json({
-            success: true,
-            payment,
-})                     
+    res.status(201).json({
+        success: true,
+        payments,
+    })                     
 });
 
 //get all payment
