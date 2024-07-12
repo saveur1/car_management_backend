@@ -23,7 +23,13 @@ import activities from "./routes/activities.js";
 import holiday from "./routes/holiday.js";
 import chat from "./routes/chat.js";
 import payment from "./routes/payment.js"
+import session from "./routes/sessions.js";
+import accounts from "./routes/accounts.js";
+import cookieParser from 'cookie-parser';
+
 import { swaggerDocumentation } from "./docs/swagger.js";
+import { corsOptionsDelegate } from "./config/corsOptions.js";
+
 
 //setting up Configurations
 dotenv.config();
@@ -31,11 +37,12 @@ const app = express();
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use("/uploads", express.static("./uploads"));
+
+//configuration of cors policy
 app.use(
-  cors({
-    origin: "*",
-  })
+  cors(corsOptionsDelegate)
 );
 
 //cloudinary config
@@ -61,6 +68,8 @@ app.use("/api/v1/jobs", jobs);
 app.use("/api/v1/holidays", holiday);
 app.use("/api/v1/chat", chat);
 app.use("api/v1/payment",payment);
+app.use("/api/v1/accounts", accounts);
+app.use("/api/v1/sessions", session);
 //SWAGGER DOCUMENTATION(/api/docs)
 swaggerDocumentation(app);
 

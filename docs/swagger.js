@@ -16,6 +16,9 @@ import { ActivitiesDoc } from "./activities.swagger.js";
 import { HolidayDoc } from "./holiday.swagger.js";
 import { ChatDoc } from "./chat.swagger.js"; 
 import { PaymentDoc } from "./payment.swagger.js";
+import { SessionsDoc } from "./sessions.swagger.js";
+import { AccountsDoc } from "./accounts.swagger.js";
+
 
 const Options = {
   definition: {
@@ -45,6 +48,8 @@ const Options = {
       { name: "Activities", description: "Track activity with us" },
       { name: "Chat", description: "Chat Functionality" },
       { name: "Payment", description: "Payment Management" },
+      { name: "Session", description: "Managing sessions" },
+      { name: "Accounts", description: "Accounts routes" },
     ],
     servers: [
       {
@@ -81,6 +86,9 @@ const Options = {
       ...HolidayDoc,
       ...ChatDoc,
       ...PaymentDoc, 
+      ...SessionsDoc,
+      ...AccountsDoc
+
     },
   },
   apis: ["./routes/*.js"],
