@@ -11,15 +11,15 @@ const paymentSchema = new mongoose.Schema({
   },
   amount: {
     type: Number,
-    required: true,
+    required: false,
   },
   paymentMethod: {
     type: String,
-    required: true,
+    required: false,
   },
   accountNumber: {
     type: Number,
-    required: true,
+    required: false,
   },
   paymentDate: {
     type: Date,

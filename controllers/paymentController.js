@@ -15,7 +15,10 @@ export const createPayment = asyncCatch(async (req, res) => {
         })
     }
 
-    const payments = await Payment.find({_id: {$in: staffs }})
+    // Convert user IDs to ObjectIds for Mongoose query
+    const staffIds = staffs?.map(id => mongoose.Types.ObjectId(id));
+
+    const payments = await Payment.find({_id: {$in: staffIds }})
                               .populate("staff");
 
 
