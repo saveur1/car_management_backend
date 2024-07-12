@@ -1,24 +1,26 @@
 import Payment from "../models/paymentModel.js";
 import asyncCatch from "../middlewares/asyncCatch.js";
+import mongoose from "mongoose";
 
 // Create a new payment
 export const createPayment = asyncCatch(async (req, res) => {
 
     const { staffs, reason, paymentDate } = req.body;
-
-    // Convert user IDs to ObjectIds for Mongoose query
-    const staffIds = staffs?.map(id => mongoose.Types.ObjectId(id));
+    const insertedIds = [];
 
     //save all incoming payments
-    for(let staffId in staffIds){
-        await Payment.create({
+    for(let staffId of staffs){
+
+        const payment = await Payment.create({
             staff: staffId,
             paymentDate: paymentDate,
             reason: reason
         })
+
+        insertedIds.push(payment?._id);
     }
 
-    const payments = await Payment.find({_id: {$in: staffIds }})
+    const payments = await Payment.find({_id: {$in: insertedIds }})
                               .populate("staff");
 
 
