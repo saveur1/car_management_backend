@@ -15,7 +15,16 @@ const activitySchema = new mongoose.Schema(
     color: {
         type: String,
         default: "blue"
-    }
+    },
+    booking: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Booking",
+        required: false
+    },
+    status: {
+        type: String,
+        enum: ["Incoming", "Live", "Completed", "Cancelled"]
+    },
   },
   {
     timestamps: true,

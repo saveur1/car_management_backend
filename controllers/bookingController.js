@@ -1,13 +1,13 @@
 import Booking from "../models/bookingModel.js";
 import asyncCatch from "../middlewares/asyncCatch.js";
 import Car from "../models/carsModel.js";
-import schedule from "node-schedule";
-import Notification from "../models/notificationModel.js";
 import Activities from '../models/activityModel.js';
+
 
 // Create a new booking
 export const createBooking = asyncCatch(async (req, res) => {
   const booking = new Booking(req.body);
+  let status = "Incoming";
 
   const car = await Car.findById(req.body.car);
 
@@ -20,10 +20,12 @@ export const createBooking = asyncCatch(async (req, res) => {
 
     case "confirm":
         car.current_status = "taken";
+        status = "Live";
         break;
 
     case "cancelled":
         car.current_status = "available";
+        status = "Cancelled";
         break;
 
     default:
@@ -33,44 +35,18 @@ export const createBooking = asyncCatch(async (req, res) => {
 
   car.available_after = booking.returnDate;
 
-  //pick up date notification
-//   const pickUpDate = new Date(req.body.pickUpDate);
-
-//   const pickUpJob=schedule.scheduleJob("booking pick up date", { start: pickUpDate},async function(){
-//     await Notification.create({
-//         booking: booking._id,
-//         isread: false,
-//         message: "Booking Pick up date is about to expire",
-//         title: "Booking"
-//     });
-
-//     pickUpJob.cancel();
-//   })
-
-//   //return date notification
-//   const returnDate = new Date(req.body.returnDate);
-
-//   const returnJob = schedule.scheduleJob("booking return date", { start: returnDate},async function(){
-//     await Notification.create({
-//         booking: booking._id,
-//         isread: false,
-//         message: "Booking return date is about to expire",
-//         title: "Booking"
-//     });
-
-//     returnJob.cancel();
-//   })
-
   //add new activies
   await Activities.create({
     staff: req.staff._id,
     activityName: "Created Booking",
-    color: "blue"
+    color: "blue",
+    status: status,
+    booking: booking._id
   });
 
   //save both booking and car
   await booking.save();
-  await car.save();;
+  await car.save();
 
   res.status(201).json({
     status: "success",
@@ -129,6 +105,7 @@ export const getBookingsByStatus = asyncCatch(async (req, res) => {
 export const updateBooking = asyncCatch(async (req, res) => {
   //get previous booking first
   const prevBooking = await Booking.findById(req.params.id);
+  let status = "Incoming";
 
   if (!prevBooking) {
     return next(new ErrorHandler(`No booking found with that ID`, 400));
@@ -151,10 +128,12 @@ export const updateBooking = asyncCatch(async (req, res) => {
 
     case "confirm":
       await Car.findByIdAndUpdate(booking.car, { current_status: "taken", available_after: booking.returnDate });
+      status = "Live";
       break;
 
     case "cancelled":
       await Car.findByIdAndUpdate(booking.car, { current_status: "available", available_after: new Date() });
+      status = "Cancelled";
       break;
 
     case "expired":
@@ -163,6 +142,7 @@ export const updateBooking = asyncCatch(async (req, res) => {
 
     case "completed":
       await Car.findByIdAndUpdate(booking.car, { current_status: "available", available_after: new Date() });
+      status = "Completed";
       break;
 
     default:
@@ -173,7 +153,9 @@ export const updateBooking = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Updated Booking",
-    color: "yellow"
+    color: "yellow",
+    status: status,
+    booking: booking._id
   });
 
   res.status(200).json({
@@ -195,8 +177,12 @@ export const deleteBooking = asyncCatch(async (req, res) => {
   //find car ID and make it's status available to be booked
   await Car.findByIdAndUpdate(booking.car, { current_status: "available" });
 
+  //delete all activities for this booking
+  await Activities.deleteMany({booking: booking._id});
+
   //deleted booking then from database
   await Booking.findByIdAndDelete(req.params.id);
+
   //delete activies
   await Activities.create({
     staff: req.staff._id,
