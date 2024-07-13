@@ -21,7 +21,14 @@ export const createPayment = asyncCatch(async (req, res) => {
     }
 
     const payments = await Payment.find({_id: {$in: insertedIds }})
-                              .populate("staff");
+                              .populate("staff")
+                              .populate({
+                                path: "staff",
+                                populate: {
+                                    path: "position",
+                                    model: "Job"
+                                }
+                              });
 
 
     res.status(201).json({
@@ -34,7 +41,14 @@ export const createPayment = asyncCatch(async (req, res) => {
 
 export const getPayments = asyncCatch(async (req, res) => {
 const payments = await Payment.find()
-                         .populate("staff");
+                         .populate("staff")
+                              .populate({
+                                path: "staff",
+                                populate: {
+                                    path: "position",
+                                    model: "Job"
+                                }
+                              });
 
         res.status(200).json({
             success: true,
@@ -46,7 +60,14 @@ const payments = await Payment.find()
 export const getPaymentByStaff = asyncCatch(async (req, res) => {
 const { staffId } = req.params;
 const payments = await Payment.find({ staff: staffId })
-                         .populate("staff");
+                         .populate("staff")
+                              .populate({
+                                path: "staff",
+                                populate: {
+                                    path: "position",
+                                    model: "Job"
+                                }
+                              });
 
         res.status(200).json({
             success: true,
@@ -56,7 +77,14 @@ const payments = await Payment.find({ staff: staffId })
 //get single payment by id
 export const getPaymentById = asyncCatch(async(req,res) => {
     const payment = await Payment.findById(req.params.id)
-                         .populate("staff");
+                         .populate("staff")
+                              .populate({
+                                path: "staff",
+                                populate: {
+                                    path: "position",
+                                    model: "Job"
+                                }
+                              });
 
                          res.status(200).json({
                             success: true,
@@ -68,10 +96,17 @@ export const getPaymentById = asyncCatch(async(req,res) => {
 
 export const updatePayment = asyncCatch(async (req, res) => {
 const payment = await Payment.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-})
-.populate("staff");
+                                new: true,
+                                runValidators: true,
+                            })
+                            .populate("staff")
+                              .populate({
+                                path: "staff",
+                                populate: {
+                                    path: "position",
+                                    model: "Job"
+                                }
+                              });
 
 if (!payment) {
     return res.status(404).json({
