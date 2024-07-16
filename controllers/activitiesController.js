@@ -3,7 +3,13 @@ import asyncCatch from "../middlewares/asyncCatch.js";
 
 // Create a new asset
 export const createActivity = asyncCatch(async (req, res) => {
-    const activity = await Activities.create({...req.body, company: req.staff.company});
+    const activity = await Activities.create({
+            ...req.body,
+            activityName: "Added Activity",
+            color: "blue",
+            staff:req.staff._id, 
+            company: req.staff.company
+    });
   
     res.status(201).json({
       status: "success",
