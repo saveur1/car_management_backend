@@ -54,7 +54,8 @@ const staffSchema = new mongoose.Schema({
   company: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Company",
-    default: "669670020f9122e001cd17bc"
+    default: "669670020f9122e001cd17bc",
+    required: true
   },
   position: {
     type: mongoose.Schema.Types.ObjectId,
