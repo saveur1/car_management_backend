@@ -17,7 +17,7 @@ const notificationSchema = new mongoose.Schema(
     company: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Company",
-        default: "66965043ad17b5897e2f6ec9"
+        default: "669670020f9122e001cd17bc"
     },
     isread: {
       type: Boolean,
