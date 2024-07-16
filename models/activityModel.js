@@ -18,6 +18,10 @@ const activitySchema = new mongoose.Schema(
         default: "669670020f9122e001cd17bc",
         required: true
     },
+    activity_cost: {
+        type: Number,
+        required: false
+    },
     color: {
         type: String,
         default: "blue"
