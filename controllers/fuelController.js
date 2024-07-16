@@ -11,7 +11,7 @@ export const createFuel = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Created Fuel",
-    company: req.staff.company._id,
+    company: req.staff.company,
     color: "blue"
   });
   res.status(201).json({
@@ -25,7 +25,7 @@ export const getAllFuels = asyncCatch(async (req, res) => {
   const fuels = await Fuel.find()
                           .populate("employee")
                           .populate("car")
-                          .where("company", req.staff.company._id)
+                          .where("company", req.staff.company)
                           .sort({_id: -1});
   res.status(200).json({
     status: "success",
@@ -69,7 +69,7 @@ export const updateFuel = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Updated Fuel",
-    company: req.staff.company._id,
+    company: req.staff.company,
     color: "yellow"
   });
 
@@ -93,7 +93,7 @@ export const deleteFuel = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Deleted Fuel",
-    company: req.staff.company._id,
+    company: req.staff.company,
     color: "red"
   });
 
@@ -109,7 +109,7 @@ export const getFuelsByEmployee = asyncCatch(async (req, res) => {
   const fuels = await Fuel.find({ employee })
                           .populate("employee")
                           .populate("car")
-                          .where("company", req.staff.company._id)
+                          .where("company", req.staff.company)
                           .sort({_id: -1});
   res.status(200).json({
     status: "success",
@@ -123,7 +123,7 @@ export const getFuelsByCar = asyncCatch(async (req, res) => {
     const fuels = await Fuel.find({ car })
                             .populate("employee")
                             .populate("car")
-                            .where("company", req.staff.company._id)
+                            .where("company", req.staff.company)
                             .sort({_id: -1});
     res.status(200).json({
       status: "success",

@@ -17,8 +17,7 @@ export const CheckAuth = asyncCatch(async(req,res,next)=>{
     const decoded = jwt.verify(token , process.env.JWT_SECRET);
 
     req.staff = await Staff.findById(decoded.id)
-                           .populate("position")
-                           .populate("company");
+                           .populate("position");
 
     next();
 });

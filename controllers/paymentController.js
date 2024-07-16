@@ -15,7 +15,7 @@ export const createPayment = asyncCatch(async (req, res) => {
             staff: staffId,
             paymentDate: paymentDate,
             reason: reason,
-            company: req.staff.company._id
+            company: req.staff.company
         })
 
         insertedIds.push(payment?._id);
@@ -30,7 +30,7 @@ export const createPayment = asyncCatch(async (req, res) => {
                                     model: "Job"
                                 }
                               })
-                              .where("staff", req.staff.company._id)
+                              .where("staff", req.staff.company)
                               .sort({_id: -1});
 
 
@@ -52,7 +52,7 @@ const payments = await Payment.find()
                                     model: "Job"
                                 }
                               })
-                               .where("company", req.staff.company._id)
+                               .where("company", req.staff.company)
                                .sort({_id: -1});
 
         res.status(200).json({
@@ -73,7 +73,7 @@ const payments = await Payment.find({ staff: staffId })
                                     model: "Job"
                                 }
                               })
-                              .where("company", req.staff.company._id)
+                              .where("company", req.staff.company)
                               .sort({_id: -1});
 
         res.status(200).json({

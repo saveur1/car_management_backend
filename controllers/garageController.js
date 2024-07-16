@@ -5,7 +5,7 @@ import Activities from "../models/activityModel.js";
 
 // Create a new garage entry
 export const createGarage = asyncCatch(async (req, res) => {
-  const garage = new Garage({...req.body, company: req.staff.company._id });
+  const garage = new Garage({...req.body, company: req.staff.company });
 
   //Update car to be under maintenance
   await Car.findByIdAndUpdate(req.body.car, {
@@ -18,7 +18,7 @@ export const createGarage = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Created Garage",
-    company: req.staff.company._id,
+    company: req.staff.company,
     color: "blue"
   });
 
@@ -34,7 +34,7 @@ export const getAllGarages = asyncCatch(async (req, res) => {
   const garages = await Garage.find()
                               .populate("employee")
                               .populate("car")
-                              .where("company", req.staff.company._id,)
+                              .where("company", req.staff.company,)
                               .sort({_id: -1});
   res.status(200).json({
     status: "success",
@@ -77,7 +77,7 @@ export const updateGarage = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Updated Garage",
-    company: req.staff.company._id,
+    company: req.staff.company,
     color: "yellow"
   });
 
@@ -101,7 +101,7 @@ export const deleteGarage = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Deleted Garage",
-    company: req.staff.company._id,
+    company: req.staff.company,
     color: "red"
   });
   
@@ -117,7 +117,7 @@ export const getGaragesByEmployee = asyncCatch(async (req, res) => {
   const garages = await Garage.find({ car })
                               .populate("employee")
                               .populate("car")
-                              .where("company", req.staff.company._id)
+                              .where("company", req.staff.company)
                               .sort({ _id: -1});
   res.status(200).json({
     status: "success",

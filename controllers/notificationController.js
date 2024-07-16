@@ -4,7 +4,7 @@ import Activities from "../models/activityModel.js";
 
 // Create a new notification
 export const createNotification = asyncCatch(async (req, res) => {
-  const notification = await Notification.create({...req.body, company: req.staff.company._id});
+  const notification = await Notification.create({...req.body, company: req.staff.company});
 
   res.status(201).json({
     status: "success",
@@ -30,7 +30,7 @@ export const getAllNotifications = asyncCatch(async (req, res) => {
                                                 model: "Car"
                                             }
                                           })
-                                          .where("company", req.staff.company._id)
+                                          .where("company", req.staff.company)
                                           .sort({ createdAt: -1 });
 
                                            

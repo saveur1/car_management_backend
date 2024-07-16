@@ -16,7 +16,7 @@ export const createCarTool = asyncCatch(async (req, res) => {
   const carTool = new CarTool({
     ...req.body,
     photo: image_url.secure_url,
-    company: req.staff.company._id,
+    company: req.staff.company,
   });
 
   await carTool.save();
@@ -25,7 +25,7 @@ export const createCarTool = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Created Car Tool",
-    company: req.staff.company._id,
+    company: req.staff.company,
     color: "blue"
   });
 
@@ -38,7 +38,7 @@ export const createCarTool = asyncCatch(async (req, res) => {
 // Get all car tool entries
 export const getAllCarTools = asyncCatch(async (req, res) => {
   const carTools = await CarTool.find()
-                                .where("company", req.staff.company._id)
+                                .where("company", req.staff.company)
                                 .sort({_id: -1});
   res.status(200).json({
     status: "success",
@@ -92,7 +92,7 @@ export const updateCarTool = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Updated Car Tool",
-    company: req.staff.company._id,
+    company: req.staff.company,
     color: "yellow"
   });
 
@@ -116,7 +116,7 @@ export const deleteCarTool = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Deleted Car Tool",
-    company: req.staff.company._id,
+    company: req.staff.company,
     color: "red"
   });
 
