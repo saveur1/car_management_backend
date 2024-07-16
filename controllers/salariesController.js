@@ -24,10 +24,9 @@ export const registerSalary = asyncCatch(async(req,res,next)=>{
 //Get all salaries => Get /api/v1/salaries -> admin only route
 export const getAllSalaries = asyncCatch(async(req,res,next)=>{
 
-    const salaries = await Salary.find()
+    const salaries = await Salary.find({ company: req.staff.company })
                                  .populate("job")
                                  .populate("employee")
-                                 .where("company", req.staff.company)
                                  .sort({ _id: -1});
 
     res.status(200).json({

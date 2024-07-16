@@ -37,8 +37,7 @@ export const createCarTool = asyncCatch(async (req, res) => {
 
 // Get all car tool entries
 export const getAllCarTools = asyncCatch(async (req, res) => {
-  const carTools = await CarTool.find()
-                                .where("company", req.staff.company)
+  const carTools = await CarTool.find({ company: req.staff.company })
                                 .sort({_id: -1});
   res.status(200).json({
     status: "success",

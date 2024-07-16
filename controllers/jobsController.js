@@ -24,8 +24,7 @@ export const registerJob = asyncCatch(async(req,res,next)=>{
 //Get all jobs => Get /api/v1/jobs -> admin only route
 export const getAllJobs = asyncCatch(async(req,res,next)=>{
 
-    const jobs = await Job.find()
-                          .where("company", req.staff.company)
+    const jobs = await Job.find({ company: req.staff.company })
                           .sort({ _id: -1});
 
     res.status(200).json({

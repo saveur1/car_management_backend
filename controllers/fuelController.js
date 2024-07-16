@@ -22,10 +22,9 @@ export const createFuel = asyncCatch(async (req, res) => {
 
 // Get all fuel entries
 export const getAllFuels = asyncCatch(async (req, res) => {
-  const fuels = await Fuel.find()
+  const fuels = await Fuel.find({ company: req.staff.company })
                           .populate("employee")
                           .populate("car")
-                          .where("company", req.staff.company)
                           .sort({_id: -1});
   res.status(200).json({
     status: "success",
@@ -106,10 +105,9 @@ export const deleteFuel = asyncCatch(async (req, res) => {
 // Get fuel entries by employee ID
 export const getFuelsByEmployee = asyncCatch(async (req, res) => {
   const employee = req.params.employee;
-  const fuels = await Fuel.find({ employee })
+  const fuels = await Fuel.find({ employee, company: req.staff.company })
                           .populate("employee")
                           .populate("car")
-                          .where("company", req.staff.company)
                           .sort({_id: -1});
   res.status(200).json({
     status: "success",
@@ -120,10 +118,9 @@ export const getFuelsByEmployee = asyncCatch(async (req, res) => {
 // Get fuel entries by car ID
 export const getFuelsByCar = asyncCatch(async (req, res) => {
     const car = req.params.carId;
-    const fuels = await Fuel.find({ car })
+    const fuels = await Fuel.find({ car, company: req.staff.company })
                             .populate("employee")
                             .populate("car")
-                            .where("company", req.staff.company)
                             .sort({_id: -1});
     res.status(200).json({
       status: "success",

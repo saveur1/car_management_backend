@@ -1,6 +1,5 @@
 import Payment from "../models/paymentModel.js";
 import asyncCatch from "../middlewares/asyncCatch.js";
-import mongoose from "mongoose";
 
 // Create a new payment
 export const createPayment = asyncCatch(async (req, res) => {
@@ -21,7 +20,7 @@ export const createPayment = asyncCatch(async (req, res) => {
         insertedIds.push(payment?._id);
     }
 
-    const payments = await Payment.find({_id: {$in: insertedIds }})
+    const payments = await Payment.find({_id: {$in: insertedIds }, company: req.staff.company })
                               .populate("staff")
                               .populate({
                                 path: "staff",
@@ -30,7 +29,6 @@ export const createPayment = asyncCatch(async (req, res) => {
                                     model: "Job"
                                 }
                               })
-                              .where("staff", req.staff.company)
                               .sort({_id: -1});
 
 
@@ -43,7 +41,7 @@ export const createPayment = asyncCatch(async (req, res) => {
 //get all payment
 
 export const getPayments = asyncCatch(async (req, res) => {
-const payments = await Payment.find()
+const payments = await Payment.find({ company: req.staff.company })
                          .populate("staff")
                               .populate({
                                 path: "staff",
@@ -52,7 +50,6 @@ const payments = await Payment.find()
                                     model: "Job"
                                 }
                               })
-                               .where("company", req.staff.company)
                                .sort({_id: -1});
 
         res.status(200).json({
@@ -64,7 +61,7 @@ const payments = await Payment.find()
 
 export const getPaymentByStaff = asyncCatch(async (req, res) => {
 const { staffId } = req.params;
-const payments = await Payment.find({ staff: staffId })
+const payments = await Payment.find({ staff: staffId, company: req.staff.company })
                          .populate("staff")
                               .populate({
                                 path: "staff",
@@ -73,7 +70,6 @@ const payments = await Payment.find({ staff: staffId })
                                     model: "Job"
                                 }
                               })
-                              .where("company", req.staff.company)
                               .sort({_id: -1});
 
         res.status(200).json({

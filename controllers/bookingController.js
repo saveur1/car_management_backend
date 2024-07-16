@@ -57,11 +57,10 @@ export const createBooking = asyncCatch(async (req, res) => {
 
 // Get all bookings
 export const getAllBookings = asyncCatch(async (req, res) => {
-  const bookings = await Booking.find()
+  const bookings = await Booking.find({company: req.staff.company})
                                 .populate("car")
                                 .populate("customer")
                                 .populate("driver")
-                                .where("company", req.staff.company)
                                 .sort({createdAt: -1});
   res.status(200).json({
     status: "success",
@@ -91,11 +90,10 @@ export const getBooking = asyncCatch(async (req, res) => {
 export const getBookingsByStatus = asyncCatch(async (req, res) => {
     const { status } = req.params;
 
-    const bookings = await Booking.find({ bookingStatus: status })
+    const bookings = await Booking.find({ bookingStatus: status, company: req.staff.company })
                                   .populate("car")
                                   .populate("customer")
                                   .populate("driver")
-                                  .where("company", req.staff.company)
                                   .sort({createdAt: -1});
     
     // update car status
@@ -204,11 +202,10 @@ export const deleteBooking = asyncCatch(async (req, res) => {
 // Get all customers bookings
 export const getAllCustomersBookings = asyncCatch(async (req, res) => {
     const customer = req.params.customer;
-    const bookings = await Booking.find({customer: customer})
+    const bookings = await Booking.find({customer: customer, company: req.staff.company})
                                   .populate("car")
                                   .populate("customer")
                                   .populate("driver")
-                                  .where("company", req.staff.company)
                                   .sort({createdAt: -1});
     res.status(200).json({
       status: "success",
@@ -219,11 +216,10 @@ export const getAllCustomersBookings = asyncCatch(async (req, res) => {
 // Get all customers bookings rented particular car
 export const getAllCustomersRentedCar = asyncCatch(async (req, res) => {
     const car = req.params.car;
-    const bookings = await Booking.find({car: car})
+    const bookings = await Booking.find({car: car, company: req.staff.company})
                                   .populate("car")
                                   .populate("customer")
                                   .populate("driver")
-                                  .where("company", req.staff.company)
                                   .sort({createdAt: -1});
     res.status(200).json({
       status: "success",

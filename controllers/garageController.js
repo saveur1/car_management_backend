@@ -31,10 +31,9 @@ export const createGarage = asyncCatch(async (req, res) => {
 
 // Get all garage entries
 export const getAllGarages = asyncCatch(async (req, res) => {
-  const garages = await Garage.find()
+  const garages = await Garage.find({ company: req.staff.company })
                               .populate("employee")
                               .populate("car")
-                              .where("company", req.staff.company,)
                               .sort({_id: -1});
   res.status(200).json({
     status: "success",
@@ -114,10 +113,9 @@ export const deleteGarage = asyncCatch(async (req, res) => {
 // Get garage entries by car ID
 export const getGaragesByEmployee = asyncCatch(async (req, res) => {
   const car = req.params.car;
-  const garages = await Garage.find({ car })
+  const garages = await Garage.find({ car, company: req.staff.company })
                               .populate("employee")
                               .populate("car")
-                              .where("company", req.staff.company)
                               .sort({ _id: -1});
   res.status(200).json({
     status: "success",

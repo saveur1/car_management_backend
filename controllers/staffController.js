@@ -214,9 +214,8 @@ export const updateUserPassword = asyncCatch(async (req, res, next) => {
 // @desc    Get all staff
 // @route   GET /api/v1/staff
 export const getAllStaff = asyncCatch(async (req, res, next) => {
-  const staff = await Staff.find()
+  const staff = await Staff.find({ company: req.staff.company })
                             .populate("position")
-                            .where("company", req.staff.company)
                             .sort({ _id: -1 })
                             .select("-password");
   res.status(200).json({
@@ -341,10 +340,9 @@ export const deleteStaffById = asyncCatch(async (req, res, next) => {
 // @desc    Get staff by position
 // @route   GET /api/v1/staff/position/:position
 export const getStaffByPosition = asyncCatch(async (req, res, next) => {
-  const staff = await Staff.find({ position: req.params.position })
+  const staff = await Staff.find({ position: req.params.position, company: req.staff.company })
                             .populate("position")
                             .sort({ _id: -1 })
-                            .where("company", req.staff.company)
                             .select("-password");
   if (!staff) {
     return res.status(404).json({
@@ -360,10 +358,9 @@ export const getStaffByPosition = asyncCatch(async (req, res, next) => {
 
 // @route   GET /api/v1/staff/jobtype/:jobtype
 export const getStaffByJobType = asyncCatch(async (req, res, next) => {
-  const staffs = await Staff.find({ jobType: req.params.jobtype })
+  const staffs = await Staff.find({ jobType: req.params.jobtype, company: req.staff.company })
                             .populate("position")
                             .sort({ _id: -1 })
-                            .where("company", req.staff.company)
                             .select("-password");
 
   res.status(200).json({

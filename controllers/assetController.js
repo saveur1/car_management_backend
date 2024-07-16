@@ -23,9 +23,8 @@ export const createAsset = asyncCatch(async (req, res) => {
 
 // Get all assets
 export const getAllAssets = asyncCatch(async (req, res) => {
-  const assets = await Asset.find()
-                            .sort({_id: -1})
-                            .where("company", req.staff.company);
+  const assets = await Asset.find({company: req.staff.company})
+                            .sort({_id: -1});
   res.status(200).json({
     status: "success",
     assets,

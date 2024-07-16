@@ -45,8 +45,7 @@ export const registerUser = asyncCatch(async(req,res,next)=>{
 //Get all Users => /api/v1/users -> admin only route
 export const getAllUsers = asyncCatch(async(req,res,next)=>{
 
-    const users = await User.find()
-                            .where("company", req.staff.company)
+    const users = await User.find({ company: req.staff.company })
                             .sort({ _id: -1});
 
     res.status(200).json({

@@ -14,7 +14,7 @@ export const createNotification = asyncCatch(async (req, res) => {
 
 // Get all notifications
 export const getAllNotifications = asyncCatch(async (req, res) => {
-  const notifications = await Notification.find()
+  const notifications = await Notification.find({ company: req.staff.company })
                                           .populate("booking")
                                           .populate({
                                             path: "booking",
@@ -30,7 +30,6 @@ export const getAllNotifications = asyncCatch(async (req, res) => {
                                                 model: "Car"
                                             }
                                           })
-                                          .where("company", req.staff.company)
                                           .sort({ createdAt: -1 });
 
                                            
