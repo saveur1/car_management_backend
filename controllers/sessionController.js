@@ -4,7 +4,7 @@ import Session from "../models/sessionModel.js";
 
 //Session => /api/v1/sessions
 export const createSession = asyncCatch(async(req,res,next)=>{
-    const session = await Session.create(req.body);
+    const session = await Session.create({...req.body, company: req.staff.company._id});
 
     res.json({
         success: true,

@@ -1,8 +1,5 @@
 import mongoose from "mongoose";
 import validator from "validator";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import crypto from "crypto";
 
 
 const userSchema = new mongoose.Schema({
@@ -32,6 +29,11 @@ const userSchema = new mongoose.Schema({
         trim: true,
         unique: true,
         maxLength:[30,"UserName can not exceed 30 characters"]
+    },
+    company: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Company",
+        default: "66965043ad17b5897e2f6ec9"
     },
     location:{
         type: String,

@@ -13,6 +13,11 @@ const carToolSchema = new mongoose.Schema({
     trim: true,
     maxLength: [50, "Tool Brand cannot exceed 50 characters"],
   },
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Company",
+    default: "66965043ad17b5897e2f6ec9"
+  },
   modelNumber: {
     type: String,
     required: [true, "Model Number is required"],

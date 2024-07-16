@@ -26,6 +26,7 @@ import payment from "./routes/payment.js"
 import session from "./routes/sessions.js";
 import accounts from "./routes/accounts.js";
 import cookieParser from 'cookie-parser';
+import companies from "./routes/companies.js";
 
 import { swaggerDocumentation } from "./docs/swagger.js";
 import { corsOptionsDelegate } from "./config/corsOptions.js";
@@ -70,6 +71,8 @@ app.use("/api/v1/chat", chat);
 app.use("/api/v1/payment",payment);
 app.use("/api/v1/accounts", accounts);
 app.use("/api/v1/sessions", session);
+app.use("/api/v1/companies", companies);
+
 //SWAGGER DOCUMENTATION(/api/docs)
 swaggerDocumentation(app);
 

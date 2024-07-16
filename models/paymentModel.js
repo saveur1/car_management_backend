@@ -21,6 +21,11 @@ const paymentSchema = new mongoose.Schema({
     type: Number,
     required: false,
   },
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Company",
+    default: "66965043ad17b5897e2f6ec9"
+  },
   paymentDate: {
     type: Date,
     required: true,

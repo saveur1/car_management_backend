@@ -50,7 +50,12 @@ const staffSchema = new mongoose.Schema({
     required: true, 
     length: 16,
     unique:true 
-},
+  },
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Company",
+    default: "66965043ad17b5897e2f6ec9"
+  },
   position: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Job",
@@ -111,7 +116,7 @@ const staffSchema = new mongoose.Schema({
   NetInRwf: Number,
   totalCost: Number
 
-}, 
+},
 {
     timestamps: true
 });

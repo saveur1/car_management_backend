@@ -5,12 +5,13 @@ import Activities from "../models/activityModel.js";
 
 //Register Salary =>POST /api/v1/salaries
 export const registerSalary = asyncCatch(async(req,res,next)=>{
-  const salary = await Salary.create(req.body);
+  const salary = await Salary.create({...req.body, company: req.staff.company._id});
 
   //add new activies
   await Activities.create({
     staff: req.staff._id,
     activityName: "Added Salary Group",
+    company: req.staff.company._id,
     color: "blue"
   });
 
@@ -26,6 +27,7 @@ export const getAllSalaries = asyncCatch(async(req,res,next)=>{
     const salaries = await Salary.find()
                                  .populate("job")
                                  .populate("employee")
+                                 .where("company", req.staff.company._id)
                                  .sort({ _id: -1});
 
     res.status(200).json({

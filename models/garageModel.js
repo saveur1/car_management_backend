@@ -18,6 +18,11 @@ const garageSchema = new mongoose.Schema({
     trim: true,
     maxLength: [50, "Garage Name can not exceed 50 characters"],
   },
+  company: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Company",
+    default: "66965043ad17b5897e2f6ec9"
+  },
   garageStatus: {
     type: String,
     enum: ["garage", "completed"]

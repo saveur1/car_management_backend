@@ -18,6 +18,7 @@ import { ChatDoc } from "./chat.swagger.js";
 import { PaymentDoc } from "./payment.swagger.js";
 import { SessionsDoc } from "./sessions.swagger.js";
 import { AccountsDoc } from "./accounts.swagger.js";
+import { CompanyDoc } from "./companies.swagger.js";
 
 
 const Options = {
@@ -37,6 +38,7 @@ const Options = {
         name: "User",
         description: "Car Rental Users: Individuals, suppliers and admin",
       },
+      { name: "Company", description: "Company routes" },
       { name: "Booking", description: "Car Rental Bookings" },
       { name: "Cars", description: "Requests for creating Cars" },
       { name: "Staff", description: "Staff Management" },
@@ -87,7 +89,8 @@ const Options = {
       ...ChatDoc,
       ...SessionsDoc,
       ...AccountsDoc,
-      ...PaymentDoc, 
+      ...PaymentDoc,
+      ...CompanyDoc
 
     },
   },

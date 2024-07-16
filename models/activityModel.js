@@ -3,28 +3,36 @@ const activitySchema = new mongoose.Schema(
   {
     activityName: {
       type: String,
-      required: [true, "Name of Asset is required Please"],
+      required: [true, "Activity name is required Please"],
       trim: true,
-      maxLength: [50, "Name of Asset can not exceed 50 characters"],
+      maxLength: [50, "Activity name can not exceed 50 characters"],
     },
     staff: {
       type: mongoose.Schema.Types.ObjectId,
       ref:"Staff",
       required: [true, "Staff is required Please"],
     },
+    company: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Company",
+        default: "66965043ad17b5897e2f6ec9"
+    },
     color: {
         type: String,
         default: "blue"
     },
-    booking: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Booking",
-        required: false
+    date: {
+        type: Date,
+        required:false,
     },
     status: {
         type: String,
         enum: ["Incoming", "Live", "Completed", "Cancelled"]
     },
+    description: {
+        type: String,
+        required:false,
+    }
   },
   {
     timestamps: true,

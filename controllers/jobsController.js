@@ -11,6 +11,7 @@ export const registerJob = asyncCatch(async(req,res,next)=>{
   await Activities.create({
     staff: req.staff._id,
     activityName: "Created Job Position",
+    company: req.staff.company._id,
     color: "blue"
   });
 
@@ -24,6 +25,7 @@ export const registerJob = asyncCatch(async(req,res,next)=>{
 export const getAllJobs = asyncCatch(async(req,res,next)=>{
 
     const jobs = await Job.find()
+                          .where("company", req.staff.company._id)
                           .sort({ _id: -1});
 
     res.status(200).json({
@@ -59,6 +61,7 @@ export const updateJobInfo = asyncCatch(async(req,res,next)=>{
   await Activities.create({
     staff: req.staff._id,
     activityName: "Updated Job Position",
+    company: req.staff.company._id,
     color: "yellow"
   });
 
@@ -84,6 +87,7 @@ export const deleteJob = asyncCatch(async(req,res,next)=>{
   await Activities.create({
     staff: req.staff._id,
     activityName: "Deleted Job Position",
+    company: req.staff.company._id,
     color: "red"
   });
 

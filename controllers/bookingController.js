@@ -6,7 +6,7 @@ import Activities from '../models/activityModel.js';
 
 // Create a new booking
 export const createBooking = asyncCatch(async (req, res) => {
-  const booking = new Booking(req.body);
+  const booking = new Booking({...req.body, company: req.staff.company._id });
   let status = "Incoming";
 
   const car = await Car.findById(req.body.car);
@@ -41,7 +41,8 @@ export const createBooking = asyncCatch(async (req, res) => {
     activityName: "Created Booking",
     color: "blue",
     status: status,
-    booking: booking._id
+    company: req.staff.company._id,
+    date: new Date(Date.now())
   });
 
   //save both booking and car
@@ -60,6 +61,7 @@ export const getAllBookings = asyncCatch(async (req, res) => {
                                 .populate("car")
                                 .populate("customer")
                                 .populate("driver")
+                                .where("company", req.staff.company._id)
                                 .sort({createdAt: -1});
   res.status(200).json({
     status: "success",
@@ -93,6 +95,7 @@ export const getBookingsByStatus = asyncCatch(async (req, res) => {
                                   .populate("car")
                                   .populate("customer")
                                   .populate("driver")
+                                  .where("company", req.staff.company._id)
                                   .sort({createdAt: -1});
     
     // update car status
@@ -155,7 +158,8 @@ export const updateBooking = asyncCatch(async (req, res) => {
     activityName: "Updated Booking",
     color: "yellow",
     status: status,
-    booking: booking._id
+    company: req.staff.company._id,
+    date: new Date(Date.now())
   });
 
   res.status(200).json({
@@ -178,7 +182,7 @@ export const deleteBooking = asyncCatch(async (req, res) => {
   await Car.findByIdAndUpdate(booking.car, { current_status: "available" });
 
   //delete all activities for this booking
-  await Activities.deleteMany({booking: booking._id});
+  await Activities.deleteMany({$and:{ booking: booking._id, company: req.staff.company._id }});
 
   //deleted booking then from database
   await Booking.findByIdAndDelete(req.params.id);
@@ -187,6 +191,7 @@ export const deleteBooking = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Deleted Booking",
+    company: req.staff.company._id,
     color: "red"
   });
   
@@ -203,6 +208,7 @@ export const getAllCustomersBookings = asyncCatch(async (req, res) => {
                                   .populate("car")
                                   .populate("customer")
                                   .populate("driver")
+                                  .where("company", req.staff.company._id)
                                   .sort({createdAt: -1});
     res.status(200).json({
       status: "success",
@@ -217,6 +223,7 @@ export const getAllCustomersRentedCar = asyncCatch(async (req, res) => {
                                   .populate("car")
                                   .populate("customer")
                                   .populate("driver")
+                                  .where("company", req.staff.company._id)
                                   .sort({createdAt: -1});
     res.status(200).json({
       status: "success",

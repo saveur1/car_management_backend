@@ -4,7 +4,7 @@ import asyncCatch from "../middlewares/asyncCatch.js";
 
 // Create a new holiday
 export const createHoliday = asyncCatch(async (req, res) => {
-  const saveHoliday = await Holiday.create(req.body);
+  const saveHoliday = await Holiday.create({...req.body, company: req.staff.company._id});
   
   const holiday = await Holiday.findById(saveHoliday._id)
                                 .populate("staff");
@@ -16,7 +16,7 @@ export const createHoliday = asyncCatch(async (req, res) => {
 });
 // Get all holidays
 export const getAllHolidays = asyncCatch(async (req, res) => {
-  const holidays = await Holiday.find().populate("staff").sort({createdAt: -1});
+  const holidays = await Holiday.find().populate("staff").sort({createdAt: -1}).where("company", req.staff.company._id);
   res.status(200).json({
     success: true,
     holidays,
@@ -26,7 +26,7 @@ export const getAllHolidays = asyncCatch(async (req, res) => {
 // Get holiday by staff ID
 export const getHolidaysByStaff = asyncCatch(async (req, res) => {
   const { staffId } = req.params;
-  const holidays = await Holiday.find({ staff: staffId }).populate("staff").sort({createdAt: -1});
+  const holidays = await Holiday.find({ staff: staffId }).populate("staff").sort({createdAt: -1}).where("company", req.staff.company._id);
   
   res.status(200).json({
     success: true,

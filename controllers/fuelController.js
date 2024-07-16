@@ -11,6 +11,7 @@ export const createFuel = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Created Fuel",
+    company: req.staff.company._id,
     color: "blue"
   });
   res.status(201).json({
@@ -24,6 +25,7 @@ export const getAllFuels = asyncCatch(async (req, res) => {
   const fuels = await Fuel.find()
                           .populate("employee")
                           .populate("car")
+                          .where("company", req.staff.company._id)
                           .sort({_id: -1});
   res.status(200).json({
     status: "success",
@@ -34,8 +36,8 @@ export const getAllFuels = asyncCatch(async (req, res) => {
 // Get a fuel entry by ID
 export const getFuel = asyncCatch(async (req, res) => {
   const fuel = await Fuel.findById(req.params.id)
-    .populate("employee")
-    .populate("car");
+                          .populate("employee")
+                             .populate("car");
   if (!fuel) {
     return res.status(404).json({
       status: "fail",
@@ -67,6 +69,7 @@ export const updateFuel = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Updated Fuel",
+    company: req.staff.company._id,
     color: "yellow"
   });
 
@@ -90,6 +93,7 @@ export const deleteFuel = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Deleted Fuel",
+    company: req.staff.company._id,
     color: "red"
   });
 
@@ -105,6 +109,7 @@ export const getFuelsByEmployee = asyncCatch(async (req, res) => {
   const fuels = await Fuel.find({ employee })
                           .populate("employee")
                           .populate("car")
+                          .where("company", req.staff.company._id)
                           .sort({_id: -1});
   res.status(200).json({
     status: "success",
@@ -118,6 +123,7 @@ export const getFuelsByCar = asyncCatch(async (req, res) => {
     const fuels = await Fuel.find({ car })
                             .populate("employee")
                             .populate("car")
+                            .where("company", req.staff.company._id)
                             .sort({_id: -1});
     res.status(200).json({
       status: "success",

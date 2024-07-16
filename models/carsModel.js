@@ -65,6 +65,11 @@ const carsSchema = new mongoose.Schema({
         required: true,
         default: "main_owner"
     },
+    company: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Company",
+        default: "66965043ad17b5897e2f6ec9"
+    },
     supplier: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"

@@ -8,12 +8,13 @@ import Activities from "../models/activityModel.js";
 
 //Register Car =>POST /api/v1/cars/create
 export const registerCar = asyncCatch(async(req,res,next)=>{
-  const car = await Car.create(req.body);
+  const car = await Car.create({...req.body, company: req.staff.company._id });
 
   //add new activies
   await Activities.create({
     staff: req.staff._id,
     activityName: "Created Car",
+    company: req.staff.company._id,
     color: "blue"
   });
 
@@ -27,6 +28,7 @@ export const registerCar = asyncCatch(async(req,res,next)=>{
 export const getAllCars = asyncCatch(async(req,res,next)=>{
 
     const cars = await Car.find()
+                          .where("company", req.staff.company._id)
                           .sort({createdAt: -1});
 
     res.status(200).json({
@@ -63,6 +65,7 @@ export const updateCarInfo = asyncCatch(async(req,res,next)=>{
   await Activities.create({
     staff: req.staff._id,
     activityName: "Updated Car",
+    company: req.staff.company._id,
     color: "yellow"
   });
 
@@ -83,13 +86,13 @@ export const deleteCar = asyncCatch(async(req,res,next)=>{
   }
 
   //Delete all bookings for car
-  await Booking.deleteMany({ car: req.params.id });
+  await Booking.deleteMany({$and:{ car: req.params.id, company: req.staff.company._id }});
 
   //Delete all Fuels for car
-  await Fuel.deleteMany({ car: req.params.id });
+  await Fuel.deleteMany({$and:{ car: req.params.id, company: req.staff.company._id }});
 
   //Delete all Garage for car
-  await Garage.deleteMany({ car: req.params.id });
+  await Garage.deleteMany({$and:{ car: req.params.id, company: req.staff.company._id }});
 
   await Car.findByIdAndDelete(req.params.id);
 
@@ -97,6 +100,7 @@ export const deleteCar = asyncCatch(async(req,res,next)=>{
   await Activities.create({
     staff: req.staff._id,
     activityName: "Deleted Car",
+    company: req.staff.company._id,
     color: "red"
   });
 
@@ -117,18 +121,27 @@ export const getCarCategory = asyncCatch(async(req,res,next)=>{
         case "new":
             cars = await Car.find({
                 // manufacturer_year <= 2
-                manufacture_year:{ $gt: nowYear-2 }  // 2 represents the years car stays as new: stops at 2 years old: 1,2
+                $and: {
+                    manufacture_year:{ $gt: nowYear-2 },  // 2 represents the years car stays as new: stops at 2 years old: 1,2
+                    company: req.staff.company._id
+                }
             }).sort({createdAt: -1});
             break;
         case "medium":
             cars = await Car.find({
                 // 3 <= manufacturer_year <= 6
-                manufacture_year:{ $gte: nowYear-5, $lte: nowYear-2 } //Start from 3 years old - 6 years old: 3,4,5 
+                $and: {
+                    manufacture_year:{ $gte: nowYear-5, $lte: nowYear-2 }, //Start from 3 years old - 6 years old: 3,4,5
+                    company: req.staff.company._id
+                }
             }).sort({createdAt: -1});
             break;
         default:
             cars = await Car.find({
-                manufacture_year:{ $lt: nowYear-5 }  // start from 5 years old - Anywhere in past years: 6,7,8,9...
+                $and: {
+                    manufacture_year:{ $lt: nowYear-5 },  // start from 5 years old - Anywhere in past years: 6,7,8,9...
+                    company: req.staff.company._id
+                }
             }).sort({createdAt: -1});
             break;
     }
@@ -147,6 +160,7 @@ export const currentStatusCar = asyncCatch(async(req,res,next)=>{
 
     //get cars by current status
     const cars = await Car.find({current_status: query})
+                          .where("company", req.staff.company._id)
                           .sort({createdAt: -1});
 
     res.status(200).json({

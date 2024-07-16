@@ -1,5 +1,69 @@
 export const ActivitiesDoc = {
   "/api/v1/activities": {
+    post: {
+        tags: ["Activities"],
+        security: [
+          {
+            token: [],
+          },
+        ],
+        requestBody: {
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  activityName: {
+                    type: "string",
+                    example: "Cleaning Chair",
+                    description: "Activity Title",
+                    required: true,
+                  },
+                  staff: {
+                    type: "string",
+                    example: "60c72b2f9b1d4b3c6d3b9b0e",
+                    description: "Staff who added this activity",
+                    required: true,
+                  },
+                  date: {
+                    type: "date",
+                    example: String(new Date()),
+                    description: "Date of activity",
+                    required: true,
+                  },
+                  status: {
+                      type: "string",
+                      enum: ["Incoming", "Live", "Completed", "Cancelled"],
+                      description: "Activity status",
+                      required: true,
+                  },
+                  description: {
+                    type: "string",
+                    required: false,
+                    description: "Activity description",
+                  }
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          201: {
+            description: "Asset created successfully",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  example: {
+                    status: "success",
+                    asset: {},
+                  },
+                },
+              },
+            },
+          },
+        },
+    },
     get: {
       tags: ["Activities"],
       security: [

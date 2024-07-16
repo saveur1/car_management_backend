@@ -16,6 +16,11 @@ const holidaySchema = new mongoose.Schema(
         type: Date,
         required: true,
     },
+    company: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Company",
+        default: "66965043ad17b5897e2f6ec9"
+    },
     endDate: {
         type: Date,
         required: true,

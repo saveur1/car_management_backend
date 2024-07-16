@@ -16,6 +16,7 @@ export const createStaff = asyncCatch(async (req, res, next) => {
 
   const staffToAdd = {
     ...req.body,
+    company: req.staff.company._id
   };
 
   //If there is file then add its url to staff data
@@ -62,6 +63,7 @@ export const createStaff = asyncCatch(async (req, res, next) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Created Staff",
+    company: req.staff.company._id,
     color: "blue"
   });
 
@@ -70,6 +72,7 @@ export const createStaff = asyncCatch(async (req, res, next) => {
     staff,
   });
 });
+
 
 //Login Staff => /api/v1/staff/login
 export const loginStaff = asyncCatch(async (req, res, next) => {
@@ -213,6 +216,7 @@ export const updateUserPassword = asyncCatch(async (req, res, next) => {
 export const getAllStaff = asyncCatch(async (req, res, next) => {
   const staff = await Staff.find()
                             .populate("position")
+                            .where("company", req.staff.company._id)
                             .sort({ _id: -1 })
                             .select("-password");
   res.status(200).json({
@@ -244,7 +248,7 @@ export const getStaffById = asyncCatch(async (req, res, next) => {
 // @desc    Get staff by email
 // @route   GET /api/v1/staff/:id
 export const getStaffEmail = asyncCatch(async (req, res, next) => {
-    const staff = await Staff.findOne({email: req.body.email})
+    const staff = await Staff.findOne({email: req.body.email, company: req.staff.company._id })
                       .populate("position")
                       .select("-password");
   
@@ -294,6 +298,7 @@ export const updateStaffById = asyncCatch(async (req, res, next) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Updated Staff",
+    company: req.staff.company._id,
     color: "yellow"
   });
 
@@ -323,6 +328,7 @@ export const deleteStaffById = asyncCatch(async (req, res, next) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Deleted Staff",
+    company: req.staff.company._id,
     color: "red"   //this color is used at frontend to style bullet point of activity
   });
 
@@ -336,9 +342,10 @@ export const deleteStaffById = asyncCatch(async (req, res, next) => {
 // @route   GET /api/v1/staff/position/:position
 export const getStaffByPosition = asyncCatch(async (req, res, next) => {
   const staff = await Staff.find({ position: req.params.position })
-    .populate("position")
-    .sort({ _id: -1 })
-    .select("-password");
+                            .populate("position")
+                            .sort({ _id: -1 })
+                            .where("company", req.staff.company._id)
+                            .select("-password");
   if (!staff) {
     return res.status(404).json({
       success: false,
@@ -354,9 +361,10 @@ export const getStaffByPosition = asyncCatch(async (req, res, next) => {
 // @route   GET /api/v1/staff/jobtype/:jobtype
 export const getStaffByJobType = asyncCatch(async (req, res, next) => {
   const staffs = await Staff.find({ jobType: req.params.jobtype })
-    .populate("position")
-    .sort({ _id: -1 })
-    .select("-password");
+                            .populate("position")
+                            .sort({ _id: -1 })
+                            .where("company", req.staff.company._id)
+                            .select("-password");
 
   res.status(200).json({
     success: true,

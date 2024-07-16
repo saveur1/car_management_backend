@@ -12,6 +12,11 @@ const salariesSchema = new mongoose.Schema({
         required: [true,"Job Amount is required Please"],
         maxLength:[10,"Job amount can not exceed 10 characters"],
     },
+    company: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Company",
+        default: "66965043ad17b5897e2f6ec9"
+    },
     employee:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Staff",

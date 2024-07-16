@@ -10,6 +10,7 @@ import cloudinary from "cloudinary";
 export const registerUser = asyncCatch(async(req,res,next)=>{
     const userToAdd = {
         ...req.body,
+        company: req.staff.company._id,
       };
     
       //If there is file then add its url to staff data
@@ -32,6 +33,7 @@ export const registerUser = asyncCatch(async(req,res,next)=>{
   await Activities.create({
     staff: req.staff._id,
     activityName: "Registered User",
+    company: req.staff.company._id,
     color: "blue"
   });
 
@@ -44,6 +46,7 @@ export const registerUser = asyncCatch(async(req,res,next)=>{
 export const getAllUsers = asyncCatch(async(req,res,next)=>{
 
     const users = await User.find()
+                            .where("company", req.staff.company._id)
                             .sort({ _id: -1});
 
     res.status(200).json({
@@ -97,6 +100,7 @@ export const updateUserInfo = asyncCatch(async(req,res,next)=>{
   await Activities.create({
     staff: req.staff._id,
     activityName: "Updated User",
+    company: req.staff.company._id,
     color: "yellow"
   });
 
@@ -122,6 +126,7 @@ export const deleteUser = asyncCatch(async(req,res,next)=>{
   await Activities.create({
     staff: req.staff._id,
     activityName: "Deleted User",
+    company: req.staff.company._id,
     color: "red"
   });
   
@@ -135,7 +140,8 @@ export const deleteUser = asyncCatch(async(req,res,next)=>{
 export const getUserByCategory = asyncCatch(async(req,res,next)=>{
 
     const users = await User.find({
-        categories:req.params.category
+        categories:req.params.category,
+        company: req.staff.company._id
     }).sort({ _id: -1});
 
     res.status(200).json({
@@ -148,7 +154,8 @@ export const getUserByCategory = asyncCatch(async(req,res,next)=>{
 export const getUserByRole = asyncCatch(async(req,res,next)=>{
 
     const users = await User.find({
-        role:req.params.role
+        role:req.params.role,
+        company: req.staff.company._id,
     }).sort({ _id: -1});
 
     res.status(200).json({

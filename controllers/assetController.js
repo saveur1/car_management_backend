@@ -4,13 +4,14 @@ import Activities from "../models/activityModel.js";
 
 // Create a new asset
 export const createAsset = asyncCatch(async (req, res) => {
-  const asset = new Asset(req.body);
+  const asset = new Asset({ ...req.body, company: req.staff.company._id });
   await asset.save();
 
   //add new activies
   await Activities.create({
     staff: req.staff._id,
     activityName: "Created Asset",
+    company: req.staff.company._id,
     color: "blue"
   });
 
@@ -23,7 +24,8 @@ export const createAsset = asyncCatch(async (req, res) => {
 // Get all assets
 export const getAllAssets = asyncCatch(async (req, res) => {
   const assets = await Asset.find()
-                            .sort({_id: -1});
+                            .sort({_id: -1})
+                            .where("company", req.staff.company._id);
   res.status(200).json({
     status: "success",
     assets,
@@ -63,6 +65,7 @@ export const updateAsset = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Updated Asset",
+    company: req.staff.company._id,
     color: "yellow"
   });
 
@@ -87,6 +90,7 @@ export const deleteAsset = asyncCatch(async (req, res) => {
   await Activities.create({
     staff: req.staff._id,
     activityName: "Deleted Asset",
+    company: req.staff.company._id,
     color: "red"
   });
 

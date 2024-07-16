@@ -14,7 +14,8 @@ export const createPayment = asyncCatch(async (req, res) => {
         const payment = await Payment.create({
             staff: staffId,
             paymentDate: paymentDate,
-            reason: reason
+            reason: reason,
+            company: req.staff.company._id
         })
 
         insertedIds.push(payment?._id);
@@ -28,7 +29,9 @@ export const createPayment = asyncCatch(async (req, res) => {
                                     path: "position",
                                     model: "Job"
                                 }
-                              });
+                              })
+                              .where("staff", req.staff.company._id)
+                              .sort({_id: -1});
 
 
     res.status(201).json({
@@ -48,7 +51,9 @@ const payments = await Payment.find()
                                     path: "position",
                                     model: "Job"
                                 }
-                              });
+                              })
+                               .where("company", req.staff.company._id)
+                               .sort({_id: -1});
 
         res.status(200).json({
             success: true,
@@ -67,13 +72,16 @@ const payments = await Payment.find({ staff: staffId })
                                     path: "position",
                                     model: "Job"
                                 }
-                              });
+                              })
+                              .where("company", req.staff.company._id)
+                              .sort({_id: -1});
 
         res.status(200).json({
             success: true,
             payments,
  })
 });
+
 //get single payment by id
 export const getPaymentById = asyncCatch(async(req,res) => {
     const payment = await Payment.findById(req.params.id)
