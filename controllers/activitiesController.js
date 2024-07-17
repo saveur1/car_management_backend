@@ -7,7 +7,6 @@ export const createActivity = asyncCatch(async (req, res) => {
             ...req.body,
             activityName: "Added Activity",
             color: "blue",
-            staff:req.staff._id, 
             company: req.staff.company
     });
   
