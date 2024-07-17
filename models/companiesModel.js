@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 import validator from "validator";
 const companySchema = new mongoose.Schema(
   {
+    company_logo: {
+        type: String,
+        required: [true,"Company Logo is required Please"]
+    },
     company_name: {
       type: String,
       required: [true, "company name is required Please"],

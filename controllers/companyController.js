@@ -4,7 +4,25 @@ import Activities from "../models/activityModel.js";
 
 // Create a new company
 export const createCompany = asyncCatch(async (req, res) => {
-  const company = await Company.create(req.body);
+    const companyToAdd = {
+        ...req.body,
+    };
+    
+      //If there is file then add its url to staff data
+    if (req.file) {
+        const cloudinary_image = await cloudinary.v2.uploader.upload(
+          req.file.path,
+          {
+            folder: "companies",
+            unique_filename: false,
+            use_filename: true,
+          }
+        );
+    
+        companyToAdd["company_logo"] = cloudinary_image.secure_url;
+    }
+
+  const company = await Company.create(companyToAdd);
 
   //add new activies
   await Activities.create({
@@ -22,7 +40,7 @@ export const createCompany = asyncCatch(async (req, res) => {
 // Get all companies
 export const getAllCompanys = asyncCatch(async (req, res) => {
   const company = await Company.find()
-                            .sort({_id: -1});
+                               .sort({_id: -1});
   res.status(200).json({
     status: "success",
     company,
@@ -47,10 +65,29 @@ export const getCompany = asyncCatch(async (req, res) => {
 
 // Update a company by ID
 export const updateCompany = asyncCatch(async (req, res) => {
-  const company = await Company.findByIdAndUpdate(req.params.id, req.body, {
+    const companyToUpdate = {
+        ...req.body,
+    };
+    
+      //If there is file then add its url to staff data
+    if (req.file) {
+        const cloudinary_image = await cloudinary.v2.uploader.upload(
+          req.file.path,
+          {
+            folder: "companies",
+            unique_filename: false,
+            use_filename: true,
+          }
+        );
+    
+        companyToUpdate["company_logo"] = cloudinary_image.secure_url;
+    }
+
+  const company = await Company.findByIdAndUpdate(req.params.id, companyToUpdate, {
     new: true,
     runValidators: true,
   });
+  
   if (!company) {
     return res.status(404).json({
       status: "fail",

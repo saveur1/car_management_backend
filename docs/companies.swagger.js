@@ -9,7 +9,7 @@ export const CompanyDoc = {
         ],
         requestBody: {
           content: {
-            "application/json": {
+            "multipart/form-data": {
               schema: {
                 type: "object",
                 properties: {
@@ -48,6 +48,11 @@ export const CompanyDoc = {
                     required: true,
                     example: "Born 2020 and it's purpose is to insure food security.",
                     description: "Describe Company's reputation."
+                  },
+                  company_logo: {
+                    type: "file",
+                    required: true,
+                    description: "Company logo",
                   }
                 },
               },
@@ -148,7 +153,7 @@ export const CompanyDoc = {
         ],
         requestBody: {
           content: {
-            "application/json": {
+            "multipart/form-data": {
               schema: {
                 type: "object",
                 properties: {
@@ -187,6 +192,11 @@ export const CompanyDoc = {
                         required: true,
                         example: "Born 2020 and it's purpose is to insure food security.",
                         description: "Describe Company's reputation."
+                      },
+                      company_logo: {
+                        type: "file",
+                        required: true,
+                        description: "Company logo",
                       }
                 },
               },
