@@ -4,16 +4,15 @@ import asyncCatch from "../middlewares/asyncCatch.js";
 // Create a new payment
 export const createPayment = asyncCatch(async (req, res) => {
 
-    const { staffs, reason, paymentDate } = req.body;
+    const { staffs } = req.body;
     const insertedIds = [];
 
     //save all incoming payments
     for(let staffId of staffs){
 
         const payment = await Payment.create({
+            ...req.body,
             staff: staffId,
-            paymentDate: paymentDate,
-            reason: reason,
             company: req.staff.company
         })
 
