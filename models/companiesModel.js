@@ -30,7 +30,8 @@ const companySchema = new mongoose.Schema(
     },
     status: {
         type: String,
-        enum: ["active", "not-active"]
+        enum: ["active", "not-active"],
+        default: "active"
     },
     description: {
         type: String,
