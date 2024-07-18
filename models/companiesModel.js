@@ -4,7 +4,7 @@ const companySchema = new mongoose.Schema(
   {
     company_logo: {
         type: String,
-        required: [true,"Company Logo is required Please"]
+        required: false
     },
     company_name: {
       type: String,
@@ -14,11 +14,11 @@ const companySchema = new mongoose.Schema(
     },
     location: {
         type: String,
-        required: true,
+        required: [true, "company Location is required Please"],
     },
     phone_number: {
         type: String,
-        required:true,
+        required:[true, "Company phone number is required Please"],
     },
     email:{
         type: String,
@@ -28,15 +28,9 @@ const companySchema = new mongoose.Schema(
         unique: true,
         message:"Email Already Exists in Database"
     },
-    website:{
-        type: String,
-        required: false,
-        trim: true,
-        validate: [validator.isURL,"Please enter a valid URL"],
-    },
     description: {
         type: String,
-        required: true,
+        required: [true, "company description is required Please"],
     }
   },
   {

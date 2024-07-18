@@ -71,7 +71,7 @@ export const updateCompany = asyncCatch(async (req, res) => {
     };
     
       //If there is file then add its url to staff data
-    if (req.file) {
+    if(req.file) {
         const cloudinary_image = await cloudinary.v2.uploader.upload(
           req.file.path,
           {
