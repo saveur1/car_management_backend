@@ -1,6 +1,7 @@
 import Company from "../models/companiesModel.js";
 import asyncCatch from "../middlewares/asyncCatch.js";
 import Activities from "../models/activityModel.js";
+import cloudinary from "cloudinary";
 
 // Create a new company
 export const createCompany = asyncCatch(async (req, res) => {
