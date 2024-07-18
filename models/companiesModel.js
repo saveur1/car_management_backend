@@ -28,6 +28,10 @@ const companySchema = new mongoose.Schema(
         unique: true,
         message:"Email Already Exists in Database"
     },
+    status: {
+        type: String,
+        enum: ["active", "not-active"]
+    },
     description: {
         type: String,
         required: [true, "company description is required Please"],
