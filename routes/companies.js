@@ -23,7 +23,7 @@ router
 router
   .route("/:id")
   .get(CheckAuth,    CheckRole("admin"), getCompany)
-  .put(CheckAuth,    CheckRole("admin"), upload.single("company_logo"), updateCompany)
+  .patch(CheckAuth,    CheckRole("admin"), upload.single("company_logo"), updateCompany)
   .delete(CheckAuth, CheckRole("admin"), deleteCompany);
 
 export default router;
