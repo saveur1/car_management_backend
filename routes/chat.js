@@ -14,13 +14,13 @@ router
   .route("/")
   .post(
     CheckAuth,
-    CheckRole("admin", "operators", "manager", "human_resources", "accountant"),
+    CheckRole("admin", "operators", "manager", "human_resources", "accountant", "CEO"),
     upload.array("attachments", 5),
     sendMessage
   )
   .get(
     CheckAuth,
-    CheckRole("admin", "operators", "manager", "human_resources", "accountant"),
+    CheckRole("admin", "operators", "manager", "human_resources", "accountant", "CEO"),
     getAllChats
   );
 
@@ -28,17 +28,17 @@ router
   .route("/:id")
   .get(
     CheckAuth,
-    CheckRole("admin", "operators", "manager", "human_resources", "accountant"),
+    CheckRole("admin", "operators", "manager", "human_resources", "accountant", "CEO"),
     getChatById
   )
   .put(
     CheckAuth,
-    CheckRole("admin", "operators", "manager", "human_resources", "accountant"),
+    CheckRole("admin", "operators", "manager", "human_resources", "accountant", "CEO"),
     updateChat
   )
   .delete(
     CheckAuth,
-    CheckRole("admin", "operators", "manager", "human_resources", "accountant"),
+    CheckRole("admin", "operators", "manager", "human_resources", "accountant", "CEO"),
     deleteChat
   );
 

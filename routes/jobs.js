@@ -1,5 +1,5 @@
 /*
-                ADMIN, HUMAN RESOURCES AND ACCOUNTANT ONLY
+                ADMIN, HUMAN RESOURCES, CEO AND ACCOUNTANT ONLY
 */
 
 import express from 'express';
@@ -17,15 +17,15 @@ import {
 import { CheckAuth, CheckRole } from '../middlewares/CheckAuth.js';
 
 router.route("/")
-      .get(CheckAuth, CheckRole("admin", "human_resources", "accountant"), getAllJobs)
+      .get(CheckAuth, CheckRole("admin", "human_resources", "accountant", "CEO"), getAllJobs)
       .post(CheckAuth, CheckRole("admin", "human_resources","accountant"), registerJob);
 
 //Salaries routes, a whole CRUD for salaries
 //Check authentication first then check user role
 router.route("/:id")
-      .get(CheckAuth, CheckRole("admin", "human_resources","accountant"), getJobDetails)
-      .put(CheckAuth, CheckRole("admin", "human_resources", "accountant"), updateJobInfo)
-      .delete(CheckAuth, CheckRole("admin", "human_resources", "accountant"), deleteJob);
+      .get(CheckAuth, CheckRole("admin", "human_resources", "accountant", "CEO"), getJobDetails)
+      .put(CheckAuth, CheckRole("admin", "human_resources", "accountant", "CEO"), updateJobInfo)
+      .delete(CheckAuth, CheckRole("admin", "human_resources", "accountant", "CEO"), deleteJob);
 
 
 

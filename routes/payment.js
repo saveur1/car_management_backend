@@ -3,11 +3,11 @@ import {createPayment,getPayments,getPaymentByStaff,getPaymentById,updatePayment
 import { CheckAuth,CheckRole } from "../middlewares/CheckAuth.js";
 const router = express.Router();
 
-router.route("/").post(CheckAuth, CheckRole("admin", "operators"), createPayment)
-                 .get(CheckAuth, CheckRole("admin", "operators"), getPayments);
-router.route("/staff/:staffId").get(CheckAuth, CheckRole("admin", "operators"), getPaymentByStaff);
+router.route("/").post(CheckAuth, CheckRole("admin", "operators","CEO"), createPayment)
+                 .get(CheckAuth, CheckRole("admin", "operators","CEO"), getPayments);
+router.route("/staff/:staffId").get(CheckAuth, CheckRole("admin", "operators","CEO"), getPaymentByStaff);
 
-router.route("/:id").get(CheckAuth, CheckRole("admin", "operators"), getPaymentById)
-                    .patch(CheckAuth, CheckRole("admin", "operators"), updatePayment)
-                    .delete(CheckAuth, CheckRole("admin", "operators"), deletePayment);
+router.route("/:id").get(CheckAuth, CheckRole("admin", "operators","CEO"), getPaymentById)
+                    .patch(CheckAuth, CheckRole("admin", "operators","CEO"), updatePayment)
+                    .delete(CheckAuth, CheckRole("admin", "operators","CEO"), deletePayment);
 export default router;

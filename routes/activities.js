@@ -10,11 +10,11 @@ const router = express.Router();
 
 router
   .route("/")
-  .post(CheckAuth, CheckRole("admin", "operators"), createActivity)
-  .get(CheckAuth, CheckRole("admin", "operators"), getAllActivities);
+  .post(CheckAuth, CheckRole("admin", "operators","CEO"), createActivity)
+  .get(CheckAuth, CheckRole("admin", "operators","CEO"), getAllActivities);
 
 router
   .route("/staff/:staffId")
-  .get(CheckAuth, CheckRole("admin", "operators"), getActivitiesByStaff);
+  .get(CheckAuth, CheckRole("admin", "operators","CEO"), getActivitiesByStaff);
 
 export default router;

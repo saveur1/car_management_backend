@@ -1,6 +1,6 @@
 
 /*
-                ADMIN, OPERATORS, ACCOUNTANT AND MANAGER
+                ADMIN, OPERATORS,CEO, ACCOUNTANT AND MANAGER
 */
 import express from "express";
 import {
@@ -18,21 +18,21 @@ const router = express.Router();
 
 router
   .route("/")
-  .post(CheckAuth, CheckRole("admin", "operators", "manager"), createFuel)
-  .get(CheckAuth, CheckRole("admin", "operators", "manager", "accountant"), getAllFuels);
+  .post(CheckAuth, CheckRole("admin", "operators", "manager","CEO"), createFuel)
+  .get(CheckAuth, CheckRole("admin", "operators", "manager", "accountant", "CEO"), getAllFuels);
 
 router
   .route("/employee/:employee")
-  .get(CheckAuth, CheckRole("admin", "operators", "manager"), getFuelsByEmployee);
+  .get(CheckAuth, CheckRole("admin", "operators", "manager","CEO"), getFuelsByEmployee);
 
 router
   .route("/car/:carId")
-  .get(CheckAuth, CheckRole("admin", "operators", "manager", "accountant"), getFuelsByCar);
+  .get(CheckAuth, CheckRole("admin", "operators", "manager", "accountant", "CEO"), getFuelsByCar);
 
 router
   .route("/:id")
-  .get(CheckAuth,    CheckRole("admin", "operators", "manager", "accountant"), getFuel)
-  .put(CheckAuth,    CheckRole("admin", "operators", "manager"), updateFuel)
-  .delete(CheckAuth, CheckRole("admin", "manager"), deleteFuel);
+  .get(CheckAuth,    CheckRole("admin", "operators", "manager", "accountant", "CEO"), getFuel)
+  .put(CheckAuth,    CheckRole("admin", "operators", "manager","CEO"), updateFuel)
+  .delete(CheckAuth, CheckRole("admin", "manager", "CEO"), deleteFuel);
 
 export default router;

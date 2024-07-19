@@ -1,5 +1,5 @@
 /*
-                ADMIN, HUMAN RESOURCES AND ACCOUNTANT ONLY
+                ADMIN, HUMAN RESOURCES, CEO AND ACCOUNTANT ONLY
                 OPERATORS: fetch all staffs only
 */
 import express from "express";
@@ -34,22 +34,22 @@ router.route("/password/update").put(CheckAuth, updateUserPassword);
 //staff routes, a whole CRUD for staff
 //Check authentication first then check user role
 router.route("/")
-      .post(CheckAuth, CheckRole("admin", "human_resources", "accountant"), upload.single("image"), createStaff) //create staff
-      .get(CheckAuth, CheckRole("admin", "human_resources", "accountant", "operators"), getAllStaff);
+      .post(CheckAuth, CheckRole("admin", "human_resources", "accountant", "CEO"), upload.single("image"), createStaff) //create staff
+      .get(CheckAuth, CheckRole("admin", "human_resources", "accountant", "operators", "CEO"), getAllStaff);
 
 router.route("/position/:position")
-      .get(CheckAuth, CheckRole("admin", "human_resources", "accountant", "operators"), getStaffByPosition);
+      .get(CheckAuth, CheckRole("admin", "human_resources", "accountant", "operators", "CEO"), getStaffByPosition);
 
 router.route("/jobtype/:jobtype")
-      .get(CheckAuth, CheckRole("admin", "human_resources", "accountant", "operators"), getStaffByJobType)
+      .get(CheckAuth, CheckRole("admin", "human_resources", "accountant", "operators", "CEO"), getStaffByJobType)
 
 router.route("/email")
-      .get(CheckAuth, CheckRole("admin", "human_resources", "accountant", "operators"), getStaffEmail);
+      .get(CheckAuth, CheckRole("admin", "human_resources", "accountant", "operators", "CEO"), getStaffEmail);
 
 router
   .route("/:id")
-  .get(CheckAuth, CheckRole("admin", "human_resources", "accountant"), getStaffById)
-  .put(CheckAuth, CheckRole("admin", "human_resources", "accountant"), upload.single("image"), updateStaffById)
-  .delete(CheckAuth, CheckRole("admin", "human_resources", "accountant"), deleteStaffById);
+  .get(CheckAuth, CheckRole("admin", "human_resources", "accountant", "CEO"), getStaffById)
+  .put(CheckAuth, CheckRole("admin", "human_resources", "accountant", "CEO"), upload.single("image"), updateStaffById)
+  .delete(CheckAuth, CheckRole("admin", "human_resources", "accountant", "CEO"), deleteStaffById);
   
 export default router;

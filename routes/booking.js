@@ -1,4 +1,4 @@
-    /*         ADMIN, OPERATOR, HUMAN RESOURCES AND MANAGER*/
+    /*         ADMIN, OPERATOR, HUMAN RESOURCES, CEO AND MANAGER*/
 import express from "express";
 import {
   createBooking,
@@ -16,26 +16,26 @@ const router = express.Router();
 
 router
   .route("/")
-  .post(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources"), createBooking)
-  .get(CheckAuth,  CheckRole("admin", "operators", "manager", "human_resources", "accountant"), getAllBookings);
+  .post(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources", "CEO"), createBooking)
+  .get(CheckAuth,  CheckRole("admin", "operators", "manager", "human_resources", "accountant", "CEO"), getAllBookings);
 router
   .route("/status/:status")
-  .get(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources", "accountant"), getBookingsByStatus);
+  .get(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources", "accountant", "CEO"), getBookingsByStatus);
 
 //get all bookings held by particular user id
 router
   .route("/customer/:customer")
-  .get(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources", "accountant"), getAllCustomersBookings);
+  .get(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources", "accountant", "CEO"), getAllCustomersBookings);
 
 //get all bookings held by particular car id
 router
   .route("/car/:car")
-  .get(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources", "accountant"), getAllCustomersRentedCar);
+  .get(CheckAuth, CheckRole("admin", "operators", "manager", "human_resources", "accountant", "CEO"), getAllCustomersRentedCar);
 
 router
   .route("/:id")
-  .get(CheckAuth,    CheckRole("admin", "operators", "manager", "human_resources", "accountant"), getBooking)
-  .patch(CheckAuth,  CheckRole("admin", "operators", "manager"), updateBooking)
-  .delete(CheckAuth, CheckRole("admin", "operators", "manager"), deleteBooking);
+  .get(CheckAuth,    CheckRole("admin", "operators", "manager", "human_resources", "accountant", "CEO"), getBooking)
+  .patch(CheckAuth,  CheckRole("admin", "operators", "manager","CEO"), updateBooking)
+  .delete(CheckAuth, CheckRole("admin", "operators", "manager","CEO"), deleteBooking);
 
 export default router;

@@ -12,16 +12,16 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(CheckAuth, CheckRole("admin", "operators"), getAllHolidays)
-  .post(CheckAuth, CheckRole("admin", "operators"), createHoliday);
+  .get(CheckAuth, CheckRole("admin", "operators","CEO"), getAllHolidays)
+  .post(CheckAuth, CheckRole("admin", "operators","CEO"), createHoliday);
 
 router
   .route("/staff/:staffId")
-  .get(CheckAuth, CheckRole("admin", "operators"), getHolidaysByStaff);
+  .get(CheckAuth, CheckRole("admin", "operators","CEO"), getHolidaysByStaff);
 
 router
   .route("/:id")
-  .patch(CheckAuth, CheckRole("admin", "operators"), updateHoliday)
-  .delete(CheckAuth, CheckRole("admin", "operators"), deleteHoliday);
+  .patch(CheckAuth, CheckRole("admin", "operators","CEO"), updateHoliday)
+  .delete(CheckAuth, CheckRole("admin", "operators","CEO"), deleteHoliday);
 
 export default router;
