@@ -2,6 +2,11 @@ import Company from "../models/companiesModel.js";
 import asyncCatch from "../middlewares/asyncCatch.js";
 import Activities from "../models/activityModel.js";
 import cloudinary from "cloudinary";
+import Staff from "../models/staffModel.js";
+import sendEmail from "../utils/sendEmail.js";
+import schedule from "node-schedule";
+import { staffEmail } from "../config/staffEmailTemplate.js";
+import Position from "../models/jobsModel.js";
 
 // Create a new company
 export const createCompany = asyncCatch(async (req, res) => {
@@ -132,3 +137,65 @@ export const deleteCompany = asyncCatch(async (req, res) => {
     message: "Company was deleted successfully",
   });
 });
+
+// @desc    Create new staff
+// @route   POST /api/v1/companies/CEO
+export const createStaff = asyncCatch(async (req, res, next) => {
+
+    const staffToAdd = {
+      ...req.body,
+    };
+  
+    //If there is file then add its url to staff data
+    if (req.file) {
+      const cloudinary_image = await cloudinary.v2.uploader.upload(
+        req.file.path,
+        {
+          folder: "staff",
+          unique_filename: false,
+          use_filename: true,
+        }
+      );
+  
+      staffToAdd["image"] = cloudinary_image.secure_url;
+    }
+  
+    //Save staff in database
+    const staff = await Staff.create(staffToAdd);
+  
+    //send email with password and email address
+    //this function will run in background
+    const position = Position.findById(staff.position);
+    const allowedPositions = ["admin", "human_resources", "accountant", "operators", "manager","CEO"]; //excludes other positions form receiving email
+  
+    if(allowedPositions.includes(position.job_title)) {
+      const job = schedule.scheduleJob( "send staff email", { start: new Date() }, async function () {
+          await sendEmail({
+              email: req.body.email,
+              subject: "Welcome to Rent Car",
+              message: staffEmail(
+                req,
+                req.body.email,
+                req.body.password,
+                `${req.body.firstname} ${req.body.lastname}`
+              ),
+          });
+  
+          job.cancel();
+          }
+      );
+  }
+  
+    //add new activies
+    await Activities.create({
+      staff: req.staff._id,
+      activityName: "Created Company CEO",
+      company: req.staff.company,
+      color: "blue"
+    });
+  
+    res.status(200).json({
+      success: true,
+      staff,
+    });
+  });

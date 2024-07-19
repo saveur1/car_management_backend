@@ -9,6 +9,7 @@ import {
   getCompany,
   updateCompany,
   deleteCompany,
+  createStaff,
 } from "../controllers/companyController.js";
 import { CheckAuth, CheckRole } from "../middlewares/CheckAuth.js";
 import { upload } from "../middlewares/imagesUpload.js";
@@ -19,6 +20,9 @@ router
   .route("/")
   .post(CheckAuth, CheckRole("admin"), upload.single("company_logo"), createCompany)
   .get(CheckAuth, CheckRole("admin"), getAllCompanys);
+
+router.route("/CEO")
+      .post(CheckAuth, CheckRole("admin"), upload.single("image"), createStaff);
 
 router
   .route("/:id")

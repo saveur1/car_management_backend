@@ -39,7 +39,7 @@ export const createStaff = asyncCatch(async (req, res, next) => {
   //send email with password and email address
   //this function will run in background
   const position = Position.findById(staff.position);
-  const allowedPositions = ["admin", "human_resources", "accountant", "operators", "manager"]; //excludes other positions form receiving email
+  const allowedPositions = ["admin", "human_resources", "accountant", "operators", "manager","CEO"]; //excludes other positions form receiving email
 
   if(allowedPositions.includes(position.job_title)) {
     const job = schedule.scheduleJob( "send staff email", { start: new Date() }, async function () {
