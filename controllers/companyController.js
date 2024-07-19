@@ -196,17 +196,17 @@ export const createStaff = asyncCatch(async (req, res, next) => {
   
     res.status(200).json({
       success: true,
-      staff,
+      company: staff,
     });
   });
 
 // @desc    Get all staff CEO
 // @route   GET /api/v1/companies/CEO
 export const getAllStaffCEO = asyncCatch(async (req, res, next) => {
-    const staff = await Staff.aggregate([
+    const ceos = await Staff.aggregate([
         {
           $lookup: {
-            from: "positions",
+            from: "jobs",
             localField: "position",
             foreignField: "_id",
             as: "position"
@@ -221,8 +221,9 @@ export const getAllStaffCEO = asyncCatch(async (req, res, next) => {
           }
         },
       ]);
+
     res.status(200).json({
       success: true,
-      company: staff,
+      ceos,
     });
   });
