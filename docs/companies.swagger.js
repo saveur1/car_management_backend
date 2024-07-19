@@ -415,6 +415,31 @@ export const CompanyDoc = {
         },
       },
     },
+
+    get: {
+        tags: ["Company"],
+        security: [
+          {
+            token: [],
+          },
+        ],
+        responses: {
+          204: {
+            description: "Company CEO fetched successfully",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  example: {
+                    status: "success",
+                    company: {}
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     } 
   };
   

@@ -199,3 +199,30 @@ export const createStaff = asyncCatch(async (req, res, next) => {
       staff,
     });
   });
+
+// @desc    Get all staff CEO
+// @route   GET /api/v1/companies/CEO
+export const getAllStaffCEO = asyncCatch(async (req, res, next) => {
+    const staff = await Staff.aggregate([
+        {
+          $lookup: {
+            from: "positions",
+            localField: "position",
+            foreignField: "_id",
+            as: "position"
+          }
+        },
+        {
+          $unwind: "$position"
+        },
+        {
+          $match: {
+            "position.job_title": "CEO"
+          }
+        },
+      ]);
+    res.status(200).json({
+      success: true,
+      company: staff,
+    });
+  });
