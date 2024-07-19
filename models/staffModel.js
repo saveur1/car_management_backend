@@ -83,7 +83,7 @@ const staffSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    required: true,
+    default: "https://res.cloudinary.com/dpwzlkjbo/image/upload/f_auto,q_auto/v1/staff/s1gc2yiili1tsiyaybsr"
   },
   gender: {
     type: String,
@@ -95,8 +95,8 @@ const staffSchema = new mongoose.Schema({
 
   //Salary Fields
   grossSalary: { 
-    type: String,
-    required: true,
+    type: Number,
+    default: 0,
   },
   accountNumber: String,
   bankName: String,

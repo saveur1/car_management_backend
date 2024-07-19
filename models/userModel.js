@@ -56,7 +56,7 @@ const userSchema = new mongoose.Schema({
     },
     avatar:{
             type: String,
-            required: true
+            default: "https://res.cloudinary.com/dpwzlkjbo/image/upload/f_auto,q_auto/v1/staff/s1gc2yiili1tsiyaybsr"
     },
     categories:{
         type: String,
