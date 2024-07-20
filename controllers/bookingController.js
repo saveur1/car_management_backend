@@ -59,6 +59,13 @@ export const createBooking = asyncCatch(async (req, res) => {
 export const getAllBookings = asyncCatch(async (req, res) => {
   const bookings = await Booking.find({company: req.staff.company})
                                 .populate("car")
+                                .populate({
+                                    path: "car",
+                                    populate:{
+                                        path: "supplier",
+                                        model:"User"
+                                    }
+                                })
                                 .populate("customer")
                                 .populate("driver")
                                 .sort({createdAt: -1});
