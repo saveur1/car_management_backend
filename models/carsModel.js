@@ -76,6 +76,7 @@ const carsSchema = new mongoose.Schema({
         ref: "User"
     },
     supplier_contract: String,
+    supplier_money_month: Number,
 
     //insurance part
     insurance_name: String,
