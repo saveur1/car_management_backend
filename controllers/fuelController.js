@@ -4,8 +4,11 @@ import Activities from "../models/activityModel.js";
 
 // Create a new fuel entry
 export const createFuel = asyncCatch(async (req, res) => {
-  const fuel = new Fuel(req.body);
-  await fuel.save();
+  const newFuel = await Fuel.create(req.body);
+
+  const fuel = await Fuel.findById(newFuel._id)
+                          .populate("employee")
+                             .populate("car");
 
   //add new activies
   await Activities.create({
@@ -14,6 +17,7 @@ export const createFuel = asyncCatch(async (req, res) => {
     company: req.staff.company,
     color: "blue"
   });
+
   res.status(201).json({
     status: "success",
     fuel,
@@ -53,9 +57,11 @@ export const getFuel = asyncCatch(async (req, res) => {
 export const updateFuel = asyncCatch(async (req, res) => {
 
   const fuel = await Fuel.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+                                    new: true,
+                                    runValidators: true,
+                                })
+                                .populate("employee")
+                                .populate("car");
 
   if (!fuel) {
     return res.status(404).json({

@@ -5,14 +5,16 @@ import Activities from "../models/activityModel.js";
 
 // Create a new garage entry
 export const createGarage = asyncCatch(async (req, res) => {
-  const garage = new Garage({...req.body, company: req.staff.company });
+  const newGarage = await Garage.create({...req.body, company: req.staff.company });
+
+  const garage = await Garage.findById(newGarage._id)
+                             .populate("employee")
+                             .populate("car");
 
   //Update car to be under maintenance
   await Car.findByIdAndUpdate(req.body.car, {
     current_status: "under_maintance",
   });
-
-  await garage.save();
 
   //add new activies
   await Activities.create({
@@ -67,9 +69,12 @@ export const getGarage = asyncCatch(async (req, res) => {
 // Update a garage entry
 export const updateGarage = asyncCatch(async (req, res) => {
   const garage = await Garage.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+                                new: true,
+                                runValidators: true,
+                            })
+                            .populate("employee")
+                            .populate("car");
+
   if (!garage) {
     return res.status(404).json({
       status: "fail",

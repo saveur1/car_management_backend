@@ -4,8 +4,7 @@ import Activities from "../models/activityModel.js";
 
 // Create a new asset
 export const createAsset = asyncCatch(async (req, res) => {
-  const asset = new Asset({ ...req.body, company: req.staff.company });
-  await asset.save();
+  const asset = await Asset.create({ ...req.body, company: req.staff.company });
 
   //add new activies
   await Activities.create({
