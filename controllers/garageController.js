@@ -53,6 +53,11 @@ export const getGarage = asyncCatch(async (req, res) => {
       message: "No garage entry found with that ID",
     });
   }
+
+  if(req.body.garageStatus == "out_of_garage")
+        await Car.findByIdAndUpdate(req.body.car, { current_status: "available" });
+  
+  
   res.status(200).json({
     status: "success",
     garage,

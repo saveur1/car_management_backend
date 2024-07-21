@@ -26,7 +26,7 @@ const garageSchema = new mongoose.Schema({
   },
   garageStatus: {
     type: String,
-    enum: ["garage", "completed"]
+    enum: ["in_garage", "out_of_garage"]
   },
   amount: {
     type: Number,

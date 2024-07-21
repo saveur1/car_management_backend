@@ -75,6 +75,10 @@ const carsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
+    description: {
+        type: String,
+        required: false
+    },
     supplier_contract: String,
     supplier_money_month: Number,
 
