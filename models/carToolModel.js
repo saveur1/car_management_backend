@@ -49,7 +49,11 @@ const carToolSchema = new mongoose.Schema({
   },
   quantity: {
     type: Number,
-    required: true,
+    required: [true, "Quantity is required!"],
+  },
+  remainingTools: {
+    type: Number,
+    default: 0
   },
   pricePerUnity: {
     type: Number,
