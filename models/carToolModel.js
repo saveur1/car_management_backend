@@ -51,7 +51,7 @@ const carToolSchema = new mongoose.Schema({
     type: Number,
     required: [true, "Quantity is required!"],
   },
-  remainingTools: {
+  usedTools: {
     type: Number,
     default: 0
   },
