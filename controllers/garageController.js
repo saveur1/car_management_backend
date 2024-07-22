@@ -13,7 +13,7 @@ export const createGarage = asyncCatch(async (req, res) => {
 
   //Update car to be under maintenance
   await Car.findByIdAndUpdate(req.body.car, {
-    current_status: "under_maintance",
+    current_status: "under_maintenance",
   });
 
   //add new activies
@@ -105,6 +105,10 @@ export const deleteGarage = asyncCatch(async (req, res) => {
       message: "No garage entry found with that ID",
     });
   }
+
+  await Car.findByIdAndUpdate(garage.car, {
+    current_status: "available",
+  });
 
   //Deleted activies
   await Activities.create({
