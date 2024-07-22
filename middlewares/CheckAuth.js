@@ -25,9 +25,11 @@ export const CheckAuth = asyncCatch(async(req,res,next)=>{
 
 //Authorize user base on role
 export const CheckRole = (...roles)=>{
+    const newRoles = roles?.map(role => role?.toLowerCase());
+
     return (req,res,next)=>{
         
-        if(!roles.includes(req.staff.position.job_title.toLowerCase())){
+        if(!newRoles.includes(req.staff.position.job_title.toLowerCase())){
             return next(
                 new ErrorHandler(`Your role is not allowed to access this resource`,403)
             );
