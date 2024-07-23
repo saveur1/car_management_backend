@@ -35,7 +35,7 @@ router.route("/password/update").put(CheckAuth, updateUserPassword);
 //Check authentication first then check user role
 router.route("/")
       .post(CheckAuth, CheckRole("admin", "human_resources", "accountant", "CEO"), upload.single("image"), createStaff) //create staff
-      .get(CheckAuth, CheckRole("admin", "human_resources", "accountant", "operators", "CEO"), getAllStaff);
+      .get(CheckAuth, CheckRole("admin", "human_resources", "accountant", "operators", "CEO", "manager"), getAllStaff);
 
 router.route("/position/:position")
       .get(CheckAuth, CheckRole("admin", "human_resources", "accountant", "operators", "CEO"), getStaffByPosition);

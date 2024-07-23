@@ -1,5 +1,6 @@
 import Holiday from "../models/holidayModel.js";
 import asyncCatch from "../middlewares/asyncCatch.js";
+import Staff from "../models/staffModel.js";
 
 
 // Create a new holiday
@@ -8,6 +9,9 @@ export const createHoliday = asyncCatch(async (req, res) => {
   
   const holiday = await Holiday.findById(saveHoliday._id)
                                 .populate("staff");
+  
+  //Update staff to holiday
+  await Staff.findByIdAndUpdate(holiday.staff, { status: "holiday" });
 
   res.status(201).json({
     success: true,
