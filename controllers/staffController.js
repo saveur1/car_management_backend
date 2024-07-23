@@ -99,6 +99,10 @@ export const loginStaff = asyncCatch(async (req, res, next) => {
     return next(new ErrorHandler("Invalid email or password", 401));
   }
 
+  if(staff.status == "fired"){
+    return next(new ErrorHandler("You are not allowed to Loggin!", 401));
+  }
+
   staff.password = undefined;
 
   sendToken(200, staff, res);
