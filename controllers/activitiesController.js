@@ -37,6 +37,8 @@ export const getAllActivities = asyncCatch(async (req, res) => {
                                             model: "Job"
                                         }
                                      });
+
+
   res.status(200).json({
     success: true,
     activities,

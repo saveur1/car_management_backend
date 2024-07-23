@@ -217,7 +217,8 @@ export const getAllStaffCEO = asyncCatch(async (req, res, next) => {
         },
         {
           $match: {
-            "position.job_title": "CEO"
+            "position.job_title": "CEO",
+            "company": req.params.company
           }
         },
       ]);

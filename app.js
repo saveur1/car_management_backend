@@ -6,6 +6,7 @@ import pageNotFound from "./middlewares/pageNotFound.js";
 import cors from "cors";
 import dotenv from "dotenv";
 import cloudinary from "cloudinary";
+import schedule from "node-schedule";
 
 // IMPORTING ALL ROUTERS
 import users from "./routes/user.js";
@@ -30,6 +31,7 @@ import companies from "./routes/companies.js";
 
 import { swaggerDocumentation } from "./docs/swagger.js";
 import { corsOptionsDelegate } from "./config/corsOptions.js";
+import { handleTriggers } from "./utils/runTriggers.js";
 
 
 //setting up Configurations
@@ -52,6 +54,9 @@ cloudinary.v2.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
+
+// Schedule the handleTriggers function to run periodically
+schedule.scheduleJob('*/10 * * * *', handleTriggers); // Runs every 10 minutes
 
 //CALLING ALL ROUTES
 app.use("/api/v1", users);

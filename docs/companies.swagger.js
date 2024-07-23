@@ -415,31 +415,41 @@ export const CompanyDoc = {
         },
       },
     },
-
-    get: {
-        tags: ["Company"],
-        security: [
-          {
-            token: [],
-          },
-        ],
-        responses: {
-          204: {
-            description: "Company CEO fetched successfully",
-            content: {
-              "application/json": {
-                schema: {
-                  type: "object",
-                  example: {
-                    status: "success",
-                    company: {}
+},
+"/api/v1/companies/CEO/{companyID}": {
+        get: {
+            tags: ["Company"],
+            security: [
+              {
+                token: [],
+              },
+            ],
+            parameters: [
+                {
+                  in: "path",
+                  name: "companyID",
+                  description: "Company ID",
+                  required: true,
+                  example: "60c72b2f9b1d4b3c6d3b9b0e",
+                },
+            ],
+            responses: {
+              204: {
+                description: "Company CEO fetched successfully",
+                content: {
+                  "application/json": {
+                    schema: {
+                      type: "object",
+                      example: {
+                        status: "success",
+                        company: {}
+                      },
+                    },
                   },
                 },
               },
             },
-          },
         },
-      },
     } 
-  };
+};
   

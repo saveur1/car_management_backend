@@ -58,6 +58,16 @@ const bookingSchema = new mongoose.Schema({
   },
   passenger: {
     type: String,
+  },
+
+  //Two field for notifications
+  pickup_notify: {
+    type: Boolean,
+    default: false
+  },
+  returndate_notify: {
+    type: Boolean,
+    default: false
   }
 },
 {

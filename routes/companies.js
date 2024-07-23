@@ -23,7 +23,9 @@ router
   .get(CheckAuth, CheckRole("admin"), getAllCompanys);
 
 router.route("/CEO")
-      .post(CheckAuth, CheckRole("admin"), upload.single("image"), createStaff)
+      .post(CheckAuth, CheckRole("admin"), upload.single("image"), createStaff);
+    
+router.route("/CEO/:company")
       .get(CheckAuth, CheckRole("admin"), getAllStaffCEO);
 
 router
