@@ -9,12 +9,14 @@ import cloudinary from "cloudinary";
 //Register User => /api/v1/register
 export const registerUser = asyncCatch(async(req,res,next)=>{
     const userToAdd = {
+        ...req.body,
         company: req.staff.company,
       };
     
       //If there is file then add its url to staff data
       if (req.file) {
         const cloudinary_image = await cloudinary.v2.uploader.upload(
+          req.file.path,
           {
             folder: "user",
             unique_filename: false,
@@ -28,7 +30,12 @@ export const registerUser = asyncCatch(async(req,res,next)=>{
   const user = await User.create(userToAdd);
 
   //add new activies
-
+  await Activities.create({
+    staff: req.staff._id,
+    activityName: "Registered User",
+    company: req.staff.company,
+    color: "blue"
+  });
 
   sendToken(201, user, res);
 });
@@ -83,7 +90,9 @@ export const updateUserInfo = asyncCatch(async(req,res,next)=>{
       }
 
   const user = await User.findByIdAndUpdate(req.params.id, userToUpdate, {
-    new: true
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
   });
 
   //update activies
