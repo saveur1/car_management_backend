@@ -10,7 +10,9 @@ import Position from "../models/jobsModel.js";
 
 // Create a new company
 export const createCompany = asyncCatch(async (req, res) => {
-   
+    const companyToAdd = {
+        ...req.body,
+    };
     
       //If there is file then add its url to staff data
     if (req.file) {
