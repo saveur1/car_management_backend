@@ -7,6 +7,7 @@ import sendEmail from "../utils/sendEmail.js";
 import schedule from "node-schedule";
 import { staffEmail } from "../config/staffEmailTemplate.js";
 import Position from "../models/jobsModel.js";
+import mongoose from "mongoose";
 
 // Create a new company
 export const createCompany = asyncCatch(async (req, res) => {
@@ -203,6 +204,11 @@ export const createStaff = asyncCatch(async (req, res, next) => {
 // @desc    Get all staff CEO
 // @route   GET /api/v1/companies/CEO
 export const getAllStaffCEO = asyncCatch(async (req, res, next) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.company)) {
+        return res.status(400).json({ success: false, message: "Invalid company ID" });
+    }
+    const companyId = new mongoose.Types.ObjectId(String(req.params.company));
+
     const ceos = await Staff.aggregate([
         {
           $lookup: {
@@ -217,8 +223,10 @@ export const getAllStaffCEO = asyncCatch(async (req, res, next) => {
         },
         {
           $match: {
-            "position.job_title": "CEO",
-            "company": req.params.company
+            $and: [
+                { "position.job_title": "CEO" },
+                { "company": companyId }
+            ] 
           }
         },
       ]);
